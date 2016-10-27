@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import AudioKit
 
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        // do some work!
     }
 
     override func didReceiveMemoryWarning() {

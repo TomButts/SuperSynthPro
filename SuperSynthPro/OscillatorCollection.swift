@@ -1,33 +1,48 @@
 import Foundation
 import AudioKit
 
-class OscillatorCollection {
-    var waveCollection: Array<AKOscillator> = []
-    let waveNode: AKMixer
+class OscillatorCollection: GeneratorProtocol {
+    var waveNode: AKMixer
+    var fundamentalFrequency: Double
     
-    init(fundamentalFrequency: Double, waveType: Array<AKTable>) {
+    var waveCollection: Array<AKOscillator> = []
+    
+    init(frequency: Double, waveType: Array<AKTable>) {
+        self.fundamentalFrequency = frequency
+        
         // mix the oscillators together into one node
         waveNode = AKMixer()
         
+        
+        var harmonicFrequency = self.fundamentalFrequency
+        
         for i in 0 ... waveType.count - 1 {
-            var frequency = fundamentalFrequency
-            
             waveCollection.append(AKOscillator(waveform: waveType[i]))
             
-            waveCollection[i].frequency = frequency
+            waveCollection[i].frequency = harmonicFrequency
             
             // Set the frequency of next harmonic oscillator
-            frequency = frequency * 2
+            harmonicFrequency = harmonicFrequency * 2
             
             // connect the oscillator waves together
             waveNode.connect(waveCollection[i])
         }
     }
-    
-    // Start all the oscillators in the collection
-    func startOscillatorCollection() {
+
+    func startWaveNode() {
         for oscillator in self.waveCollection {
             oscillator.start()
         }
     }
+    
+    func stopWaveNode() {
+        for oscillator in self.waveCollection {
+            oscillator.stop()
+        }
+    }
+    
+    func changeAmplitude(harmonic: Int, amplitude: Double) {
+        waveCollection[harmonic].amplitude = amplitude
+    }
+    
 }

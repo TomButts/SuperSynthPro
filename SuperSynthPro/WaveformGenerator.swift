@@ -7,8 +7,8 @@ class WaveformGenerator {
     var waveformNode: AKNode
     var frequency = 330.0
     
-    // this looks shit
-    var waveTypes = [AKTable(.sine), AKTable(.sawtooth), AKTable(.sine)]
+    // defaults to a 3 sine collection of oscillators
+    var waveTypes = [AKTable(.sine), AKTable(.sine), AKTable(.sine)]
     
     init(generatorType: String = "AKOscillator") {
         self.generatorType = generatorType

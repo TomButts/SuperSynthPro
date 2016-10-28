@@ -15,6 +15,8 @@
 		E24E303B1DC2754D00E6D6BD /* SuperSynthProTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24E303A1DC2754D00E6D6BD /* SuperSynthProTests.swift */; };
 		E24E30561DC27DCA00E6D6BD /* AudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E24E30551DC27DCA00E6D6BD /* AudioKit.framework */; };
 		E24E30571DC27DCA00E6D6BD /* AudioKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E24E30551DC27DCA00E6D6BD /* AudioKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E24E305D1DC2836800E6D6BD /* WaveformGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24E305C1DC2836800E6D6BD /* WaveformGenerator.swift */; };
+		E24E30601DC2892F00E6D6BD /* OscillatorCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24E305F1DC2892F00E6D6BD /* OscillatorCollection.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +55,8 @@
 		E24E303A1DC2754D00E6D6BD /* SuperSynthProTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuperSynthProTests.swift; sourceTree = "<group>"; };
 		E24E303C1DC2754D00E6D6BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E24E30551DC27DCA00E6D6BD /* AudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioKit.framework; path = "AudioKit-iOS/AudioKit.framework"; sourceTree = "<group>"; };
+		E24E305C1DC2836800E6D6BD /* WaveformGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaveformGenerator.swift; sourceTree = "<group>"; };
+		E24E305F1DC2892F00E6D6BD /* OscillatorCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OscillatorCollection.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +100,7 @@
 		E24E30241DC2754D00E6D6BD /* SuperSynthPro */ = {
 			isa = PBXGroup;
 			children = (
+				E24E30591DC281D300E6D6BD /* Synthesizer */,
 				E24E30251DC2754D00E6D6BD /* AppDelegate.swift */,
 				E24E30271DC2754D00E6D6BD /* ViewController.swift */,
 				E24E30291DC2754D00E6D6BD /* Main.storyboard */,
@@ -113,6 +118,15 @@
 				E24E303C1DC2754D00E6D6BD /* Info.plist */,
 			);
 			path = SuperSynthProTests;
+			sourceTree = "<group>";
+		};
+		E24E30591DC281D300E6D6BD /* Synthesizer */ = {
+			isa = PBXGroup;
+			children = (
+				E24E305C1DC2836800E6D6BD /* WaveformGenerator.swift */,
+				E24E305F1DC2892F00E6D6BD /* OscillatorCollection.swift */,
+			);
+			name = Synthesizer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -220,7 +234,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				E24E30281DC2754D00E6D6BD /* ViewController.swift in Sources */,
+				E24E30601DC2892F00E6D6BD /* OscillatorCollection.swift in Sources */,
 				E24E30261DC2754D00E6D6BD /* AppDelegate.swift in Sources */,
+				E24E305D1DC2836800E6D6BD /* WaveformGenerator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

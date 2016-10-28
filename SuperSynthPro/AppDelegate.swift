@@ -1,11 +1,3 @@
-//
-//  AppDelegate.swift
-//  SuperSynthPro
-//
-//  Created by Tom Butts on 27/10/2016.
-//  Copyright © 2016 Tom Butts. All rights reserved.
-//
-
 import UIKit
 
 @UIApplicationMain

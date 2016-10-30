@@ -42,7 +42,7 @@ class ViewController: UIViewController {
         AudioKit.start()
         
         // waveform plot
-        let rect = CGRect(x: 50.0, y: 50.0, width: 800.0, height: 100.0)
+        let rect = CGRect(x: 70.0, y: 90.0, width: 820.0, height: 100.0)
         
         let plot = AKRollingOutputPlot(frame: rect)
         
@@ -83,11 +83,10 @@ class ViewController: UIViewController {
         rateChanger.rate = Double(sender.value)
     }
     
-    // TODO create the picker that makes it mandatory to add
-    // a wave form type with a new harmonic
     @IBAction func addSubtractHarmonics(_ sender: UIStepper) {
         if (Int(sender.value) > waveTypes.count) {
             generator.addHarmonic(waveType: wave.sine)
+            
             selectedHarmonicStepper.maximumValue = Double(sender.value)
         } else {
             generator.deleteHarmonic(harmonic: Int(sender.value))

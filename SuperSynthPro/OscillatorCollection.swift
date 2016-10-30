@@ -92,6 +92,8 @@ class OscillatorCollection: GeneratorProtocol {
         
         self.waveCollection[waveCollection.count]?.oscillator.frequency = (self.waveCollection[penultimateWave]?.oscillator.frequency)! * 2
         
+        self.waveCollection[waveCollection.count]?.oscillator.amplitude = 0.2
+        
         self.stopWaveNode()
         waveNode.connect((self.waveCollection[waveCollection.count - 1]?.oscillator)!)
         self.startWaveNode()

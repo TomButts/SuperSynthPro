@@ -29,7 +29,7 @@ class GeneratorTable {
                 t.column(updatedAt)
             })
         } catch {
-            print("Failed to create generator table")
+            print("Failed to create generator table: \(error)")
         }
     }
 }

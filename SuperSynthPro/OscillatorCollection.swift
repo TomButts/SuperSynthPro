@@ -107,4 +107,24 @@ class OscillatorCollection: GeneratorProtocol {
         self.waveCollection.removeValue(forKey: harmonic)
         self.startWaveNode()
     }
+    
+    func getAllWaveTypes() -> Array<Int> {
+        var waveTypes: Array<Int> = []
+        
+        for wave in waveCollection {
+            waveTypes.append(wave.value.waveType)
+        }
+        
+        return waveTypes
+    }
+    
+    func getAllAmplitudes() -> Array<Double> {
+        var amplitudes: Array<Double> = []
+        
+        for wave in waveCollection {
+            amplitudes.append(wave.value.oscillator.amplitude)
+        }
+        
+        return amplitudes
+    }
 }

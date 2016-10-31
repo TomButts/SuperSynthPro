@@ -1,10 +1,20 @@
 import Foundation
 import SQLite
 
-final class DatabaseConnector {
-    static var connection: Connection = try! Connection("db.sqlite")
+class DatabaseConnector {
+    static var connection: Connection? = nil
 
-    private init() {
-    
+    init() {
+        let path = NSSearchPathForDirectoriesInDomains(
+            .documentDirectory,
+            .userDomainMask,
+            true
+        ).first!
+        
+        if (DatabaseConnector.connection == nil) {
+            DatabaseConnector.connection = try! Connection("\(path)/db.SuperSynthPro")
+        }
+        
+        print(path)
     }
 }

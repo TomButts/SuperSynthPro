@@ -6,26 +6,18 @@ class Generator {
     let oscillatorAmplitudeTable:OscillatorAmplitudeTable
     let oscillatorWaveTypeTable: OscillatorWaveTypeTable
     
-    let db: Connection
+    var db: Connection = DatabaseConnector.connection!
     
-    init(db: Connection) {
-        self.db = db
-        
+    init() {
         // create the tables
         generatorTable = GeneratorTable(db: db)
         oscillatorAmplitudeTable = OscillatorAmplitudeTable(db: db)
         oscillatorWaveTypeTable = OscillatorWaveTypeTable(db: db)
     }
     
-    func saveGenerator(generator: GeneratorStructure) {
+    func save(generator: GeneratorStructure) {
         // TODO select latest created and take row number to put on the end of default
         // add generator record
-        
-//        let formatter = DateFormatter()
-//        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-//        let currentDate = NSDate()
-//        let date = formatter.date(from: currentDate)
-        
         var insert = GeneratorTable.generatorTable.insert(
             generatorTable.name <- generator.name,
             generatorTable.type <- generator.type,
@@ -42,45 +34,48 @@ class Generator {
             print("Error with inserting generator record")
         }
         
-        // add amplitudes
-        
         if (generatorRowId != nil) {
+            // add amplitudes
             for harmonicIndex in 0 ... generator.waveAmplitudes.count - 1 {
                 insert = OscillatorAmplitudeTable.oscillatorAmplitudeTable.insert(
                     oscillatorAmplitudeTable.amplitude <- generator.waveAmplitudes[harmonicIndex],
                     oscillatorAmplitudeTable.generatorId <- generatorRowId,
                     oscillatorAmplitudeTable.harmonicNumber <- harmonicIndex
                 )
+                
+                do {
+                    _ = try self.db.run(insert)
+                } catch {
+                    print("Failed to save generator amplitude values")
+                }
             }
             
-            do {
-                _ = try self.db.run(insert)
-            } catch {
-                print("Failed to save generator amplitude values")
-            }
             
+            
+            // add wave types
             for harmonicIndex in 0 ... generator.waveTypes.count - 1 {
                 insert = OscillatorWaveTypeTable.oscillatorWaveTypeTable.insert(
                     oscillatorWaveTypeTable.waveType <- generator.waveTypes[harmonicIndex],
                     oscillatorWaveTypeTable.generatorId <- generatorRowId!,
                     oscillatorWaveTypeTable.harmonicNumber <- harmonicIndex
                 )
+                
+                do {
+                    _ = try self.db.run(insert)
+                } catch {
+                    print("Failed to save generator wave type values")
+                }
             }
             
-            
-            do {
-                _ = try self.db.run(insert)
-            } catch {
-                print("Failed to save generator amplitude values")
-            }
+           
         }
     }
     
-    func loadGenerator(id: Int64) {
+    func load(id: Int) {
         
     }
     
-    func deleteGenerator(id: Int64) {
+    func delete(id: Int) {
         
     }
 }

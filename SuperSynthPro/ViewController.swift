@@ -7,6 +7,8 @@ class ViewController: UIViewController {
     var rateChanger: AKVariSpeed! = nil
     
     var wave = Wave()
+    let db = DatabaseConnector()
+    var generatorModel = Generator()
     
     @IBOutlet var totalHarmonicsLabel: UILabel!
     @IBOutlet var selectedHarmonicLabel: UILabel!
@@ -108,6 +110,20 @@ class ViewController: UIViewController {
     
     @IBAction func selectedWaveTypeSegment(_ sender: UISegmentedControl) {
         generator.setWaveType(harmonic: selectedHarmonic, waveType: waveTypeSegment.selectedSegmentIndex)
+    }
+    
+    @IBAction func saveGenerator(_ sender: AnyObject) {
+        let generatorStruct = GeneratorStructure(
+            name: "default",
+            type: String(describing: generator.self),
+            frequency: generator.fundamentalFrequency,
+            waveTypes: generator.getAllWaveTypes(),
+            waveAmplitudes: generator.getAllAmplitudes()
+        )
+        
+        generatorModel.save(generator: generatorStruct)
+        
+        print("Saved Generator")
     }
 }
 

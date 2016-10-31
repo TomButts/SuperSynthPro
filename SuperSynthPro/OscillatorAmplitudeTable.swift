@@ -18,12 +18,16 @@ class OscillatorAmplitudeTable {
         do {
             try db.run(OscillatorAmplitudeTable.oscillatorAmplitudeTable.create { t in
                 t.column(id, primaryKey: true)
-                t.foreignKey(generatorId, references: GeneratorTable.generatorTable, id, delete: .cascade)
+                t.column(
+                    generatorId,
+                    references: GeneratorTable.generatorTable,
+                    GeneratorTable(db: DatabaseConnector.connection!).id
+                )
                 t.column(harmonicNumber)
                 t.column(amplitude)
             })
         } catch {
-            print("Failed to create oscillator amplitude table")
+            print("Failed to create oscillator amplitude table: \(error)")
         }
     }
 

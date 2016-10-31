@@ -1,6 +1,7 @@
+import Foundation
 import AudioKit
 
-struct Oscillator {
+struct OscillatorStructure {
     var oscillator: AKOscillator
     var waveType: Int
 }

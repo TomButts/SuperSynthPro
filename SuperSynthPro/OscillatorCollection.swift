@@ -5,7 +5,7 @@ class OscillatorCollection: GeneratorProtocol {
     var waveNode: AKMixer
     var fundamentalFrequency: Double
     var harmonics: Int
-    var waveCollection: [ Int: Oscillator ] = [:]
+    var waveCollection: [ Int: OscillatorStructure ] = [:]
     
     // wave class
     let wave = Wave()
@@ -23,7 +23,7 @@ class OscillatorCollection: GeneratorProtocol {
         for i in 0 ... waveType.count - 1 {
             let waveformTable = wave.makeWave(wave: waveType[i])
             
-            waveCollection[i] = Oscillator(oscillator: AKOscillator(waveform: waveformTable), waveType: waveType[i])
+            waveCollection[i] = OscillatorStructure(oscillator: AKOscillator(waveform: waveformTable), waveType: waveType[i])
             
             waveCollection[i]?.oscillator.frequency = harmonicFrequency
             
@@ -77,6 +77,9 @@ class OscillatorCollection: GeneratorProtocol {
         self.startWaveNode()
     }
     
+    /**
+     * keeps throwing errors, fix this
+     */
     func getWaveType(harmonic: Int) -> Int {
         if (harmonic > waveCollection.count) {
             return 10
@@ -86,7 +89,7 @@ class OscillatorCollection: GeneratorProtocol {
     }
     
     func addHarmonic(waveType: Int) {
-        self.waveCollection[waveCollection.count] = Oscillator(oscillator: AKOscillator(waveform: wave.makeWave(wave: waveType)), waveType: waveType)
+        self.waveCollection[waveCollection.count] = OscillatorStructure(oscillator: AKOscillator(waveform: wave.makeWave(wave: waveType)), waveType: waveType)
         
         let penultimateWave = self.waveCollection.count - 1
         

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E201C4111DC8E11900B8F99F /* GeneratorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E201C4101DC8E11900B8F99F /* GeneratorFactory.swift */; };
 		E20F0F051DC6707B002A7389 /* Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20F0F041DC6707B002A7389 /* Generator.swift */; };
 		E20F0F071DC769DC002A7389 /* GeneratorStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20F0F061DC769DC002A7389 /* GeneratorStructure.swift */; };
 		E215BD141DC388FC007410B1 /* GeneratorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E215BD131DC388FC007410B1 /* GeneratorProtocol.swift */; };
@@ -112,6 +113,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		E201C4101DC8E11900B8F99F /* GeneratorFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratorFactory.swift; sourceTree = "<group>"; };
 		E20F0F041DC6707B002A7389 /* Generator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Generator.swift; sourceTree = "<group>"; };
 		E20F0F061DC769DC002A7389 /* GeneratorStructure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratorStructure.swift; sourceTree = "<group>"; };
 		E215BD131DC388FC007410B1 /* GeneratorProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratorProtocol.swift; sourceTree = "<group>"; };
@@ -259,6 +261,7 @@
 				E2D64F1F1DC4F55D0074A86A /* Protocols */,
 				E2D64F1E1DC4F54C0074A86A /* Structures */,
 				E24E305F1DC2892F00E6D6BD /* OscillatorCollection.swift */,
+				E201C4101DC8E11900B8F99F /* GeneratorFactory.swift */,
 			);
 			name = Generators;
 			sourceTree = "<group>";
@@ -445,6 +448,7 @@
 			files = (
 				E2D64F231DC517120074A86A /* Wave.swift in Sources */,
 				E24E30281DC2754D00E6D6BD /* ViewController.swift in Sources */,
+				E201C4111DC8E11900B8F99F /* GeneratorFactory.swift in Sources */,
 				E2F17D181DC66D1700FAB9AE /* GeneratorTable.swift in Sources */,
 				E2BE05481DC61D3F0004CADD /* DatabaseConnector.swift in Sources */,
 				E24E30601DC2892F00E6D6BD /* OscillatorCollection.swift in Sources */,

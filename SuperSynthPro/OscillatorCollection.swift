@@ -2,32 +2,34 @@ import Foundation
 import AudioKit
 
 class OscillatorCollection: GeneratorProtocol {
-    var waveNode: AKMixer
-    var fundamentalFrequency: Double
-    var harmonics: Int
+    let type = "AKOscillator"
+    
+    var waveNode: AKMixer = AKMixer()
+    var fundamentalFrequency: Double = 330.0
+    var harmonics: Int = 1
     var waveCollection: [ Int: OscillatorStructure ] = [:]
     
     // wave class
     let wave = Wave()
     
-    init(frequency: Double, waveType: Array<Int>) {
-        self.fundamentalFrequency = frequency
-        self.harmonics = waveType.count
+    init(generator: GeneratorStructure) {
+        fundamentalFrequency = generator.frequency
+        harmonics = generator.waveTypes.count
         
-        // mix the oscillators together into one node
-        waveNode = AKMixer()
+        var frequency = generator.frequency
         
-        var harmonicFrequency = self.fundamentalFrequency
-        
-        // create the wave form by combining oscillators
-        for i in 0 ... waveType.count - 1 {
-            let waveformTable = wave.makeWave(wave: waveType[i])
+        for i in 0 ... generator.waveTypes.count - 1 {
+            let waveformTable = wave.makeWave(wave: generator.waveTypes[i])
             
-            waveCollection[i] = OscillatorStructure(oscillator: AKOscillator(waveform: waveformTable), waveType: waveType[i])
+            waveCollection[i] = OscillatorStructure(
+                oscillator: AKOscillator(waveform: waveformTable),
+                waveType: generator.waveTypes[i]
+            )
             
-            waveCollection[i]?.oscillator.frequency = harmonicFrequency
+            waveCollection[i]?.oscillator.frequency = frequency
+            waveCollection[i]?.oscillator.amplitude = generator.waveAmplitudes[i]
             
-            harmonicFrequency = harmonicFrequency * 2
+            frequency = frequency * 2
             
             waveNode.connect((waveCollection[i]?.oscillator)!)
         }
@@ -81,21 +83,20 @@ class OscillatorCollection: GeneratorProtocol {
      * keeps throwing errors, fix this
      */
     func getWaveType(harmonic: Int) -> Int {
-        if (harmonic > waveCollection.count) {
-            return 10
-        }
-        
         return self.waveCollection[harmonic]!.waveType
     }
     
     func addHarmonic(waveType: Int) {
-        self.waveCollection[waveCollection.count] = OscillatorStructure(oscillator: AKOscillator(waveform: wave.makeWave(wave: waveType)), waveType: waveType)
+        waveCollection[waveCollection.count] = OscillatorStructure(
+            oscillator: AKOscillator(waveform: wave.makeWave(wave: waveType)),
+            waveType: waveType
+        )
         
         let penultimateWave = self.waveCollection.count - 1
         
-        self.waveCollection[waveCollection.count]?.oscillator.frequency = (self.waveCollection[penultimateWave]?.oscillator.frequency)! * 2
+        waveCollection[waveCollection.count]?.oscillator.frequency = (self.waveCollection[penultimateWave]?.oscillator.frequency)! * 2
         
-        self.waveCollection[waveCollection.count]?.oscillator.amplitude = 0.2
+        waveCollection[waveCollection.count]?.oscillator.amplitude = 0.2
         
         self.stopWaveNode()
         waveNode.connect((self.waveCollection[waveCollection.count - 1]?.oscillator)!)
@@ -103,9 +104,11 @@ class OscillatorCollection: GeneratorProtocol {
     }
     
     func deleteHarmonic(harmonic: Int) {
-        self.stopWaveNode()
+        AudioKit.stop()
+        
         self.waveCollection.removeValue(forKey: harmonic)
-        self.startWaveNode()
+        
+        AudioKit.start()
     }
     
     func getAllWaveTypes() -> Array<Int> {

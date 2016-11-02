@@ -2,7 +2,7 @@ import UIKit
 import AudioKit
 
 class ViewController: UIViewController {
-    var selectedHarmonic: Int = 0
+    var selectedHarmonic: Int = 1
     var rateChanger: AKVariSpeed! = nil
     
     let db = DatabaseConnector()
@@ -16,6 +16,7 @@ class ViewController: UIViewController {
     @IBOutlet var waveTypeSegment: UISegmentedControl!
     @IBOutlet var selectedHarmonicStepper: UIStepper!
     @IBOutlet var amplitudeSlider: UISlider!
+    @IBOutlet var totalHarmonicStepper: UIStepper!
     
     @IBOutlet var startStopSwitch: UISwitch!
     
@@ -35,8 +36,16 @@ class ViewController: UIViewController {
         selectedHarmonicStepper.maximumValue = Double(generator.harmonics)
         selectedHarmonicStepper.minimumValue = 1.0
         
+        totalHarmonicStepper.minimumValue = 1.0
+        totalHarmonicStepper.maximumValue = 9.0
+        
         totalHarmonicsLabel.text = String(format: "%d", generator.harmonics)
-        selectedHarmonicLabel.text = String(format: "%d", selectedHarmonic + 1)
+        selectedHarmonicLabel.text = String(format: "%d", selectedHarmonic)
+        
+        amplitudeSlider.setValue(
+            Float(generator.waveCollection[selectedHarmonic - 1]!.oscillator.amplitude),
+            animated: true
+        )
         
         rateChanger = AKVariSpeed(generator.waveNode)
         rateChanger.rate = 1.0
@@ -51,6 +60,8 @@ class ViewController: UIViewController {
         plot.layer.borderWidth = 0.8
         plot.layer.borderColor = UIColor.blue.cgColor
         view.addSubview(plot)
+        
+        printWaveCollection()
     }
 
     override func didReceiveMemoryWarning() {
@@ -60,25 +71,23 @@ class ViewController: UIViewController {
     
     @IBAction func changeAmplitude(_ sender: UISlider) {
         if (selectedHarmonic <= generator.harmonics) {
-            self.generator.changeAmplitude(harmonic: selectedHarmonic, amplitude: Double(sender.value))
+            generator.changeAmplitude(harmonic: selectedHarmonic - 1, amplitude: Double(sender.value))
         }
     }
     
     @IBAction func startStopGenerator(_ sender: AnyObject) {
-        if (self.startStopSwitch .isOn) {
-            AudioKit.start()
+        if (startStopSwitch .isOn) {
             generator.startWaveNode()
-            self.startStopSwitch.setOn(false, animated: true)
+            startStopSwitch.setOn(true, animated: true)
         } else {
             generator.stopWaveNode()
-            AudioKit.stop()
-            self.startStopSwitch.setOn(true, animated: true)
+            startStopSwitch.setOn(false, animated: true)
         }
     }
     
     @IBAction func changeFrequency(_ sender: UISlider) {
-        self.generator.fundamentalFrequency = Double(sender.value)
-        self.generator.updateFrequency()
+        generator.fundamentalFrequency = Double(sender.value)
+        generator.updateFrequency()
     }
     
     @IBAction func changeRate(_ sender: UISlider) {
@@ -88,13 +97,22 @@ class ViewController: UIViewController {
     @IBAction func addSubtractHarmonics(_ sender: UIStepper) {
         if (Int(sender.value) > generator.waveCollection.count) {
             generator.addHarmonic(waveType: wave.sine)
-            
-            selectedHarmonicStepper.maximumValue = Double(sender.value)
         } else {
             generator.deleteHarmonic(harmonic: Int(sender.value))
+            
+            // reset to 1
+            selectedHarmonic = 1
+            selectedHarmonicLabel.text = String(format: "%d", 1)
+            selectedHarmonicStepper.value = 1.0
         }
         
+        // the maximum you can select is the value of the total harmonics stepper
+        selectedHarmonicStepper.maximumValue = Double(sender.value)
+        
         totalHarmonicsLabel.text = String(format: "%d", Int(sender.value))
+        
+        printConfig(function: "add subtract harmonic stepper")
+        printWaveCollection()
     }
     
     @IBAction func selectedWaveStepper(_ sender: UIStepper) {
@@ -102,20 +120,26 @@ class ViewController: UIViewController {
 
         waveTypeSegment.selectedSegmentIndex = generator.getWaveType(harmonic: Int(sender.value) - 1)
         
-        selectedHarmonic = Int(sender.value) - 1
+        selectedHarmonic = Int(sender.value)
         
-        amplitudeSlider.setValue(Float(generator.waveCollection[selectedHarmonic]!.oscillator.amplitude), animated: true)
+        amplitudeSlider.setValue(
+            Float(generator.waveCollection[selectedHarmonic - 1]!.oscillator.amplitude),
+            animated: true
+        )
+        
+        printConfig(function: "selectedWaveStepper")
+        printWaveCollection()
     }
     
     @IBAction func selectedWaveTypeSegment(_ sender: UISegmentedControl) {
-        generator.setWaveType(harmonic: selectedHarmonic, waveType: waveTypeSegment.selectedSegmentIndex)
+        generator.setWaveType(harmonic: selectedHarmonic - 1, waveType: waveTypeSegment.selectedSegmentIndex)
     }
     
     @IBAction func saveGenerator(_ sender: AnyObject) {
         // TODO different names
         let generatorStruct = GeneratorStructure(
             name: "default",
-            type: String(describing: generator.self),
+            type: generator.type,
             frequency: generator.fundamentalFrequency,
             waveTypes: generator.getAllWaveTypes(),
             waveAmplitudes: generator.getAllAmplitudes()
@@ -127,9 +151,16 @@ class ViewController: UIViewController {
     }
     
     @IBAction func loadGenerator(_ sender: AnyObject) {
-        currentGenerator = generatorModel.load(id: 4)
+        AudioKit.stop()
+        currentGenerator = generatorModel.load(id: 5)
         
         generator = GeneratorFactory.createGenerator(generator: currentGenerator)
+        
+        rateChanger = AKVariSpeed(generator.waveNode)
+        rateChanger.rate = 1.0
+        
+        AudioKit.output = rateChanger
+        AudioKit.start()
         
         selectedHarmonic = 0
         selectedHarmonicStepper.value = 0.0
@@ -138,7 +169,42 @@ class ViewController: UIViewController {
         totalHarmonicsLabel.text = String(format: "%d", generator.harmonics)
         selectedHarmonicLabel.text = String(format: "%d", selectedHarmonic + 1)
         
+        generator.stopWaveNode()
+        startStopSwitch.setOn(false, animated: true)
+        
         print("Load Generator")
+    }
+    
+    func printConfig(function: String) {
+        print(function)
+        
+        print("Select Label Value:")
+        print(selectedHarmonicLabel.text)
+        
+        print("Selected harmonic variable:")
+        print(selectedHarmonic)
+        
+        print("\ntotal harmonics in generator object:")
+        print(generator.harmonics)
+        
+        print("harmonic number label:")
+        print(totalHarmonicsLabel.text)
+        
+        print("harmonic stepper value:")
+        print(totalHarmonicStepper.value)
+    }
+    
+    func printWaveCollection() {
+        for (key, value) in generator.waveCollection {
+            print("key:")
+            print(key)
+            
+            print("Value amplitude")
+            print(value.amplitude)
+            
+            print("Value wave type:")
+            print(value.waveType)
+        }
     }
 }
 

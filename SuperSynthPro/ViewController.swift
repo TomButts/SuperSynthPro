@@ -8,7 +8,6 @@ class ViewController: UIViewController {
     let db = DatabaseConnector()
     var wave = Wave()
     var generatorModel = Generator()
-    var currentGenerator: GeneratorStructure! = nil
     var generator: GeneratorProtocol! = nil
     
     @IBOutlet var totalHarmonicsLabel: UILabel!
@@ -17,13 +16,13 @@ class ViewController: UIViewController {
     @IBOutlet var selectedHarmonicStepper: UIStepper!
     @IBOutlet var amplitudeSlider: UISlider!
     @IBOutlet var totalHarmonicStepper: UIStepper!
-    
+    @IBOutlet var nameTextField: UITextField!
     @IBOutlet var startStopSwitch: UISwitch!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        currentGenerator = GeneratorStructure(
+        let initialGenerator = GeneratorStructure(
             name: "config",
             type: "AKOscillator",
             frequency: 330.0,
@@ -31,7 +30,7 @@ class ViewController: UIViewController {
             waveAmplitudes: [0.4, 0.2, 0.1]
         )
         
-        generator = GeneratorFactory.createGenerator(generator: currentGenerator)
+        generator = GeneratorFactory.createGenerator(generator: initialGenerator)
         
         selectedHarmonicStepper.maximumValue = Double(generator.harmonics)
         selectedHarmonicStepper.minimumValue = 1.0
@@ -136,25 +135,35 @@ class ViewController: UIViewController {
     }
     
     @IBAction func saveGenerator(_ sender: AnyObject) {
-        // TODO different names
-        let generatorStruct = GeneratorStructure(
-            name: "default",
-            type: generator.type,
-            frequency: generator.fundamentalFrequency,
-            waveTypes: generator.getAllWaveTypes(),
-            waveAmplitudes: generator.getAllAmplitudes()
-        )
-        
-        generatorModel.save(generator: generatorStruct)
-        
-        print("Save Generator")
+        if (nameTextField.text == "" || (nameTextField.text?.characters.count)! < 3) {
+            let alert = UIAlertController(
+                title: "Woa there friend..",
+                message: "Please enter a name at least 3 characters long",
+                preferredStyle: UIAlertControllerStyle.alert
+            )
+            
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+            
+            self.present(alert, animated: true, completion: nil)
+        } else {
+            let generatorStruct = GeneratorStructure(
+                name: nameTextField.text!,
+                type: generator.type,
+                frequency: generator.fundamentalFrequency,
+                waveTypes: generator.getAllWaveTypes(),
+                waveAmplitudes: generator.getAllAmplitudes()
+            )
+            
+            generatorModel.save(generator: generatorStruct)
+            
+            print("Save Generator")
+        }
     }
     
     @IBAction func loadGenerator(_ sender: AnyObject) {
         AudioKit.stop()
-        currentGenerator = generatorModel.load(id: 5)
         
-        generator = GeneratorFactory.createGenerator(generator: currentGenerator)
+        generator = GeneratorFactory.createGenerator(generator: generatorModel.load(id: 1))
         
         rateChanger = AKVariSpeed(generator.waveNode)
         rateChanger.rate = 1.0

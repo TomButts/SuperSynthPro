@@ -15,9 +15,20 @@ class Generator {
         oscillatorWaveTypeTable = OscillatorWaveTypeTable(db: db)
     }
     
+    /*
+     * Return 1 for success 0 for failure
+     */
     func save(generator: GeneratorStructure) {
-        // TODO select latest created and take row number to put on the end of default
-        // add generator record
+        do {
+            let count = try db.scalar(GeneratorTable.generatorTable.filter(generatorTable.name == generator.name).count)
+            
+            if (count > 0) {
+               
+            }
+        } catch {
+            print("Failed to query for matching generator name: \(error)")
+        }
+        
         var insert = GeneratorTable.generatorTable.insert(
             generatorTable.name <- generator.name,
             generatorTable.type <- generator.type,
@@ -76,7 +87,6 @@ class Generator {
         
         // select generator details
         do {
-            // TODO: get the fucking join to work
             for generatorDetails in try db.prepare(
                 GeneratorTable.generatorTable.select(
                     generatorTable.name,
@@ -130,6 +140,66 @@ class Generator {
             waveTypes: waveTypes,
             waveAmplitudes: waveAmplitudes
         )
+    }
+    
+    /**
+     * Loads all generator records and returns array of names with row ids
+     * as indexes
+     */
+    func loadList() -> Array<String> {
+        var generatorCollection: Array<String> = []
+        
+        do {
+            for generator in try db.prepare(GeneratorTable.generatorTable.select(
+                generatorTable.id,
+                generatorTable.name
+                )
+            ) {
+                generatorCollection.insert(generator[generatorTable.name]!, at: Int(generator[generatorTable.id]))
+            }
+        } catch {
+            print("Failed to load generator list: \(error)")
+        }
+        
+        return generatorCollection
+    }
+    
+    func update(generator: GeneratorStructure) {
+        let generatorRow = GeneratorTable.generatorTable.filter(generatorTable.name == generator.name)
+        
+        do {
+            _ = try self.db.run(generatorRow.update(generatorTable.type <- generator.type))
+            _ = try self.db.run(generatorRow.update(generatorTable.frequency <- generator.frequency))
+            _ = try self.db.run(generatorRow.update(generatorTable.updatedAt <- NSDate() as Date))
+        } catch {
+            print("Error with updating generator details: \(error)")
+        }
+        
+        _ = getId(name: generator.name)
+        
+        //TODO:
+        // loop through existing amplitude values for this gen
+        // if harmonic number exists in new gen stuct update
+        // if harmonic exists in db but not in new struct
+        // delete record
+        
+        // repeat for wave type
+    }
+    
+    func getId(name: String) -> Int64 {
+        let select = GeneratorTable.generatorTable
+            .select(generatorTable.id)
+            .filter(generatorTable.name == name)
+        
+        do {
+            for id in try self.db.prepare(select) {
+                return id[generatorTable.id]
+            }
+        } catch {
+            print("Failed to get id: \(error)")
+        }
+        
+        return 0
     }
     
     func delete(id: Int) {

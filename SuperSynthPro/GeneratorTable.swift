@@ -22,8 +22,8 @@ class GeneratorTable {
         do {
             try db.run(GeneratorTable.generatorTable.create { t in
                 t.column(id, primaryKey: true)
+                t.column(name, unique: true)
                 t.column(type)
-                t.column(name)
                 t.column(frequency)
                 t.column(createdAt)
                 t.column(updatedAt)

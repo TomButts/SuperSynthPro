@@ -53,14 +53,20 @@ class ViewController: UIViewController {
         AudioKit.start()
         
         // Add waveform plot
-        let rect = CGRect(x: 70.0, y: 90.0, width: 820.0, height: 100.0)
+        let rect = CGRect(x: 100.0, y: 100.0, width: 820.0, height: 220.0)
         let plot = AKRollingOutputPlot(frame: rect)
         plot.color = UIColor.blue
         plot.layer.borderWidth = 0.8
         plot.layer.borderColor = UIColor.blue.cgColor
         view.addSubview(plot)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
         
-        printWaveCollection()
+        AudioKit.stop()
+        AudioKit.output = rateChanger
+        AudioKit.start()
     }
 
     override func didReceiveMemoryWarning() {

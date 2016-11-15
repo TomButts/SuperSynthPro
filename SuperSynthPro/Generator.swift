@@ -15,9 +15,6 @@ class Generator {
         oscillatorWaveTypeTable = OscillatorWaveTypeTable(db: db)
     }
     
-    /*
-     * Return 1 for success 0 for failure
-     */
     func save(generator: GeneratorStructure) {
         do {
             let count = try db.scalar(GeneratorTable.generatorTable.filter(generatorTable.name == generator.name).count)
@@ -184,6 +181,20 @@ class Generator {
         // delete record
         
         // repeat for wave type
+    }
+    
+    func loadLastUpdated() -> GeneratorStructure {
+        var generatorId: Int64 = 1
+        
+        do {
+            if let generatorRow = try db.pluck(GeneratorTable.generatorTable.order(generatorTable.updatedAt.desc)) {
+                generatorId = generatorRow[generatorTable.id]
+            }
+        } catch {
+            print("Failed to pluck latest generator record: \(error)")
+        }
+        
+        return load(id: generatorId)
     }
     
     func getId(name: String) -> Int64 {

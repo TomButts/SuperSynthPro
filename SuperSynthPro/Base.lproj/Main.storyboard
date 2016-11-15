@@ -146,7 +146,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Customise Sound"/>
                                 <connections>
-                                    <segue destination="t05-09-Rer" kind="show" identifier="showSoundCustomisationView" id="YfO-Zm-OAr"/>
+                                    <segue destination="t05-09-Rer" kind="show" id="lXn-Cz-ZXa"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Wave Form Generator" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OPV-za-9NR">
@@ -205,10 +205,10 @@
             </objects>
             <point key="canvasLocation" x="861.9140625" y="138.28125"/>
         </scene>
-        <!--View Controller-->
+        <!--Sound Customisation View Controller-->
         <scene sceneID="Qzw-zd-wVU">
             <objects>
-                <viewController id="t05-09-Rer" sceneMemberID="viewController">
+                <viewController id="t05-09-Rer" customClass="SoundCustomisationViewController" customModule="SuperSynthPro" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="vhx-MI-VV8"/>
                         <viewControllerLayoutGuide type="bottom" id="G3a-ki-oVz"/>
@@ -273,9 +273,26 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Stop  Start" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2MP-0a-G4M">
+                                <frame key="frameInset" minX="565" minY="362" width="83" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="A7x-ml-7oG">
+                                <frame key="frameInset" minX="582" minY="391" width="51" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="startStopSwitchValueChanged:" destination="t05-09-Rer" eventType="valueChanged" id="UYf-O7-1HU"/>
+                                </connections>
+                            </switch>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="startStopSwitch" destination="A7x-ml-7oG" id="c74-Je-svW"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MRH-YK-wHl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -2,10 +2,15 @@ import Foundation
 import AudioKit
 
 class OscillatorCollection: GeneratorProtocol {
+    var waveNode: AKMixer = AKMixer()
+    
+    // why not store the generator setup here as a structure
+    // keep it up to date after every operation then its easy to save it
+    // needs to be updated when change amp freq and wavetype add del harmonic
+    var fundamentalFrequency: Double
     let type = "AKOscillator"
     
-    var waveNode: AKMixer = AKMixer()
-    var fundamentalFrequency: Double
+    // this should be a method getHarmonicCount
     var harmonics: Int = 1
     var waveCollection: [ Int: OscillatorStructure ] = [:]
     
@@ -68,14 +73,14 @@ class OscillatorCollection: GeneratorProtocol {
     func setWaveType(harmonic: Int, waveType: Int) {
         stopWaveNode()
         
-        // reset oscillator
         let frequency = waveCollection[harmonic]?.oscillator.frequency
         
         waveCollection[harmonic]?.oscillator = AKOscillator(waveform: wave.makeWave(wave: waveType))
+        
         waveCollection[harmonic]?.oscillator.frequency = frequency!
+        
         waveCollection[harmonic]?.oscillator.amplitude = (waveCollection[harmonic]?.amplitude)!
         
-        // reset wave type
         waveCollection[harmonic]?.waveType = waveType
         
         waveNode.connect((waveCollection[harmonic]?.oscillator)!)

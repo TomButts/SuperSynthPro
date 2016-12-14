@@ -84,8 +84,6 @@ class OscillatorCollection: GeneratorProtocol {
         waveCollection[harmonic]?.waveType = waveType
         
         waveNode.connect((waveCollection[harmonic]?.oscillator)!)
-        
-        startWaveNode()
     }
     
     /**

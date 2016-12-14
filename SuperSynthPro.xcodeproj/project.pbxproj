@@ -10,7 +10,9 @@
 		E201C4111DC8E11900B8F99F /* GeneratorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E201C4101DC8E11900B8F99F /* GeneratorFactory.swift */; };
 		E20F0F051DC6707B002A7389 /* Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20F0F041DC6707B002A7389 /* Generator.swift */; };
 		E20F0F071DC769DC002A7389 /* GeneratorStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20F0F061DC769DC002A7389 /* GeneratorStructure.swift */; };
+		E21025BB1DFEF8FD00140230 /* ADSREnvelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21025BA1DFEF8FD00140230 /* ADSREnvelope.swift */; };
 		E215BD141DC388FC007410B1 /* GeneratorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E215BD131DC388FC007410B1 /* GeneratorProtocol.swift */; };
+		E223D43B1E00866E00753049 /* Knob.swift in Sources */ = {isa = PBXBuildFile; fileRef = E223D43A1E00866E00753049 /* Knob.swift */; };
 		E24E30261DC2754D00E6D6BD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24E30251DC2754D00E6D6BD /* AppDelegate.swift */; };
 		E24E30281DC2754D00E6D6BD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24E30271DC2754D00E6D6BD /* ViewController.swift */; };
 		E24E302B1DC2754D00E6D6BD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E24E30291DC2754D00E6D6BD /* Main.storyboard */; };
@@ -116,7 +118,9 @@
 		E201C4101DC8E11900B8F99F /* GeneratorFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratorFactory.swift; sourceTree = "<group>"; };
 		E20F0F041DC6707B002A7389 /* Generator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Generator.swift; sourceTree = "<group>"; };
 		E20F0F061DC769DC002A7389 /* GeneratorStructure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratorStructure.swift; sourceTree = "<group>"; };
+		E21025BA1DFEF8FD00140230 /* ADSREnvelope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADSREnvelope.swift; sourceTree = "<group>"; };
 		E215BD131DC388FC007410B1 /* GeneratorProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratorProtocol.swift; sourceTree = "<group>"; };
+		E223D43A1E00866E00753049 /* Knob.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Knob.swift; sourceTree = "<group>"; };
 		E24E30221DC2754D00E6D6BD /* SuperSynthPro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SuperSynthPro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E24E30251DC2754D00E6D6BD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E24E30271DC2754D00E6D6BD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -182,6 +186,37 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
+		E21025B31DFEF87100140230 /* Envelope */ = {
+			isa = PBXGroup;
+			children = (
+				E21025BA1DFEF8FD00140230 /* ADSREnvelope.swift */,
+			);
+			name = Envelope;
+			sourceTree = "<group>";
+		};
+		E223D42B1E00562900753049 /* Filters */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Filters;
+			sourceTree = "<group>";
+		};
+		E223D4321E0078F700753049 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				E223D4331E0078FE00753049 /* Knob */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		E223D4331E0078FE00753049 /* Knob */ = {
+			isa = PBXGroup;
+			children = (
+				E223D43A1E00866E00753049 /* Knob.swift */,
+			);
+			name = Knob;
+			sourceTree = "<group>";
+		};
 		E24E30191DC2754D00E6D6BD = {
 			isa = PBXGroup;
 			children = (
@@ -205,6 +240,7 @@
 		E24E30241DC2754D00E6D6BD /* SuperSynthPro */ = {
 			isa = PBXGroup;
 			children = (
+				E223D4321E0078F700753049 /* UI */,
 				E2BE052D1DC61C640004CADD /* DataLayer */,
 				E24E30591DC281D300E6D6BD /* Synthesizer */,
 				E24E30251DC2754D00E6D6BD /* AppDelegate.swift */,
@@ -230,6 +266,8 @@
 		E24E30591DC281D300E6D6BD /* Synthesizer */ = {
 			isa = PBXGroup;
 			children = (
+				E223D42B1E00562900753049 /* Filters */,
+				E21025B31DFEF87100140230 /* Envelope */,
 				E201C4181DCD1A0E00B8F99F /* Customisation */,
 				E2D64F221DC517120074A86A /* Wave.swift */,
 				E2D64F1B1DC4F5000074A86A /* Generators */,
@@ -468,6 +506,7 @@
 				E2F17D181DC66D1700FAB9AE /* GeneratorTable.swift in Sources */,
 				E2BE05481DC61D3F0004CADD /* DatabaseConnector.swift in Sources */,
 				E24E30601DC2892F00E6D6BD /* OscillatorCollection.swift in Sources */,
+				E21025BB1DFEF8FD00140230 /* ADSREnvelope.swift in Sources */,
 				E20F0F071DC769DC002A7389 /* GeneratorStructure.swift in Sources */,
 				E2BE052C1DC617A00004CADD /* SoundCustomisationViewController.swift in Sources */,
 				E2F17D1C1DC66D8400FAB9AE /* OscillatorWaveTypeTable.swift in Sources */,
@@ -476,6 +515,7 @@
 				E20F0F051DC6707B002A7389 /* Generator.swift in Sources */,
 				E215BD141DC388FC007410B1 /* GeneratorProtocol.swift in Sources */,
 				E2D64F1D1DC4F5240074A86A /* OscillatorStructure.swift in Sources */,
+				E223D43B1E00866E00753049 /* Knob.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

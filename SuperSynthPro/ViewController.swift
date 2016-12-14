@@ -138,6 +138,11 @@ class ViewController: UIViewController {
     
     @IBAction func selectedWaveTypeSegment(_ sender: UISegmentedControl) {
         generator.setWaveType(harmonic: selectedHarmonic - 1, waveType: waveTypeSegment.selectedSegmentIndex)
+    
+        if (startStopSwitch .isOn) {
+            generator.startWaveNode()
+            startStopSwitch.setOn(true, animated: true)
+        }
     }
     
     @IBAction func saveGenerator(_ sender: AnyObject) {

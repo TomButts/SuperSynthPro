@@ -13,6 +13,7 @@ class SoundCustomisationViewController: UIViewController {
     var delay: VariableDelay! = nil
     var delayDryWet: DryWetMixer! = nil
     var reverb: Reverb! = nil
+    var autoWah: AutoWah! = nil
     
     @IBOutlet var startStopSwitch: UISwitch!
     
@@ -23,7 +24,9 @@ class SoundCustomisationViewController: UIViewController {
     @IBOutlet var releaseKnobPlaceholder: UIView!
     @IBOutlet var delayKnobPlaceholder: UIView!
     @IBOutlet var reverbKnobPlaceholder: UIView!
-    
+    @IBOutlet var wahRateKnobPlaceholder: UIView!
+    @IBOutlet var wahAmpKnobPlaceholder: UIView!
+ 
     @IBOutlet weak var attackLabel: UILabel!
     @IBOutlet weak var decayLabel: UILabel!
     @IBOutlet weak var sustainLabel: UILabel!
@@ -36,6 +39,8 @@ class SoundCustomisationViewController: UIViewController {
     var releaseKnob: Knob!
     var delayKnob: Knob!
     var reverbKnob: Knob!
+    var wahRateKnob: Knob!
+    var wahAmpKnob: Knob!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,6 +71,16 @@ class SoundCustomisationViewController: UIViewController {
         reverbKnob = Knob(frame: reverbKnobPlaceholder.bounds)
         reverbKnob.addTarget(self, action: #selector(SoundCustomisationViewController.reverbValueChanged), for: .valueChanged)
         reverbKnobPlaceholder.addSubview(reverbKnob)
+        
+        // Wah
+        wahRateKnob = Knob(frame: wahRateKnobPlaceholder.bounds)
+        wahRateKnob.addTarget(self, action: #selector(SoundCustomisationViewController.wahRateValueChanged), for: .valueChanged)
+        wahRateKnobPlaceholder.addSubview(wahRateKnob)
+
+        wahAmpKnob = Knob(frame: wahAmpKnobPlaceholder.bounds)
+        wahAmpKnob.addTarget(self, action: #selector(SoundCustomisationViewController.wahAmpValueChanged), for: .valueChanged)
+        wahAmpKnobPlaceholder.addSubview(wahAmpKnob)
+
 
         
         view.tintColor = UIColor.blue
@@ -121,6 +136,12 @@ class SoundCustomisationViewController: UIViewController {
         
         reverb = Reverb(delayDryWet)
         
+        autoWah = AutoWah(reverb)
+        
+        // Set knob limits
+        wahRateKnob.maximumValue = 4
+        wahAmpKnob.maximumValue = 11
+        
         // Set knob starting values
         attackKnob.value = Float(adsr.attackDuration)
         decayKnob.value = Float(adsr.decayDuration)
@@ -128,15 +149,18 @@ class SoundCustomisationViewController: UIViewController {
         releaseKnob.value = Float(adsr.releaseDuration)
         delayKnob.value = Float(delayDryWet.balance)
         reverbKnob.value = Float(reverb.dryWetMix)
-    
-        AudioKit.output = reverb
+        wahRateKnob.value = Float(autoWah.lfoRate)
+        wahAmpKnob.value = Float(autoWah.lfoAmplitude)
         
-        plot.node = reverb
+        AudioKit.output = autoWah.output
+        
+        plot.node = autoWah.output
         
         AudioKit.start()
         
         delay.start()
         reverb.start()
+        autoWah.output.start()
         adsr.stop()
     }
     
@@ -179,6 +203,14 @@ class SoundCustomisationViewController: UIViewController {
     }
     
     func reverbValueChanged() {
-        
+        reverb.dryWetMix = Double(reverbKnob.value)
+    }
+    
+    func wahRateValueChanged() {
+        autoWah.lfoRate = Double(wahRateKnob.value)
+    }
+    
+    func wahAmpValueChanged() {
+        autoWah.lfoAmplitude = Double(wahAmpKnob.value)
     }
 }

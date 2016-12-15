@@ -29,6 +29,7 @@
 		E2BE05481DC61D3F0004CADD /* DatabaseConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BE05471DC61D3F0004CADD /* DatabaseConnector.swift */; };
 		E2BE054E1DC61E3D0004CADD /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2BE05391DC61CFE0004CADD /* SQLite.framework */; };
 		E2BE054F1DC61E3D0004CADD /* SQLite.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E2BE05391DC61CFE0004CADD /* SQLite.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E2C1FFAE1E033106008A0B81 /* AutoWah.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1FFAD1E033106008A0B81 /* AutoWah.swift */; };
 		E2D64F1D1DC4F5240074A86A /* OscillatorStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D64F1C1DC4F5240074A86A /* OscillatorStructure.swift */; };
 		E2D64F231DC517120074A86A /* Wave.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D64F221DC517120074A86A /* Wave.swift */; };
 		E2F17D181DC66D1700FAB9AE /* GeneratorTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F17D171DC66D1700FAB9AE /* GeneratorTable.swift */; };
@@ -142,6 +143,7 @@
 		E2BE052B1DC617A00004CADD /* SoundCustomisationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundCustomisationViewController.swift; sourceTree = "<group>"; };
 		E2BE052E1DC61CFE0004CADD /* SQLite.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SQLite.xcodeproj; path = SQLite.swift/SQLite.xcodeproj; sourceTree = "<group>"; };
 		E2BE05471DC61D3F0004CADD /* DatabaseConnector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseConnector.swift; sourceTree = "<group>"; };
+		E2C1FFAD1E033106008A0B81 /* AutoWah.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoWah.swift; sourceTree = "<group>"; };
 		E2D64F1C1DC4F5240074A86A /* OscillatorStructure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OscillatorStructure.swift; sourceTree = "<group>"; };
 		E2D64F221DC517120074A86A /* Wave.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Wave.swift; sourceTree = "<group>"; };
 		E2F17D171DC66D1700FAB9AE /* GeneratorTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratorTable.swift; sourceTree = "<group>"; };
@@ -172,16 +174,8 @@
 		E201C4181DCD1A0E00B8F99F /* Customisation */ = {
 			isa = PBXGroup;
 			children = (
-				E201C41B1DCD1AB200B8F99F /* Structures */,
 			);
 			name = Customisation;
-			sourceTree = "<group>";
-		};
-		E201C41B1DCD1AB200B8F99F /* Structures */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Structures;
 			sourceTree = "<group>";
 		};
 		E20F0EFD1DC6704A002A7389 /* Models */ = {
@@ -227,6 +221,7 @@
 		E223D42B1E00562900753049 /* Filters */ = {
 			isa = PBXGroup;
 			children = (
+				E2C1FFAD1E033106008A0B81 /* AutoWah.swift */,
 			);
 			name = Filters;
 			sourceTree = "<group>";
@@ -542,6 +537,7 @@
 				E24E30601DC2892F00E6D6BD /* OscillatorCollection.swift in Sources */,
 				E21025BB1DFEF8FD00140230 /* ADSREnvelope.swift in Sources */,
 				E20F0F071DC769DC002A7389 /* GeneratorStructure.swift in Sources */,
+				E2C1FFAE1E033106008A0B81 /* AutoWah.swift in Sources */,
 				E2BE052C1DC617A00004CADD /* SoundCustomisationViewController.swift in Sources */,
 				E2F17D1C1DC66D8400FAB9AE /* OscillatorWaveTypeTable.swift in Sources */,
 				E2F17D1A1DC66D7200FAB9AE /* OscillatorAmplitudeTable.swift in Sources */,

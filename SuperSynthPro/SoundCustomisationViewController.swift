@@ -8,25 +8,34 @@ class SoundCustomisationViewController: UIViewController {
     var generator: GeneratorProtocol! = nil
     var plot: AKNodeOutputPlot! = nil
     
-    // effects
+    // Nodes
     var adsr: ADSREnvelope! = nil
-
+    var delay: VariableDelay! = nil
+    var delayDryWet: DryWetMixer! = nil
+    var reverb: Reverb! = nil
+    
     @IBOutlet var startStopSwitch: UISwitch!
     
+    // UIViews for knob controls
     @IBOutlet var attackKnobPlaceholder: UIView!
     @IBOutlet var decayKnobPlaceholder: UIView!
     @IBOutlet var sustainKnobPlaceholder: UIView!
     @IBOutlet var releaseKnobPlaceholder: UIView!
+    @IBOutlet var delayKnobPlaceholder: UIView!
+    @IBOutlet var reverbKnobPlaceholder: UIView!
     
     @IBOutlet weak var attackLabel: UILabel!
     @IBOutlet weak var decayLabel: UILabel!
     @IBOutlet weak var sustainLabel: UILabel!
     @IBOutlet weak var releaseLabel: UILabel!
     
+    // Knob controls
     var attackKnob: Knob!
     var decayKnob: Knob!
     var sustainKnob: Knob!
     var releaseKnob: Knob!
+    var delayKnob: Knob!
+    var reverbKnob: Knob!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,6 +56,17 @@ class SoundCustomisationViewController: UIViewController {
         releaseKnob = Knob(frame: releaseKnobPlaceholder.bounds)
         releaseKnob.addTarget(self, action: #selector(SoundCustomisationViewController.releaseValueChanged), for: .valueChanged)
         releaseKnobPlaceholder.addSubview(releaseKnob)
+        
+        // Delay
+        delayKnob = Knob(frame: delayKnobPlaceholder.bounds)
+        delayKnob.addTarget(self, action: #selector(SoundCustomisationViewController.delayValueChanged), for: .valueChanged)
+        delayKnobPlaceholder.addSubview(delayKnob)
+        
+        // Reverb
+        reverbKnob = Knob(frame: reverbKnobPlaceholder.bounds)
+        reverbKnob.addTarget(self, action: #selector(SoundCustomisationViewController.reverbValueChanged), for: .valueChanged)
+        reverbKnobPlaceholder.addSubview(reverbKnob)
+
         
         view.tintColor = UIColor.blue
         
@@ -78,50 +98,87 @@ class SoundCustomisationViewController: UIViewController {
         
         generator.startWaveNode()
         
-        adsr = ADSREnvelope(node: generator.waveNode)
+        adsr = ADSREnvelope(
+            generator.waveNode,
+            attackDuration: 0.1,
+            decayDuration: 0.1,
+            sustainLevel: 0,
+            releaseDuration: 0.1
+        )
         
-        attackKnob.value = Float(adsr.envelope.attackDuration)
-        decayKnob.value = Float(adsr.envelope.decayDuration)
-        sustainKnob.value = Float(adsr.envelope.sustainLevel)
-        releaseKnob.value = Float(adsr.envelope.releaseDuration)
+        delay = VariableDelay(
+            adsr,
+            time: 0.5,
+            feedback: 0.8,
+            maximumDelayTime: 1.2
+        )
         
-        AudioKit.output = adsr.envelope
+        delayDryWet = DryWetMixer(
+            adsr,
+            delay,
+            balance: 0.5
+        )
         
-        plot.node = adsr.envelope
+        reverb = Reverb(delayDryWet)
+        
+        // Set knob starting values
+        attackKnob.value = Float(adsr.attackDuration)
+        decayKnob.value = Float(adsr.decayDuration)
+        sustainKnob.value = Float(adsr.sustainLevel)
+        releaseKnob.value = Float(adsr.releaseDuration)
+        delayKnob.value = Float(delayDryWet.balance)
+        reverbKnob.value = Float(reverb.dryWetMix)
+    
+        AudioKit.output = reverb
+        
+        plot.node = reverb
         
         AudioKit.start()
         
-        adsr.envelope.stop()
+        delay.start()
+        reverb.start()
+        adsr.stop()
     }
     
     @IBAction func startStopSwitchValueChanged(_ sender: UISwitch) {
         if (startStopSwitch .isOn) {
-            adsr.envelope.start()
+            adsr.start()
             startStopSwitch.setOn(true, animated: true)
         } else {
-            adsr.envelope.stop()
+            adsr.stop()
             startStopSwitch.setOn(false, animated: true)
         }
     }
 
+    @IBAction func delayTimeValueChanged(_ sender: UISlider) {
+        delay.time = Double(sender.value)
+    }
+
     func attackValueChanged() {
-        adsr.envelope.attackDuration = Double(attackKnob.value)
-        attackLabel.text = String(Double(adsr.envelope.attackDuration))
+        adsr.attackDuration = Double(attackKnob.value)
+        attackLabel.text = String(Double(adsr.attackDuration))
     }
     
     func decayValueChanged() {
-        adsr.envelope.decayDuration = Double(decayKnob.value)
-        decayLabel.text = String(Double(adsr.envelope.decayDuration))
+        adsr.decayDuration = Double(decayKnob.value)
+        decayLabel.text = String(Double(adsr.decayDuration))
     }
     
     func sustainValueChanged() {
-        adsr.envelope.sustainLevel = Double(sustainKnob.value)
-        sustainLabel.text = String(Double(adsr.envelope.sustainLevel))
+        adsr.sustainLevel = Double(sustainKnob.value)
+        sustainLabel.text = String(Double(adsr.sustainLevel))
     }
     
     func releaseValueChanged() {
-        adsr.envelope.releaseDuration = Double(releaseKnob.value)
-        releaseLabel.text = String(Double(adsr.envelope.releaseDuration))
+        adsr.releaseDuration = Double(releaseKnob.value)
+        releaseLabel.text = String(Double(adsr.releaseDuration))
     }
     
+    func delayValueChanged() {
+        delayDryWet.balance = Double(delayKnob.value)
+    }
+    
+    func reverbValueChanged() {
+        
+    }
 }

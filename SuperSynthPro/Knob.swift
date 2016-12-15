@@ -100,8 +100,6 @@ class Knob: UIControl {
             rotationAngle = CGFloat(rotationForLocation(location: translation))
             
             handleRotation()
-            
-            print(self.value)
         default:
             break
         }

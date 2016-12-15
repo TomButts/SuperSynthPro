@@ -12,7 +12,6 @@
 		E20F0F071DC769DC002A7389 /* GeneratorStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20F0F061DC769DC002A7389 /* GeneratorStructure.swift */; };
 		E21025BB1DFEF8FD00140230 /* ADSREnvelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21025BA1DFEF8FD00140230 /* ADSREnvelope.swift */; };
 		E215BD141DC388FC007410B1 /* GeneratorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E215BD131DC388FC007410B1 /* GeneratorProtocol.swift */; };
-		E223D43B1E00866E00753049 /* Knob.swift in Sources */ = {isa = PBXBuildFile; fileRef = E223D43A1E00866E00753049 /* Knob.swift */; };
 		E24E30261DC2754D00E6D6BD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24E30251DC2754D00E6D6BD /* AppDelegate.swift */; };
 		E24E30281DC2754D00E6D6BD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24E30271DC2754D00E6D6BD /* ViewController.swift */; };
 		E24E302B1DC2754D00E6D6BD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E24E30291DC2754D00E6D6BD /* Main.storyboard */; };
@@ -22,6 +21,7 @@
 		E24E30561DC27DCA00E6D6BD /* AudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E24E30551DC27DCA00E6D6BD /* AudioKit.framework */; };
 		E24E30571DC27DCA00E6D6BD /* AudioKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E24E30551DC27DCA00E6D6BD /* AudioKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E24E30601DC2892F00E6D6BD /* OscillatorCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24E305F1DC2892F00E6D6BD /* OscillatorCollection.swift */; };
+		E2531F901E01A0B500548B4B /* Knob.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2531F8F1E01A0B500548B4B /* Knob.swift */; };
 		E2BE052C1DC617A00004CADD /* SoundCustomisationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BE052B1DC617A00004CADD /* SoundCustomisationViewController.swift */; };
 		E2BE05481DC61D3F0004CADD /* DatabaseConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BE05471DC61D3F0004CADD /* DatabaseConnector.swift */; };
 		E2BE054E1DC61E3D0004CADD /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2BE05391DC61CFE0004CADD /* SQLite.framework */; };
@@ -120,7 +120,6 @@
 		E20F0F061DC769DC002A7389 /* GeneratorStructure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratorStructure.swift; sourceTree = "<group>"; };
 		E21025BA1DFEF8FD00140230 /* ADSREnvelope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADSREnvelope.swift; sourceTree = "<group>"; };
 		E215BD131DC388FC007410B1 /* GeneratorProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratorProtocol.swift; sourceTree = "<group>"; };
-		E223D43A1E00866E00753049 /* Knob.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Knob.swift; sourceTree = "<group>"; };
 		E24E30221DC2754D00E6D6BD /* SuperSynthPro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SuperSynthPro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E24E30251DC2754D00E6D6BD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E24E30271DC2754D00E6D6BD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -133,6 +132,7 @@
 		E24E303C1DC2754D00E6D6BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E24E30551DC27DCA00E6D6BD /* AudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioKit.framework; path = "AudioKit-iOS/AudioKit.framework"; sourceTree = "<group>"; };
 		E24E305F1DC2892F00E6D6BD /* OscillatorCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OscillatorCollection.swift; sourceTree = "<group>"; };
+		E2531F8F1E01A0B500548B4B /* Knob.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Knob.swift; sourceTree = "<group>"; };
 		E2BE052B1DC617A00004CADD /* SoundCustomisationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundCustomisationViewController.swift; sourceTree = "<group>"; };
 		E2BE052E1DC61CFE0004CADD /* SQLite.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SQLite.xcodeproj; path = SQLite.swift/SQLite.xcodeproj; sourceTree = "<group>"; };
 		E2BE05471DC61D3F0004CADD /* DatabaseConnector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseConnector.swift; sourceTree = "<group>"; };
@@ -212,7 +212,7 @@
 		E223D4331E0078FE00753049 /* Knob */ = {
 			isa = PBXGroup;
 			children = (
-				E223D43A1E00866E00753049 /* Knob.swift */,
+				E2531F8F1E01A0B500548B4B /* Knob.swift */,
 			);
 			name = Knob;
 			sourceTree = "<group>";
@@ -515,7 +515,7 @@
 				E20F0F051DC6707B002A7389 /* Generator.swift in Sources */,
 				E215BD141DC388FC007410B1 /* GeneratorProtocol.swift in Sources */,
 				E2D64F1D1DC4F5240074A86A /* OscillatorStructure.swift in Sources */,
-				E223D43B1E00866E00753049 /* Knob.swift in Sources */,
+				E2531F901E01A0B500548B4B /* Knob.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

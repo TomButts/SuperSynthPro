@@ -4,8 +4,7 @@ import AudioKit
 
 class SoundCustomisationViewController: UIViewController {
     let db = DatabaseConnector()
-    var generatorModel = Generator()
-    var generator: GeneratorProtocol! = nil
+    
     var plot: AKNodeOutputPlot! = nil
     
     // Nodes
@@ -41,6 +40,8 @@ class SoundCustomisationViewController: UIViewController {
     var reverbKnob: Knob!
     var wahRateKnob: Knob!
     var wahAmpKnob: Knob!
+    
+    var generator: AKOscillator! = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -95,24 +96,15 @@ class SoundCustomisationViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         
-        let initialGenerator = GeneratorStructure(
-            name: "config",
-            type: "AKOscillator",
-            frequency: 63.0,
-            waveTypes: [0, 0, 0],
-            waveAmplitudes: [0.4, 0.1, 0.2]
-        )
-        
-        // generator = GeneratorFactory.createGenerator(generator: generatorModel.loadLastUpdated())
-        
-        generator = GeneratorFactory.createGenerator(generator: initialGenerator)
-    
         AudioKit.stop()
         
-        generator.startWaveNode()
+        generator = AKOscillator(waveform: AKTable(.sine))
+        generator.frequency = 63.2
+        generator.amplitude = 0.4
+        generator.start()
         
         adsr = ADSREnvelope(
-            generator.waveNode,
+            generator,
             attackDuration: 0.1,
             decayDuration: 0.1,
             sustainLevel: 0,
@@ -159,15 +151,15 @@ class SoundCustomisationViewController: UIViewController {
         delay.start()
         reverb.start()
         autoWah.output.start()
-        adsr.stop()
+        adsr.start()
     }
     
     @IBAction func startStopSwitchValueChanged(_ sender: UISwitch) {
         if (startStopSwitch .isOn) {
-            adsr.start()
+            generator.start()
             startStopSwitch.setOn(true, animated: true)
         } else {
-            adsr.stop()
+            generator.stop()
             startStopSwitch.setOn(false, animated: true)
         }
     }

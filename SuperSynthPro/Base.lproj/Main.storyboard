@@ -19,21 +19,21 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="A98-2p-gXG">
-                                <frame key="frameInset" minX="911" minY="378" width="51" height="31"/>
+                                <frame key="frameInset" minX="488" minY="426" width="51" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
                                     <action selector="startStopGenerator:" destination="BYZ-38-t0r" eventType="valueChanged" id="xlM-HH-Rbk"/>
                                 </connections>
                             </switch>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Stop   Start" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rQz-nA-Ofu">
-                                <frame key="frameInset" minX="888" minY="349" width="88" height="21"/>
+                                <frame key="frameInset" minX="477" minY="397" width="88" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="P0C-mK-hBL">
-                                <frame key="frameInset" minX="36" minY="493" width="317" height="29"/>
+                                <frame key="frameInset" minX="39" minY="460" width="317" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <segments>
                                     <segment title="Sine"/>
@@ -77,7 +77,7 @@
                                 </connections>
                             </button>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="8P4-E5-9Mf">
-                                <frame key="frameInset" minX="36" minY="700" width="317" height="29"/>
+                                <frame key="frameInset" minX="39" minY="605" width="317" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <segments>
                                     <segment title="Sine"/>
@@ -89,12 +89,126 @@
                                     <action selector="selectedWaveTypeSegment:" destination="BYZ-38-t0r" eventType="valueChanged" id="PWG-9l-ucW"/>
                                 </connections>
                             </segmentedControl>
+                            <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MYU-KG-2pC">
+                                <frame key="frameInset" minX="53" minY="541" width="47" height="47"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="etb-ub-5Tq">
+                                <frame key="frameInset" minX="120" minY="541" width="47" height="47"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lxl-Wx-pw2">
+                                <frame key="frameInset" minX="188" minY="541" width="47" height="47"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tQa-gV-9Dg">
+                                <frame key="frameInset" minX="257" minY="541" width="47" height="47"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BhU-cp-TQY">
+                                <frame key="frameInset" minX="53" minY="393" width="47" height="47"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QT0-ac-5ET">
+                                <frame key="frameInset" minX="121" minY="393" width="47" height="47"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OzJ-TC-a3H">
+                                <frame key="frameInset" minX="190" minY="393" width="47" height="47"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rrL-Ub-QI6">
+                                <frame key="frameInset" minX="423" minY="596" width="47" height="47"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ise-1S-Ehv">
+                                <frame key="frameInset" minX="492" minY="596" width="47" height="47"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Evm-zW-Hfj">
+                                <frame key="frameInset" minX="257" minY="393" width="47" height="47"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7bE-ug-Eb3">
+                                <frame key="frameInset" minX="627" minY="596" width="47" height="47"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="W4C-0Z-bLm">
+                                <frame key="frameInset" minX="712" minY="502" width="47" height="47"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xVK-KF-0KK">
+                                <frame key="frameInset" minX="780" minY="502" width="47" height="47"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cYr-1S-WEK">
+                                <frame key="frameInset" minX="849" minY="502" width="47" height="47"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7wb-rC-FcT">
+                                <frame key="frameInset" minX="916" minY="502" width="47" height="47"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BFT-ph-WA6">
+                                <frame key="frameInset" minX="423" minY="502" width="47" height="47"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lK2-Je-GvJ">
+                                <frame key="frameInset" minX="491" minY="502" width="47" height="47"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eF9-2K-bkM">
+                                <frame key="frameInset" minX="560" minY="502" width="47" height="47"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="azI-Fj-AzD">
+                                <frame key="frameInset" minX="627" minY="502" width="47" height="47"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <navigationItem key="navigationItem" id="hnm-wm-PIu"/>
                     <connections>
+                        <outlet property="attackKnobPlaceholder" destination="W4C-0Z-bLm" id="sqA-cz-5VF"/>
+                        <outlet property="decayKnobPlaceholder" destination="xVK-KF-0KK" id="ge3-4u-PnN"/>
+                        <outlet property="fmModulationKnobPlaceholder" destination="rrL-Ub-QI6" id="F9p-bp-GEf"/>
+                        <outlet property="fmVolumeKnobPlaceholder" destination="Ise-1S-Ehv" id="KOq-C9-bRQ"/>
+                        <outlet property="globalBendKnobPlaceholder" destination="azI-Fj-AzD" id="TWI-1B-71u"/>
+                        <outlet property="masterVolumeKnobPlaceholder" destination="7bE-ug-Eb3" id="xI2-yT-yOM"/>
+                        <outlet property="mob1MorphKnobPlaceholder" destination="BhU-cp-TQY" id="AMh-3t-Ylc"/>
+                        <outlet property="mob1OffsetKnobPlaceholder" destination="QT0-ac-5ET" id="fbV-nG-ZjH"/>
+                        <outlet property="mob1VolumeKnobPlaceholder" destination="OzJ-TC-a3H" id="Cpg-Cd-E4G"/>
+                        <outlet property="mob2DetuneKnobPlaceholder" destination="lxl-Wx-pw2" id="RxW-Fi-1cC"/>
+                        <outlet property="mob2MorphKnobPlaceholder" destination="MYU-KG-2pC" id="gte-Sy-Kji"/>
+                        <outlet property="mob2OffsetKnobPlaceholder" destination="etb-ub-5Tq" id="1Yy-BG-urH"/>
+                        <outlet property="mob2VolumeKnobPlaceholder" destination="tQa-gV-9Dg" id="2OU-hS-XEc"/>
+                        <outlet property="mobBalancerKnobPlaceholder" destination="Evm-zW-Hfj" id="Vaa-wi-CKt"/>
+                        <outlet property="pulseWidthKnobPlaceholder" destination="BFT-ph-WA6" id="eyr-WY-bJV"/>
+                        <outlet property="pulseWidthOffsetKnobPlaceholder" destination="lK2-Je-GvJ" id="cOr-BY-hfi"/>
+                        <outlet property="pulseWidthVolumeKnobPlaceholder" destination="eF9-2K-bkM" id="qJS-hd-fY5"/>
+                        <outlet property="releaseKnobPlaceholder" destination="7wb-rC-FcT" id="aGO-Ln-KcD"/>
                         <outlet property="startStopSwitch" destination="A98-2p-gXG" id="DGI-xK-Pxx"/>
+                        <outlet property="sustainKnobPlaceholder" destination="cYr-1S-WEK" id="KcR-Me-Fgp"/>
                         <outlet property="waveTypeSegment" destination="P0C-mK-hBL" id="GnG-ZU-PgG"/>
                     </connections>
                 </viewController>

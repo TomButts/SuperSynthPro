@@ -80,8 +80,6 @@ class SoundCustomisationViewController: UIViewController {
         wahAmpKnob = Knob(frame: wahAmpKnobPlaceholder.bounds)
         wahAmpKnob.addTarget(self, action: #selector(SoundCustomisationViewController.wahAmpValueChanged), for: .valueChanged)
         wahAmpKnobPlaceholder.addSubview(wahAmpKnob)
-
-
         
         view.tintColor = UIColor.blue
         
@@ -100,7 +98,7 @@ class SoundCustomisationViewController: UIViewController {
         let initialGenerator = GeneratorStructure(
             name: "config",
             type: "AKOscillator",
-            frequency: 330.0,
+            frequency: 63.0,
             waveTypes: [0, 0, 0],
             waveAmplitudes: [0.4, 0.1, 0.2]
         )

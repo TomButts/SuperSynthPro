@@ -100,7 +100,7 @@ class SoundCustomisationViewController: UIViewController {
         
         generator = AKOscillator(waveform: AKTable(.sine))
         generator.frequency = 63.2
-        generator.amplitude = 0.4
+        generator.amplitude = 1
         generator.start()
         
         adsr = ADSREnvelope(
@@ -151,15 +151,15 @@ class SoundCustomisationViewController: UIViewController {
         delay.start()
         reverb.start()
         autoWah.output.start()
-        adsr.start()
+        adsr.stop()
     }
     
     @IBAction func startStopSwitchValueChanged(_ sender: UISwitch) {
         if (startStopSwitch .isOn) {
-            generator.start()
+            adsr.start()
             startStopSwitch.setOn(true, animated: true)
         } else {
-            generator.stop()
+            adsr.stop()
             startStopSwitch.setOn(false, animated: true)
         }
     }

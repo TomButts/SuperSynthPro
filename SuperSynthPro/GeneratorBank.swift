@@ -46,14 +46,14 @@ class GeneratorBank: AKPolyphonicNode {
     
     /** Update mob1 if the waveform or morph index is changed */
     func updateMob1WaveSetup() {
-        var newWaveformIndex = waveform1 + morph
+        var newWaveformIndex = waveform1 + morph1
         
         if newWaveformIndex < 0 {
             newWaveformIndex = 0
         }
         
-        if newWaveformIndex > 3 {
-            newWaveformIndex = 3
+        if newWaveformIndex > 4 {
+            newWaveformIndex = 4
         }
         
         morphingOscillatorBank1.index = newWaveformIndex
@@ -61,7 +61,7 @@ class GeneratorBank: AKPolyphonicNode {
     
     /** Updates mob2 if the waveform or morph index is changed */
     func updateMob2WaveSetup() {
-        var newWaveformIndex = waveform2 + morph
+        var newWaveformIndex = waveform2 + morph2
         
         if newWaveformIndex < 0 {
             newWaveformIndex = 0
@@ -75,12 +75,20 @@ class GeneratorBank: AKPolyphonicNode {
     }
     
     /** amount of wave type morphing */
-    var morph: Double = 0 {
+    var morph1: Double = 0 {
         didSet {
             updateMob1WaveSetup()
-            updateMob1WaveSetup()
+            
         }
     }
+    
+    /** amount of wave type morphing */
+    var morph2: Double = 0 {
+        didSet {
+            updateMob2WaveSetup()
+        }
+    }
+    
     
     /** Equalise the attack duration for all oscillators */
     var attackDuration: Double = 0.1 {
@@ -122,8 +130,12 @@ class GeneratorBank: AKPolyphonicNode {
         }
     }
     
-    var morphingOscillatorBank1: AKMorphingOscillatorBank
-    var morphingOscillatorBank2: AKMorphingOscillatorBank
+    let triangle = AKTable(.triangle)
+    let square   = AKTable(.square)
+    let sawtooth = AKTable(.sawtooth)
+    
+    var morphingOscillatorBank1: AKMorphingOscillatorBank = AKMorphingOscillatorBank()
+    var morphingOscillatorBank2: AKMorphingOscillatorBank = AKMorphingOscillatorBank()
     var pulseWidthModulationOscillatorBank = AKPWMOscillatorBank()
     var frequencyModulationOscillatorBank = AKFMOscillatorBank()
 
@@ -139,12 +151,13 @@ class GeneratorBank: AKPolyphonicNode {
     
     override init() {
         let triangle = AKTable(.triangle)
-        let square   = AKTable(.square)
+        let square = AKTable(.square)
         let sawtooth = AKTable(.sawtooth)
+        let sine = AKTable(.sine)
         
         // oscillators
-        morphingOscillatorBank1 = AKMorphingOscillatorBank(waveformArray: [triangle, square, sawtooth])
-        morphingOscillatorBank2 = AKMorphingOscillatorBank(waveformArray: [triangle, square, sawtooth])
+        morphingOscillatorBank1 = AKMorphingOscillatorBank(waveformArray: [triangle, square, sawtooth, sine])
+        morphingOscillatorBank2 = AKMorphingOscillatorBank(waveformArray: [square, sine, sawtooth, triangle])
         
         // mixers
         mob1Mixer = AKMixer(morphingOscillatorBank1)
@@ -162,15 +175,15 @@ class GeneratorBank: AKPolyphonicNode {
         
         // set master as a playable MIDI node
         super.init()
+        
         avAudioNode = master.avAudioNode
     }
     
     override func play(noteNumber: MIDINoteNumber, velocity: MIDIVelocity) {
-        
         morphingOscillatorBank1.play(noteNumber: noteNumber + offset1, velocity: velocity)
-        morphingOscillatorBank2.play(noteNumber: noteNumber + offset1, velocity: velocity)
-        pulseWidthModulationOscillatorBank.play(noteNumber: noteNumber, velocity: velocity)
-        frequencyModulationOscillatorBank.play(noteNumber: noteNumber - 12, velocity: velocity)
+        morphingOscillatorBank2.play(noteNumber: noteNumber + offset2, velocity: velocity)
+        pulseWidthModulationOscillatorBank.play(noteNumber: noteNumber - 12, velocity: velocity)
+        frequencyModulationOscillatorBank.play(noteNumber: noteNumber, velocity: velocity)
     
         onNotes.insert(noteNumber)
     }
@@ -178,8 +191,8 @@ class GeneratorBank: AKPolyphonicNode {
     override func stop(noteNumber: MIDINoteNumber) {
         morphingOscillatorBank1.stop(noteNumber: noteNumber + offset1)
         morphingOscillatorBank2.stop(noteNumber: noteNumber + offset2)
-        pulseWidthModulationOscillatorBank.stop(noteNumber: noteNumber)
-        frequencyModulationOscillatorBank.stop(noteNumber: noteNumber - 12)
+        pulseWidthModulationOscillatorBank.stop(noteNumber: noteNumber - 12)
+        frequencyModulationOscillatorBank.stop(noteNumber: noteNumber)
         
         onNotes.remove(noteNumber)
     }

@@ -32,6 +32,7 @@
 		E2F17D181DC66D1700FAB9AE /* GeneratorTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F17D171DC66D1700FAB9AE /* GeneratorTable.swift */; };
 		E2F17D1A1DC66D7200FAB9AE /* OscillatorAmplitudeTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F17D191DC66D7200FAB9AE /* OscillatorAmplitudeTable.swift */; };
 		E2F17D1C1DC66D8400FAB9AE /* OscillatorWaveTypeTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F17D1B1DC66D8400FAB9AE /* OscillatorWaveTypeTable.swift */; };
+		E2FC2AAD1E04BB4F00410BA0 /* GeneratorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FC2AAC1E04BB4F00410BA0 /* GeneratorHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -143,6 +144,7 @@
 		E2F17D171DC66D1700FAB9AE /* GeneratorTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratorTable.swift; sourceTree = "<group>"; };
 		E2F17D191DC66D7200FAB9AE /* OscillatorAmplitudeTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OscillatorAmplitudeTable.swift; sourceTree = "<group>"; };
 		E2F17D1B1DC66D8400FAB9AE /* OscillatorWaveTypeTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OscillatorWaveTypeTable.swift; sourceTree = "<group>"; };
+		E2FC2AAC1E04BB4F00410BA0 /* GeneratorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratorHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -328,6 +330,7 @@
 			children = (
 				E201C4101DC8E11900B8F99F /* GeneratorFactory.swift */,
 				E2E789EC1E03FF260005D5C4 /* GeneratorBank.swift */,
+				E2FC2AAC1E04BB4F00410BA0 /* GeneratorHandler.swift */,
 			);
 			name = Generators;
 			sourceTree = "<group>";
@@ -517,6 +520,7 @@
 				E2F17D1A1DC66D7200FAB9AE /* OscillatorAmplitudeTable.swift in Sources */,
 				E24E30261DC2754D00E6D6BD /* AppDelegate.swift in Sources */,
 				E20F9C431E02FB1B004430C6 /* VariableDelay.swift in Sources */,
+				E2FC2AAD1E04BB4F00410BA0 /* GeneratorHandler.swift in Sources */,
 				E20F9C4B1E030C06004430C6 /* Reverb.swift in Sources */,
 				E20F0F051DC6707B002A7389 /* Generator.swift in Sources */,
 				E2531F901E01A0B500548B4B /* Knob.swift in Sources */,

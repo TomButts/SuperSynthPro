@@ -6,19 +6,22 @@ class AudioHandler: AKMIDIListener  {
     
     var generator = GeneratorBank()
     
-    var reverb: AKCostelloReverb! = nil
-    
-    var delay: VariableDelay! = nil
-    
     var compressor: AKCompressor! = nil
     
+    var delay: VariableDelay! = nil
+    var delayDryWet: AKDryWetMixer! = nil
+    
     var lowPassFilter: LowPass! = nil
-    var lpMixer: AKMixer! = nil
+    var lpDryWet: AKDryWetMixer! = nil
     
     var highPassFilter: HighPass! = nil
-    var hpMixer: AKMixer! = nil
+    var hpDryWet: AKDryWetMixer! = nil
+    
+    var reverb: AKCostelloReverb! = nil
+    var reverbDryWet: AKDryWetMixer! = nil
     
     var autoWah: AutoWah! = nil
+    var autoWahDryWet: AKDryWetMixer! = nil
 
     var maximumBend: Double = 2.0
 
@@ -27,28 +30,25 @@ class AudioHandler: AKMIDIListener  {
     init() {
         AKSettings.audioInputEnabled = true
         
-        // All effects turned off by default
-        reverb = AKCostelloReverb(generator)
-        reverb.stop()
-        
-        delay = VariableDelay(reverb)
-        delay.time = 0
-        
         compressor = AKCompressor(delay)
-        compressor.stop()
+        compressor.dryWetMix = 0
         
-        //TODO dry wet the filters
-        lowPassFilter = LowPass(compressor)
-        lpMixer = AKMixer(lowPassFilter)
-        lpMixer.volume = 0
+        delay = VariableDelay(compressor)
+        delayDryWet = AKDryWetMixer(compressor, delay, balance: 0)
         
-        highPassFilter = HighPass(lpMixer)
-        hpMixer = AKMixer(highPassFilter)
-        hpMixer.volume = 0
+        lowPassFilter = LowPass(delayDryWet)
+        lpDryWet = AKDryWetMixer(delayDryWet, lowPassFilter, balance: 0)
         
-        autoWah = AutoWah(hpMixer)
+        highPassFilter = HighPass(lpDryWet)
+        hpDryWet = AKDryWetMixer(lpDryWet, highPassFilter, balance: 0)
+    
+        reverb = AKCostelloReverb(hpDryWet)
+        reverbDryWet = AKDryWetMixer(hpDryWet, reverb, balance: 0)
         
-        master = AKMixer(autoWah)
+        autoWah = AutoWah(reverbDryWet)
+        autoWahDryWet = AKDryWetMixer(reverbDryWet, autoWah, balance: 0)
+        
+        master = AKMixer(compressor, lpDryWet, hpDryWet, reverbDryWet, autoWahDryWet)
         
         AudioKit.output = generator
         

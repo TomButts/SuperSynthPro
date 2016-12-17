@@ -3,30 +3,30 @@ import AudioKit
 
 class AutoWah: AKNode {
     
-    var parameters: [Double] = [1, 0.5, 0.1, 0.1]
+    var parameters: [Double] = [0.0, 0.0, 0.0, 0.0]
     
-    var wahAmount: Double = 1 {
+    var wahAmount: Double = 0 {
         didSet {
             parameters[0] = wahAmount
             output.parameters = parameters
         }
     }
     
-    var amplitude: Double = 0.5 {
+    var amplitude: Double = 0.0 {
         didSet {
             parameters[1] = amplitude
             output.parameters = parameters
         }
     }
     
-    var lfoRate: Double = 0.1 {
+    var lfoRate: Double = 0.0 {
         didSet {
             parameters[2] = lfoRate
             output.parameters = parameters
         }
     }
     
-    var lfoAmplitude: Double = 0.1 {
+    var lfoAmplitude: Double = 0.0 {
         didSet {
             parameters[3] = lfoAmplitude
             output.parameters = parameters
@@ -47,14 +47,19 @@ class AutoWah: AKNode {
                 amplitude: oscAmp
             )
             
-            return input.autoWah(wah: wah + lfo, amplitude: amp)
+            return input.autoWah(
+                wah: wah + lfo,
+                amplitude: amp
+            )
         }
         
         output.parameters = parameters
         
         // Connect the input and output to this node
         super.init()
+        
         self.avAudioNode = output.avAudioNode
+        
         input.addConnectionPoint(self)
     }
 }

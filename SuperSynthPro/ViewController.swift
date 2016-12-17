@@ -4,7 +4,7 @@ import AudioKit
 class ViewController: UIViewController, AKKeyboardDelegate {
     let db = DatabaseConnector()
     
-    var generatorHandler = GeneratorHandler.sharedInstance
+    var audioHandler = AudioHandler.sharedInstance
 
     @IBOutlet var keyboardPlaceholder: UIView!
     
@@ -43,10 +43,12 @@ class ViewController: UIViewController, AKKeyboardDelegate {
   
     @IBOutlet var startStopSwitch: UISwitch!
     
+    var mob1WaveTypeKnob: Knob!
     var mob1MorphKnob: Knob!
     var mob1OffsetKnob: Knob!
     var mob1VolumeKnob: Knob!
     
+    var mob2WaveTypeKnob: Knob!
     var mob2MorphKnob: Knob!
     var mob2OffsetKnob: Knob!
     var mob2DetuneKnob: Knob!
@@ -72,6 +74,10 @@ class ViewController: UIViewController, AKKeyboardDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // MOB1
+        mob1WaveTypeKnob = Knob(frame: mob1WaveTypeKnobPlaceholder.bounds)
+        mob1WaveTypeKnob.addTarget(self, action: #selector(ViewController.mob1WaveTypeValueChanged), for: .valueChanged)
+        mob1WaveTypeKnobPlaceholder.addSubview(mob1WaveTypeKnob)
+
         mob1MorphKnob = Knob(frame: mob1MorphKnobPlaceholder.bounds)
         mob1MorphKnob.addTarget(self, action: #selector(ViewController.mob1MorphValueChanged), for: .valueChanged)
         mob1MorphKnobPlaceholder.addSubview(mob1MorphKnob)
@@ -85,6 +91,10 @@ class ViewController: UIViewController, AKKeyboardDelegate {
         mob1VolumeKnobPlaceholder.addSubview(mob1VolumeKnob)
         
         // MOB2
+        mob2WaveTypeKnob = Knob(frame: mob2WaveTypeKnobPlaceholder.bounds)
+        mob2WaveTypeKnob.addTarget(self, action: #selector(ViewController.mob2WaveTypeValueChanged), for: .valueChanged)
+        mob2WaveTypeKnobPlaceholder.addSubview(mob2WaveTypeKnob)
+
         mob2MorphKnob = Knob(frame: mob2MorphKnobPlaceholder.bounds)
         mob2MorphKnob.addTarget(self, action: #selector(ViewController.mob2MorphValueChanged), for: .valueChanged)
         mob2MorphKnobPlaceholder.addSubview(mob2MorphKnob)
@@ -155,10 +165,11 @@ class ViewController: UIViewController, AKKeyboardDelegate {
         masterVolumeKnob.addTarget(self, action: #selector(ViewController.masterVolumeValueChanged), for: .valueChanged)
         masterVolumeKnobPlaceholder.addSubview(masterVolumeKnob)
         
-        // Keyboard
+        //TODO: make ADSR view
         
-        keyboard = AKKeyboardView(width: 200, height: 100)
-        keyboard!.polyphonicMode = true
+        // Keyboard
+        keyboard = AKKeyboardView(width: 580, height: 100)
+        keyboard!.polyphonicMode = false
         keyboard!.delegate = self
         keyboardPlaceholder.addSubview(keyboard!)
         
@@ -173,35 +184,66 @@ class ViewController: UIViewController, AKKeyboardDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
+        AudioKit.stop()
+        
         // Knob values
+        setDefaultGeneratorValues()
+        
+        mob1WaveTypeKnob.maximumValue = 4
+        mob1WaveTypeKnob.value = Float(audioHandler.generator.waveform1)
+        
         mob1MorphKnob.minimumValue = -4
         mob1MorphKnob.maximumValue = 4
-        mob1MorphKnob.value = Float (generatorHandler.generator.morph1)
+        mob1MorphKnob.value = Float(audioHandler.generator.morph1)
         
         mob1OffsetKnob.minimumValue = -12
         mob1OffsetKnob.maximumValue = 12
-        mob1OffsetKnob.value = Float(generatorHandler.generator.offset1)
+        mob1OffsetKnob.value = Float(audioHandler.generator.offset1)
+        
+        mob1VolumeKnob.value = Float(audioHandler.generator.mob1Mixer.volume)
         
         mob2MorphKnob.minimumValue = -4
         mob2MorphKnob.maximumValue = 4
-        mob2MorphKnob.value = Float (generatorHandler.generator.morph2)
+        mob2MorphKnob.value = Float(audioHandler.generator.morph2)
         
         mob2OffsetKnob.minimumValue = -12
         mob2OffsetKnob.maximumValue = 12
-        mob2OffsetKnob.value = Float(generatorHandler.generator.offset2)
+        mob2OffsetKnob.value = Float(audioHandler.generator.offset2)
         
         mob2DetuneKnob.minimumValue = -4
         mob2DetuneKnob.maximumValue = 4
-        mob2DetuneKnob.value = Float(generatorHandler.generator.morphingOscillatorBank2.detuningOffset)
+        mob2DetuneKnob.value = Float(audioHandler.generator.morphingOscillatorBank2.detuningOffset)
+        
+        mob2VolumeKnob.value = Float(audioHandler.generator.mob2Mixer.volume)
+        
+        mobBalancerKnob.value = Float(audioHandler.generator.dryWet.balance)
         
         pulseWidthKnob.maximumValue = 500
-        pulseWidthKnob.value = Float(generatorHandler.generator.pulseWidthModulationOscillatorBank.pulseWidth)
+        pulseWidthKnob.value = Float(audioHandler.generator.pulseWidthModulationOscillatorBank.pulseWidth)
         
         pulseWidthOffsetKnob.minimumValue = -12
         pulseWidthOffsetKnob.maximumValue = 12
-        pulseWidthOffsetKnob.value = Float(generatorHandler.generator.pulseWidthModulationOscillatorBank.detuningOffset)
+        pulseWidthOffsetKnob.value = Float(audioHandler.generator.pulseWidthModulationOscillatorBank.detuningOffset)
         
-        AudioKit.output = generatorHandler.generator
+        pulseWidthVolumeKnob.value = Float(audioHandler.generator.pwmobMixer.volume)
+        
+        fmModulationKnob.maximumValue = 15
+        fmModulationKnob.value = Float(audioHandler.generator.frequencyModulationOscillatorBank.modulationIndex)
+        
+        fmVolumeKnob.value = Float(audioHandler.generator.fmobMixer.volume)
+        
+        // TODO ADSR
+        attackKnob.value = Float(audioHandler.generator.attackDuration)
+        decayKnob.value = Float(audioHandler.generator.decayDuration)
+        sustainKnob.value = Float(audioHandler.generator.sustainLevel)
+        releaseKnob.value = Float(audioHandler.generator.releaseDuration)
+        
+        globalBendKnob.maximumValue = 2.0
+        globalBendKnob.value = Float(audioHandler.generator.globalbend)
+        
+        masterVolumeKnob.value = Float(audioHandler.generator.master.volume)
+        
+        AudioKit.output = audioHandler.generator
         
         AudioKit.start()
     }
@@ -216,16 +258,20 @@ class ViewController: UIViewController, AKKeyboardDelegate {
         let vel: MIDIVelocity = 127
         
         if (startStopSwitch .isOn) {
-            generatorHandler.generator.play(noteNumber: middleC, velocity: vel)
+            audioHandler.generator.play(noteNumber: middleC, velocity: vel)
             startStopSwitch.setOn(true, animated: true)
         } else {
-            generatorHandler.generator.stop(noteNumber: middleC)
+            audioHandler.generator.stop(noteNumber: middleC)
             startStopSwitch.setOn(false, animated: true)
         }
     }
     
-    @IBAction func selectedWaveTypeSegment(_ sender: UISegmentedControl) {
-       
+    func setDefaultGeneratorValues() {
+        audioHandler.generator.mob1Mixer.volume = 0.5
+        audioHandler.generator.mob2Mixer.volume = 0.0
+        audioHandler.generator.globalbend = 0
+        audioHandler.generator.dryWet.balance = 0.5
+        audioHandler.generator.master.volume = 1.0
     }
     
     @IBAction func saveGenerator(_ sender: AnyObject) {
@@ -237,87 +283,95 @@ class ViewController: UIViewController, AKKeyboardDelegate {
     }
     
     func attackValueChanged() {
-        generatorHandler.generator.attackDuration = Double(attackKnob.value)
+        audioHandler.generator.attackDuration = Double(attackKnob.value)
     }
     
     func decayValueChanged() {
-        generatorHandler.generator.decayDuration = Double(decayKnob.value)
+        audioHandler.generator.decayDuration = Double(decayKnob.value)
     }
     
     func sustainValueChanged() {
-        generatorHandler.generator.sustainLevel = Double(sustainKnob.value)
+        audioHandler.generator.sustainLevel = Double(sustainKnob.value)
     }
     
     func releaseValueChanged() {
-        generatorHandler.generator.releaseDuration = Double(releaseKnob.value)
+        audioHandler.generator.releaseDuration = Double(releaseKnob.value)
+    }
+    
+    func mob1WaveTypeValueChanged() {
+        audioHandler.generator.waveform1 = Double(mob1WaveTypeKnob.value)
     }
     
     func mob1MorphValueChanged() {
-        generatorHandler.generator.morph1 = Double(mob1MorphKnob.value)
+        audioHandler.generator.morph1 = Double(mob1MorphKnob.value)
     }
     
     func mob1OffsetValueChanged() {
-        generatorHandler.generator.offset1 = Int(mob1OffsetKnob.value)
+        audioHandler.generator.offset1 = Int(mob1OffsetKnob.value)
     }
     
     func mob1VolumeValueChanged() {
-        generatorHandler.generator.mob1Mixer.volume = Double(mob1VolumeKnob.value)
+        audioHandler.generator.mob1Mixer.volume = Double(mob1VolumeKnob.value)
     }
     
     func mobBalancerValueChanged() {
-        generatorHandler.generator.dryWet.balance = Double(mobBalancerKnob.value)
+        audioHandler.generator.dryWet.balance = Double(mobBalancerKnob.value)
+    }
+    
+    func mob2WaveTypeValueChanged() {
+        audioHandler.generator.waveform2 = Double(mob2WaveTypeKnob.value)
     }
     
     func mob2MorphValueChanged() {
-        generatorHandler.generator.morph2 = Double(mob2MorphKnob.value)
+        audioHandler.generator.morph2 = Double(mob2MorphKnob.value)
     }
     
     func mob2OffsetValueChanged() {
-        generatorHandler.generator.offset2 = Int(mob2OffsetKnob.value)
+        audioHandler.generator.offset2 = Int(mob2OffsetKnob.value)
     }
     
     func mob2DetuneValueChanged() {
-        generatorHandler.generator.morphingOscillatorBank2.detuningOffset = Double(mob2DetuneKnob.value)
+        audioHandler.generator.morphingOscillatorBank2.detuningOffset = Double(mob2DetuneKnob.value)
     }
     
     func mob2VolumeValueChanged() {
-        generatorHandler.generator.mob2Mixer.volume = Double(mob2VolumeKnob.value)
+        audioHandler.generator.mob2Mixer.volume = Double(mob2VolumeKnob.value)
     }
     
     func pulseWidthValueChanged() {
-        generatorHandler.generator.pulseWidthModulationOscillatorBank.pulseWidth = Double(pulseWidthKnob.value)
+        audioHandler.generator.pulseWidthModulationOscillatorBank.pulseWidth = Double(pulseWidthKnob.value)
     }
     
     func pulseWidthOffsetValueChanged() {
-        generatorHandler.generator.pulseWidthModulationOscillatorBank.detuningOffset = Double(pulseWidthOffsetKnob.value)
+        audioHandler.generator.pulseWidthModulationOscillatorBank.detuningOffset = Double(pulseWidthOffsetKnob.value)
     }
     
     func pulseWidthVolumeValueChanged() {
-        generatorHandler.generator.pwmobMixer.volume = Double(pulseWidthVolumeKnob.value)
+        audioHandler.generator.pwmobMixer.volume = Double(pulseWidthVolumeKnob.value)
     }
     
     func fmModulationValueChanged() {
-        generatorHandler.generator.frequencyModulationOscillatorBank.modulationIndex = Double(fmModulationKnob.value)
+        audioHandler.generator.frequencyModulationOscillatorBank.modulationIndex = Double(fmModulationKnob.value)
     }
     
     func fmVolumeValueChanged() {
-        
+        audioHandler.generator.fmobMixer.volume = Double(fmVolumeKnob.value)
     }
     
     func globalBendValueChanged() {
-        
+        audioHandler.generator.globalbend = Double(globalBendKnob.value)
     }
     
     func masterVolumeValueChanged() {
-        
+        audioHandler.generator.master.volume = Double(masterVolumeKnob.value)
     }
     
     func noteOn(note: MIDINoteNumber) {
-        generatorHandler.generator.play(noteNumber: note, velocity: 80)
+        audioHandler.generator.play(noteNumber: note, velocity: 80)
     }
     
     func noteOff(note: MIDINoteNumber) {
-        generatorHandler.generator.stop(noteNumber: note)
+        audioHandler.generator.stop(noteNumber: note)
     }
 }
 

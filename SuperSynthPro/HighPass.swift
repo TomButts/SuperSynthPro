@@ -1,34 +1,27 @@
 import Foundation
 import AudioKit
 
-class VariableDelay: AKNode {
+class HighPass: AKNode {
     
-    var parameters = [1.0, 0.0, 0.0, 0.0]
+    var parameters = [1000, 0.1, 0.1]
     
-    var time: Double = 1.0 {
+    var halfPowerFrequency: Double = 1000 {
         didSet {
-            parameters[0] = time
-            output.parameters = parameters
-        }
-    }
-    
-    var feedback: Double = 0.0 {
-        didSet {
-            parameters[1] = feedback
+            parameters[0] = halfPowerFrequency
             output.parameters = parameters
         }
     }
     
     var lfoRate: Double = 0.0 {
         didSet {
-            parameters[2] = lfoRate
+            parameters[1] = lfoRate
             output.parameters = parameters
         }
     }
     
     var lfoAmplitude: Double = 0.0 {
         didSet {
-            parameters[3] = lfoAmplitude
+            parameters[2] = lfoAmplitude
             output.parameters = parameters
         }
     }
@@ -37,19 +30,17 @@ class VariableDelay: AKNode {
     
     init(_ input: AKNode) {
         output = AKOperationEffect(input) { input, parameters in
-            let time = parameters[0]
-            let feedback = parameters[1]
-            let oscRate = parameters[2]
-            let oscAmp = parameters[3]
+            let halfPower = parameters[0]
+            let oscRate = parameters[1]
+            let oscAmp = parameters[2]
             
             let lfo = AKOperation.sineWave(
                 frequency: oscRate,
                 amplitude: oscAmp
             )
             
-            return input.variableDelay(
-                time: time + lfo,
-                feedback: feedback
+            return input.highPassFilter(
+                halfPowerPoint: max(halfPower + lfo, 0)
             )
         }
         
@@ -63,4 +54,3 @@ class VariableDelay: AKNode {
         input.addConnectionPoint(self)
     }
 }
-

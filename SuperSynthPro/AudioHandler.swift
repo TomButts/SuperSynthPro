@@ -9,19 +9,19 @@ class AudioHandler: AKMIDIListener  {
     var compressor: AKCompressor! = nil
     
     var delay: VariableDelay! = nil
-    var delayDryWet: AKDryWetMixer! = nil
+    var delayMixer: AKMixer! = nil
     
     var lowPassFilter: LowPass! = nil
-    var lpDryWet: AKDryWetMixer! = nil
+    var lpMixer: AKMixer! = nil
     
     var highPassFilter: HighPass! = nil
-    var hpDryWet: AKDryWetMixer! = nil
+    var hpMixer: AKMixer! = nil
     
     var reverb: AKCostelloReverb! = nil
-    var reverbDryWet: AKDryWetMixer! = nil
+    var reverbMixer: AKMixer! = nil
     
     var autoWah: AutoWah! = nil
-    var autoWahDryWet: AKDryWetMixer! = nil
+    var autoWahMixer: AKMixer! = nil
 
     var maximumBend: Double = 2.0
 
@@ -30,25 +30,31 @@ class AudioHandler: AKMIDIListener  {
     init() {
         AKSettings.audioInputEnabled = true
         
-        compressor = AKCompressor(delay)
-        compressor.dryWetMix = 0
-        
-        delay = VariableDelay(compressor)
-        delayDryWet = AKDryWetMixer(compressor, delay, balance: 0)
-        
-        lowPassFilter = LowPass(delayDryWet)
-        lpDryWet = AKDryWetMixer(delayDryWet, lowPassFilter, balance: 0)
-        
-        highPassFilter = HighPass(lpDryWet)
-        hpDryWet = AKDryWetMixer(lpDryWet, highPassFilter, balance: 0)
-    
-        reverb = AKCostelloReverb(hpDryWet)
-        reverbDryWet = AKDryWetMixer(hpDryWet, reverb, balance: 0)
-        
-        autoWah = AutoWah(reverbDryWet)
-        autoWahDryWet = AKDryWetMixer(reverbDryWet, autoWah, balance: 0)
-        
-        master = AKMixer(compressor, lpDryWet, hpDryWet, reverbDryWet, autoWahDryWet)
+//        delay = VariableDelay(generator)
+//        delay.output.stop()
+//        delayMixer = AKMixer(delay)
+//        delayMixer.volume = 0
+//        
+//        lowPassFilter = LowPass(delay)
+//        lpMixer = AKMixer(lowPassFilter)
+//        lpMixer.volume = 0
+//        
+//        compressor = AKCompressor(lowPassFilter)
+//        compressor.dryWetMix = 0.5
+//
+//        highPassFilter = HighPass(compressor)
+//        highPassFilter.output.stop()
+//        hpMixer = AKMixer(highPassFilter)
+//
+//        reverb = AKCostelloReverb(highPassFilter)
+//        reverb.stop()
+//        reverbMixer = AKMixer(reverb)
+//
+//        autoWah = AutoWah(reverb)
+//        autoWah.output.stop()
+//        autoWahMixer = AKMixer(autoWah)
+//        
+//        master = AKMixer(delay, delayMixer, lpMixer, hpMixer, autoWahMixer)
         
         AudioKit.output = generator
         

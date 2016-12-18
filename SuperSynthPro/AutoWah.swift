@@ -3,7 +3,7 @@ import AudioKit
 
 class AutoWah: AKNode {
     
-    var parameters: [Double] = [0.0, 0.0, 0.0, 0.0]
+    var parameters: [Double] = [0.0, 0.0, 0.1, 0.1]
     
     var wahAmount: Double = 0 {
         didSet {
@@ -19,14 +19,14 @@ class AutoWah: AKNode {
         }
     }
     
-    var lfoRate: Double = 0.0 {
+    var lfoRate: Double = 0.1 {
         didSet {
             parameters[2] = lfoRate
             output.parameters = parameters
         }
     }
     
-    var lfoAmplitude: Double = 0.0 {
+    var lfoAmplitude: Double = 0.1 {
         didSet {
             parameters[3] = lfoAmplitude
             output.parameters = parameters

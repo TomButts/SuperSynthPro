@@ -3,7 +3,7 @@ import AudioKit
 
 class HighPass: AKNode {
     
-    var parameters = [1000, 0.1, 0.1]
+    var parameters: [Double] = [1000, 0.1, 0.1]
     
     var halfPowerFrequency: Double = 1000 {
         didSet {
@@ -12,14 +12,14 @@ class HighPass: AKNode {
         }
     }
     
-    var lfoRate: Double = 0.0 {
+    var lfoRate: Double = 0.1 {
         didSet {
             parameters[1] = lfoRate
             output.parameters = parameters
         }
     }
     
-    var lfoAmplitude: Double = 0.0 {
+    var lfoAmplitude: Double = 0.1 {
         didSet {
             parameters[2] = lfoAmplitude
             output.parameters = parameters

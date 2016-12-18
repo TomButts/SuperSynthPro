@@ -3,7 +3,7 @@ import AudioKit
 
 class VariableDelay: AKNode {
     
-    var parameters = [1.0, 0.0, 0.0, 0.0]
+    var parameters: [Double] = [1.0, 0.0, 0.1, 0.1]
     
     var time: Double = 1.0 {
         didSet {
@@ -19,14 +19,14 @@ class VariableDelay: AKNode {
         }
     }
     
-    var lfoRate: Double = 0.0 {
+    var lfoRate: Double = 0.1 {
         didSet {
             parameters[2] = lfoRate
             output.parameters = parameters
         }
     }
     
-    var lfoAmplitude: Double = 0.0 {
+    var lfoAmplitude: Double = 0.1 {
         didSet {
             parameters[3] = lfoAmplitude
             output.parameters = parameters

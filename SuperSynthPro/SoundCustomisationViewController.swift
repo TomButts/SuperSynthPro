@@ -11,8 +11,6 @@ class SoundCustomisationViewController: UIViewController {
     
     @IBOutlet var startStopSwitch: UISwitch!
     
-    var generator: AKOscillator! = nil
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -28,14 +26,27 @@ class SoundCustomisationViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        
         AudioKit.stop()
-        
-        // AudioKit.output = autoWah.output
-        
-        // plot.node = autoWah.output
-        
+//        
+//        // audioHandler.compressor.dryWetMix = 0.5
+//        
+        AudioKit.output = audioHandler.generator
+//       
         AudioKit.start()
+        
+        //audioHandler.compressor.start()
+        
+        
+//        audioHandler.delay.output.start()
+//        audioHandler.lowPassFilter.output.start()
+//        audioHandler.highPassFilter.output.start()
+//        audioHandler.reverb.start()
+//        audioHandler.autoWah.output.start()
+        
+        // audioHandler.master.volume = 1
+        
+        // plot.node = audioHandler.generator
+        
     }
     
     @IBAction func startStopSwitchValueChanged(_ sender: UISwitch) {

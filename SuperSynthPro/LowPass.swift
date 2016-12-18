@@ -46,10 +46,11 @@ class LowPass: AKNode {
         
         output.parameters = parameters
         
-        // Connect the input and output to this node
+        let mixer = AKMixer(output)
+        
         super.init()
         
-        self.avAudioNode = output.avAudioNode
+        self.avAudioNode = mixer.avAudioNode
         
         input.addConnectionPoint(self)
     }

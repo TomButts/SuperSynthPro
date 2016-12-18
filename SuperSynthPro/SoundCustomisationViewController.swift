@@ -5,7 +5,9 @@ import AudioKit
 class SoundCustomisationViewController: UIViewController {
     let db = DatabaseConnector()
     
-    var plot: AKNodeOutputPlot! = nil
+    static var plot: AKNodeOutputPlot! = nil
+    
+    static var viewInitialised = false
     
     var audioHandler = AudioHandler.sharedInstance
     
@@ -14,39 +16,23 @@ class SoundCustomisationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if (SoundCustomisationViewController.viewInitialised == false) {
+            let plotFrame = CGRect(x: 100.0, y: 100.0, width: 820.0, height: 220.0)
+            SoundCustomisationViewController.plot = AKNodeOutputPlot(audioHandler.master, frame: plotFrame)
+            SoundCustomisationViewController.plot.color = UIColor.blue
+            SoundCustomisationViewController.plot.layer.borderWidth = 0.8
+            SoundCustomisationViewController.plot.layer.borderColor = UIColor.blue.cgColor
+            
+            SoundCustomisationViewController.viewInitialised = true
+        }
         
-        let plotFrame = CGRect(x: 100.0, y: 100.0, width: 820.0, height: 220.0)
-        // TODO change
-        plot = AKNodeOutputPlot(audioHandler.generator, frame: plotFrame)
-        plot.color = UIColor.blue
-        plot.layer.borderWidth = 0.8
-        plot.layer.borderColor = UIColor.blue.cgColor
-        view.addSubview(plot)
+        view.addSubview(SoundCustomisationViewController.plot)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        AudioKit.stop()
-//        
-//        // audioHandler.compressor.dryWetMix = 0.5
-//        
-        AudioKit.output = audioHandler.generator
-//       
-        AudioKit.start()
         
-        //audioHandler.compressor.start()
-        
-        
-//        audioHandler.delay.output.start()
-//        audioHandler.lowPassFilter.output.start()
-//        audioHandler.highPassFilter.output.start()
-//        audioHandler.reverb.start()
-//        audioHandler.autoWah.output.start()
-        
-        // audioHandler.master.volume = 1
-        
-        // plot.node = audioHandler.generator
-        
+        audioHandler.effects.volume = 1.0
     }
     
     @IBAction func startStopSwitchValueChanged(_ sender: UISwitch) {

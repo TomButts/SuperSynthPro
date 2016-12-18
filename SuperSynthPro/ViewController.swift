@@ -10,6 +10,8 @@ class ViewController: UIViewController, AKKeyboardDelegate {
     
     var keyboard: AKKeyboardView?
     
+    var plot: AKNodeOutputPlot! = nil
+    
     // Knob Placeholders
     @IBOutlet var mob1WaveTypeKnobPlaceholder: UIView!
     @IBOutlet var mob1MorphKnobPlaceholder: UIView!
@@ -168,14 +170,16 @@ class ViewController: UIViewController, AKKeyboardDelegate {
         //TODO: make ADSR view
         
         // Keyboard
-        keyboard = AKKeyboardView(width: 580, height: 100)
+        keyboard = AKKeyboardView(width: 820, height: 128)
+        keyboard?.sizeThatFits(CGSize(width: CGFloat(820.0), height: CGFloat(128.0)))
+        keyboard?.keyOnColor = UIColor.blue
         keyboard!.polyphonicMode = false
         keyboard!.delegate = self
         keyboardPlaceholder.addSubview(keyboard!)
         
         // Add waveform plot
         let rect = CGRect(x: 100.0, y: 100.0, width: 823.0, height: 220.0)
-        let plot = AKRollingOutputPlot(frame: rect)
+        plot = AKNodeOutputPlot(audioHandler.generator, frame: rect)
         plot.color = UIColor.blue
         plot.layer.borderWidth = 0.8
         plot.layer.borderColor = UIColor.blue.cgColor
@@ -184,8 +188,6 @@ class ViewController: UIViewController, AKKeyboardDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        AudioKit.stop()
-        
         // Knob values
         setDefaultGeneratorValues()
         
@@ -218,7 +220,6 @@ class ViewController: UIViewController, AKKeyboardDelegate {
         
         mobBalancerKnob.value = Float(audioHandler.generator.dryWet.balance)
         
-        pulseWidthKnob.maximumValue = 500
         pulseWidthKnob.value = Float(audioHandler.generator.pulseWidthModulationOscillatorBank.pulseWidth)
         
         pulseWidthOffsetKnob.minimumValue = -12
@@ -243,14 +244,7 @@ class ViewController: UIViewController, AKKeyboardDelegate {
         
         masterVolumeKnob.value = Float(audioHandler.generator.master.volume)
         
-        AudioKit.output = audioHandler.generator
-        
-        AudioKit.start()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        audioHandler.effects.volume = 0.0
     }
     
     @IBAction func startStopGenerator(_ sender: AnyObject) {

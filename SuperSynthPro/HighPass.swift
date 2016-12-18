@@ -46,10 +46,13 @@ class HighPass: AKNode {
         
         output.parameters = parameters
         
-        // Connect the input and output to this node
+        // Apple avf audio doesnt breaks when you put a node with AKOperationEffect output
+        // into a drywetmixer. Passing it through a mixer fixes this.
+        let mixer = AKMixer(output)
+        
         super.init()
         
-        self.avAudioNode = output.avAudioNode
+        self.avAudioNode = mixer.avAudioNode
         
         input.addConnectionPoint(self)
     }

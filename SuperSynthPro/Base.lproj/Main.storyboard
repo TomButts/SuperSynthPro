@@ -433,35 +433,35 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="thrsh" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jf2-gA-9Md">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="cut" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jf2-gA-9Md">
                                 <frame key="frameInset" minX="63" minY="445" width="32" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="head" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZB5-qs-tnR">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="res" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZB5-qs-tnR">
                                 <frame key="frameInset" minX="125" minY="445" width="32" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="lfoR" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a0n-SK-3ah">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="dist" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a0n-SK-3ah">
                                 <frame key="frameInset" minX="195" minY="445" width="27" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="lfoA" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sWd-M7-W8g">
-                                <frame key="frameInset" minX="265" minY="445" width="25" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="asym" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sWd-M7-W8g">
+                                <frame key="frameInset" minX="265" minY="445" width="36" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Compressor" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nVl-Yo-RuY">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Roland" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nVl-Yo-RuY">
                                 <frame key="frameInset" minX="63" minY="362" width="74" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -469,7 +469,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="A7x-ml-7oG">
-                                <frame key="frameInset" minX="921" minY="684" width="51" height="31"/>
+                                <frame key="frameInset" minX="918" minY="717" width="51" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
                                     <action selector="startStopSwitchValueChanged:" destination="t05-09-Rer" eventType="valueChanged" id="UYf-O7-1HU"/>
@@ -763,17 +763,71 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="master" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JD3-Lf-hWY">
-                                <frame key="frameInset" minX="824" minY="641" width="43" height="21"/>
+                                <frame key="frameInset" minX="815" minY="641" width="43" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Duf-cy-2gX">
+                                <frame key="frameInset" minX="918" minY="678" width="51" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="bitCrusherTriggerValueChanged:" destination="t05-09-Rer" eventType="valueChanged" id="l1B-ve-Ena"/>
+                                </connections>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Play midC" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vbN-Gc-5xe">
+                                <frame key="frameInset" minX="822" minY="722" width="88" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" red="0.062874163689999998" green="0.41809286239999999" blue="0.82385062170000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="BitCrusher" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IL5-ps-yEk">
+                                <frame key="frameInset" minX="822" minY="683" width="88" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" red="0.062874163689999998" green="0.41809286239999999" blue="0.82385062170000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PLi-zh-C1L">
+                                <frame key="frameInset" minX="20" minY="615" width="716" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="bitCrusherTrigger" destination="Duf-cy-2gX" id="qbQ-t2-cXa"/>
+                        <outlet property="delayDryWetKnobPlaceholder" destination="QUL-M8-zGM" id="co9-rV-y1p"/>
+                        <outlet property="delayFeedbackKnobPlaceholder" destination="mKJ-Ko-2Tg" id="3Aj-PU-2aC"/>
+                        <outlet property="delayLfoAmplitudeKnobPlaceholder" destination="bOR-iO-wDi" id="eU5-m9-H7E"/>
+                        <outlet property="delayLfoRateKnobPlaceholder" destination="dAY-KI-wfQ" id="1Se-JJ-ret"/>
+                        <outlet property="delayTimeKnobPlaceholder" destination="aXC-Nj-r6D" id="4Ch-zY-ick"/>
+                        <outlet property="effectsKeyboardPlaceholder" destination="PLi-zh-C1L" id="tdK-QN-HDx"/>
+                        <outlet property="globalBendKnobPlaceholder" destination="t1X-0W-C7M" id="c5K-Oq-db3"/>
+                        <outlet property="highPassDryWetKnobPlaceholder" destination="ne7-pq-CAv" id="2PA-Zd-Agh"/>
+                        <outlet property="highPassHalfPowerKnobPlaceholder" destination="NXL-wu-g87" id="NQJ-nO-OqK"/>
+                        <outlet property="highPassLfoAmplitudeKnobPlaceholder" destination="1xl-Qe-YDe" id="G5E-6v-ija"/>
+                        <outlet property="highPassLfoRateKnobPlaceholder" destination="xzS-h9-xni" id="2HB-lZ-D5H"/>
+                        <outlet property="lowPassDryWetKnobPlaceholder" destination="K23-ZZ-1Sp" id="xvx-u8-SP4"/>
+                        <outlet property="lowPassHalfPowerKnobPlaceholder" destination="rZ5-dK-NC9" id="Cc2-hq-Ot5"/>
+                        <outlet property="lowPassLfoAmplitudeKnobPlaceholder" destination="TbB-UZ-Rew" id="QuA-by-ZxP"/>
+                        <outlet property="lowPassLfoRateKnobPlaceholder" destination="W7v-SM-PeE" id="iit-ms-91j"/>
+                        <outlet property="masterVolumeKnobPlaceholder" destination="nkf-Mm-gyF" id="vsf-X5-4yk"/>
+                        <outlet property="reverbCuttoffKnobPlaceholder" destination="2Ew-kY-VTY" id="f5W-z6-pT3"/>
+                        <outlet property="reverbDryWetKnobPlaceholder" destination="byP-zT-tQT" id="YU3-18-PCX"/>
+                        <outlet property="reverbFeedbackKnobPlaceholder" destination="1SF-cZ-p7X" id="woO-5a-z9U"/>
+                        <outlet property="rolandCutoffKnobPlaceholder" destination="tyD-e5-m7T" id="xJ6-bz-u4j"/>
+                        <outlet property="rolandDistortionKnobPlaceholder" destination="lbz-zd-oar" id="ba3-xM-beL"/>
+                        <outlet property="rolandDryWetKnobPlaceholder" destination="6QU-mb-qDX" id="VAw-zn-o3W"/>
+                        <outlet property="rolandResonanceAsymetryKnobPlaceholder" destination="2om-rb-UQ0" id="u4d-Sf-cyb"/>
+                        <outlet property="rolandResonanceKnobPlaceholder" destination="50a-Ld-OuJ" id="OP9-nh-daN"/>
                         <outlet property="startStopSwitch" destination="A7x-ml-7oG" id="c74-Je-svW"/>
+                        <outlet property="wahDryWetKnobPlaceholder" destination="9Zr-8A-rFE" id="x94-x9-hAx"/>
+                        <outlet property="wahKnobPlaceholder" destination="Cnw-ME-XFz" id="Z6Z-HJ-Na2"/>
+                        <outlet property="wahRateKnobPlaceholder" destination="XIC-Tu-cS5" id="KFQ-gL-a6w"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MRH-YK-wHl" userLabel="First Responder" sceneMemberID="firstResponder"/>

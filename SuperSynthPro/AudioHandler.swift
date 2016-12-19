@@ -6,7 +6,8 @@ class AudioHandler: AKMIDIListener  {
     
     var generator = GeneratorBank()
     
-    var compressor: AKCompressor! = nil
+    var roland: AKRolandTB303Filter! = nil
+    var rolandDryWetMixer: AKDryWetMixer! = nil
     
     var bitCrusher: AKBitCrusher! = nil
     
@@ -35,24 +36,28 @@ class AudioHandler: AKMIDIListener  {
         AKSettings.audioInputEnabled = true
         
         bitCrusher = AKBitCrusher(generator)
+        bitCrusher.stop()
         
-        delay = VariableDelay(bitCrusher)
-        delayDryWetMixer = AKDryWetMixer(bitCrusher, delay, balance: 0.0)
-    
-        lowPassFilter = LowPass(delayDryWetMixer)
+        lowPassFilter = LowPass(bitCrusher)
         lpDryWetMixer = AKDryWetMixer(bitCrusher, lowPassFilter, balance: 0.0)
         
-        compressor = AKCompressor(lpDryWetMixer)
-        compressor.dryWetMix = 0.0
+        roland = AKRolandTB303Filter(lowPassFilter)
+        roland.cutoffFrequency = 450
+        // It will produce noise without input if this is too high
+        roland.resonance = 0.1
+        rolandDryWetMixer = AKDryWetMixer(lpDryWetMixer, roland, balance: 0.0)
 
-        highPassFilter = HighPass(compressor)
-        hpDryWetMixer = AKDryWetMixer(bitCrusher, highPassFilter, balance: 0.0)
+        highPassFilter = HighPass(roland)
+        hpDryWetMixer = AKDryWetMixer(rolandDryWetMixer, highPassFilter, balance: 0.0)
+        
+        delay = VariableDelay(highPassFilter)
+        delayDryWetMixer = AKDryWetMixer(hpDryWetMixer, delay, balance: 0.0)
 
-        reverb = AKCostelloReverb(hpDryWetMixer)
-        reverbDryWetMixer = AKDryWetMixer(bitCrusher, reverb, balance: 0.0)
+        reverb = AKCostelloReverb(delay)
+        reverbDryWetMixer = AKDryWetMixer(delayDryWetMixer, reverb, balance: 0.0)
 
-        autoWah = AutoWah(reverbDryWetMixer)
-        autoWahDryWetMixer = AKDryWetMixer(bitCrusher, autoWah, balance: 0.0)
+        autoWah = AutoWah(reverb)
+        autoWahDryWetMixer = AKDryWetMixer(reverbDryWetMixer, autoWah, balance: 0.0)
         
         effects = AKMixer(bitCrusher, delayDryWetMixer, lpDryWetMixer, hpDryWetMixer, reverbDryWetMixer, autoWahDryWetMixer)
         

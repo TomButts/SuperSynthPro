@@ -40,7 +40,7 @@ class LowPass: AKNode {
             )
             
             return input.lowPassFilter(
-                halfPowerPoint: max(halfPower + lfo, 0)
+                halfPowerPoint: halfPower + lfo
             )
         }
         

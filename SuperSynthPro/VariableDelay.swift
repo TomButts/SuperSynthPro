@@ -48,8 +48,8 @@ class VariableDelay: AKNode {
             )
             
             return input.variableDelay(
-                time: time + lfo,
-                feedback: feedback
+                time: time,
+                feedback: feedback + lfo
             )
         }
         

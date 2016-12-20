@@ -39,7 +39,7 @@ class AudioHandler: AKMIDIListener  {
         bitCrusher.stop()
         
         lowPassFilter = LowPass(bitCrusher)
-        lpDryWetMixer = AKDryWetMixer(bitCrusher, lowPassFilter, balance: 0.0)
+        lpDryWetMixer = AKDryWetMixer(generator, lowPassFilter, balance: 0.0)
         
         roland = AKRolandTB303Filter(lowPassFilter)
         roland.cutoffFrequency = 450

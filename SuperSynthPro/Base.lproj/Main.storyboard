@@ -795,6 +795,57 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yqo-3L-iaH">
+                                <frame key="frameInset" minX="122" minY="360" width="24" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="on">
+                                    <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="rolandTriggerValueChanged:" destination="t05-09-Rer" eventType="touchUpInside" id="WCh-Gq-fKK"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uVZ-gb-42b">
+                                <frame key="frameInset" minX="122" minY="472" width="24" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="on">
+                                    <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="delayTriggerValueChanged:" destination="t05-09-Rer" eventType="touchUpInside" id="ZX5-7p-9ds"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BsO-Qu-miS">
+                                <frame key="frameInset" minX="536" minY="360" width="24" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="on">
+                                    <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="lowPassTriggerValueChange:" destination="t05-09-Rer" eventType="touchUpInside" id="kfU-9v-3LJ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qtc-Lf-5Gd">
+                                <frame key="frameInset" minX="536" minY="474" width="24" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="on">
+                                    <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="giW-5r-16G">
+                                <frame key="frameInset" minX="804" minY="362" width="24" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="on">
+                                    <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yRA-nW-wbc">
+                                <frame key="frameInset" minX="804" minY="476" width="24" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="on">
+                                    <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -804,6 +855,7 @@
                         <outlet property="delayFeedbackKnobPlaceholder" destination="mKJ-Ko-2Tg" id="3Aj-PU-2aC"/>
                         <outlet property="delayLfoAmplitudeKnobPlaceholder" destination="bOR-iO-wDi" id="eU5-m9-H7E"/>
                         <outlet property="delayLfoRateKnobPlaceholder" destination="dAY-KI-wfQ" id="1Se-JJ-ret"/>
+                        <outlet property="delayOnOffButton" destination="uVZ-gb-42b" id="izH-BQ-C2B"/>
                         <outlet property="delayTimeKnobPlaceholder" destination="aXC-Nj-r6D" id="4Ch-zY-ick"/>
                         <outlet property="effectsKeyboardPlaceholder" destination="PLi-zh-C1L" id="tdK-QN-HDx"/>
                         <outlet property="globalBendKnobPlaceholder" destination="t1X-0W-C7M" id="c5K-Oq-db3"/>
@@ -815,6 +867,7 @@
                         <outlet property="lowPassHalfPowerKnobPlaceholder" destination="rZ5-dK-NC9" id="Cc2-hq-Ot5"/>
                         <outlet property="lowPassLfoAmplitudeKnobPlaceholder" destination="TbB-UZ-Rew" id="QuA-by-ZxP"/>
                         <outlet property="lowPassLfoRateKnobPlaceholder" destination="W7v-SM-PeE" id="iit-ms-91j"/>
+                        <outlet property="lowPassOnOffButton" destination="BsO-Qu-miS" id="42n-VG-GwX"/>
                         <outlet property="masterVolumeKnobPlaceholder" destination="nkf-Mm-gyF" id="vsf-X5-4yk"/>
                         <outlet property="reverbCuttoffKnobPlaceholder" destination="2Ew-kY-VTY" id="f5W-z6-pT3"/>
                         <outlet property="reverbDryWetKnobPlaceholder" destination="byP-zT-tQT" id="YU3-18-PCX"/>
@@ -822,6 +875,7 @@
                         <outlet property="rolandCutoffKnobPlaceholder" destination="tyD-e5-m7T" id="xJ6-bz-u4j"/>
                         <outlet property="rolandDistortionKnobPlaceholder" destination="lbz-zd-oar" id="ba3-xM-beL"/>
                         <outlet property="rolandDryWetKnobPlaceholder" destination="6QU-mb-qDX" id="VAw-zn-o3W"/>
+                        <outlet property="rolandOnOffButton" destination="yqo-3L-iaH" id="saL-e2-Xrf"/>
                         <outlet property="rolandResonanceAsymetryKnobPlaceholder" destination="2om-rb-UQ0" id="u4d-Sf-cyb"/>
                         <outlet property="rolandResonanceKnobPlaceholder" destination="50a-Ld-OuJ" id="OP9-nh-daN"/>
                         <outlet property="startStopSwitch" destination="A7x-ml-7oG" id="c74-Je-svW"/>
@@ -853,4 +907,7 @@
             <point key="canvasLocation" x="137.6953125" y="138.28125"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="on" width="24" height="24"/>
+    </resources>
 </document>

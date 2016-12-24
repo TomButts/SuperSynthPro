@@ -1,27 +1,20 @@
 import Foundation
 import AudioKit
 
-class AutoWah: AKNode {
+class Wobble: AKNode {
     
-    var parameters: [Double] = [0.0, 0.0, 0.1]
+    var parameters: [Double] = [1000, 0.1]
     
-    var wahAmount: Double = 0 {
+    var halfPowerFrequency: Double = 1000 {
         didSet {
-            parameters[0] = wahAmount
-            output.parameters = parameters
-        }
-    }
-    
-    var amplitude: Double = 0.0 {
-        didSet {
-            parameters[1] = amplitude
+            parameters[0] = halfPowerFrequency
             output.parameters = parameters
         }
     }
     
     var lfoRate: Double = 0.1 {
         didSet {
-            parameters[2] = lfoRate
+            parameters[1] = lfoRate
             output.parameters = parameters
         }
     }
@@ -30,18 +23,16 @@ class AutoWah: AKNode {
     
     init(_ input: AKNode) {
         output = AKOperationEffect(input) { input, parameters in
-            let wah = parameters[0]
-            let amp = parameters[1]
-            let oscRate = parameters[2]
+            let halfPower = parameters[0]
+            let oscRate = parameters[1]
             
             let lfo = AKOperation.sineWave(
                 frequency: oscRate,
                 amplitude: 1
             )
             
-            return input.autoWah(
-                wah: wah + lfo,
-                amplitude: amp
+            return input.lowPassFilter(
+                halfPowerPoint: halfPower + lfo
             )
         }
         

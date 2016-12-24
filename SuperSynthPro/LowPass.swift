@@ -3,25 +3,53 @@ import AudioKit
 
 class LowPass: AKNode {
     
-    var parameters: [Double] = [1000, 0.1, 0.1]
+    var parameters: [Double] = [1000.0, 0.0, 0.2, 0.2, 0.0, 0.8, 1.0]
     
-    var halfPowerFrequency: Double = 1000 {
+    var cutOff: Double = 1000.0 {
         didSet {
-            parameters[0] = halfPowerFrequency
+            parameters[0] = cutOff
             output.parameters = parameters
         }
     }
     
-    var lfoRate: Double = 0.1 {
+    var gate: Double = 0.0 {
         didSet {
-            parameters[1] = lfoRate
+            parameters[1] = gate
             output.parameters = parameters
         }
     }
     
-    var lfoAmplitude: Double = 0.1 {
+    var attack: Double = 0.2 {
         didSet {
-            parameters[2] = lfoAmplitude
+            parameters[2] = attack
+            output.parameters = parameters
+        }
+    }
+    
+    var decay: Double = 0.2 {
+        didSet {
+            parameters[3] = decay
+            output.parameters = parameters
+        }
+    }
+    
+    var sustain: Double = 0.0 {
+        didSet {
+            parameters[4] = sustain
+            output.parameters = parameters
+        }
+    }
+    
+    var rel: Double = 0.8 {
+        didSet {
+            parameters[5] = rel
+            output.parameters = parameters
+        }
+    }
+    
+    var resonance: Double = 1.0 {
+        didSet {
+            parameters[6] = resonance
             output.parameters = parameters
         }
     }
@@ -30,18 +58,23 @@ class LowPass: AKNode {
     
     init(_ input: AKNode) {
         output = AKOperationEffect(input) { input, parameters in
-            let halfPower = parameters[0]
-            let oscRate = parameters[1]
-            let oscAmp = parameters[2]
+            let cuttoff = parameters[0]
+            let gate = parameters[1]
+            let attack = parameters[2]
+            let decay = parameters[3]
+            let sustain = parameters[4]
+            let rel = parameters[5]
+            let res = parameters[6]
             
-            let lfo = AKOperation.sineWave(
-                frequency: oscRate,
-                amplitude: oscAmp
+            let cuttoffFrequency = cuttoff.gatedADSREnvelope(
+                gate: gate,
+                attack: attack,
+                decay: decay,
+                sustain: sustain,
+                release: rel
             )
             
-            return input.lowPassFilter(
-                halfPowerPoint: halfPower + lfo
-            )
+            return input.moogLadderFilter(cutoffFrequency: cuttoffFrequency, resonance: res)
         }
         
         output.parameters = parameters

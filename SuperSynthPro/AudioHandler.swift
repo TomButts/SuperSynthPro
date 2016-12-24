@@ -6,29 +6,26 @@ class AudioHandler: AKMIDIListener  {
     
     var generator = GeneratorBank()
     
-    var roland: AKRolandTB303Filter! = nil
-    var rolandDryWetMixer: AKDryWetMixer! = nil
-    
     var bitCrusher: AKBitCrusher! = nil
     
-    var delay: VariableDelay! = nil
-    var delayDryWetMixer: AKDryWetMixer! = nil
-    
     var lowPassFilter: LowPass! = nil
-    var lpDryWetMixer: AKDryWetMixer! = nil
+    var lowPassFilter2: LowPass! = nil
     
-    var highPassFilter: HighPass! = nil
-    var hpDryWetMixer: AKDryWetMixer! = nil
+    var highPassFilter: AKHighPassFilter! = nil
+
+    var wobble: Wobble! = nil
     
-    var reverb: AKCostelloReverb! = nil
-    var reverbDryWetMixer: AKDryWetMixer! = nil
+    var delay: VariableDelay! = nil
+    
+    var reverb: AKCombFilterReverb! = nil
     
     var autoWah: AutoWah! = nil
-    var autoWahDryWetMixer: AKDryWetMixer! = nil
 
     var maximumBend: Double = 2.0
 
-    var effects: AKMixer! = nil
+    var filterMixer: AKDryWetMixer! = nil
+    
+    var effects: AKDryWetMixer! = nil
     
     var master: AKMixer! = nil
     
@@ -37,32 +34,30 @@ class AudioHandler: AKMIDIListener  {
         
         bitCrusher = AKBitCrusher(generator)
         bitCrusher.stop()
-        
+    
         lowPassFilter = LowPass(bitCrusher)
-        lpDryWetMixer = AKDryWetMixer(generator, lowPassFilter, balance: 0.0)
+        lowPassFilter2 = LowPass(lowPassFilter)
+        highPassFilter = AKHighPassFilter(lowPassFilter2)
         
-        roland = AKRolandTB303Filter(lowPassFilter)
-        roland.cutoffFrequency = 450
-        // It will produce noise without input if this is too high
-        roland.resonance = 0.1
-        rolandDryWetMixer = AKDryWetMixer(lpDryWetMixer, roland, balance: 0.0)
-
-        highPassFilter = HighPass(roland)
-        hpDryWetMixer = AKDryWetMixer(rolandDryWetMixer, highPassFilter, balance: 0.0)
+        // Filter section output
+        filterMixer = AKDryWetMixer(generator, highPassFilter)
         
-        delay = VariableDelay(highPassFilter)
-        delayDryWetMixer = AKDryWetMixer(hpDryWetMixer, delay, balance: 0.0)
+        // Wobble
+        wobble = Wobble(filterMixer)
+    
+        // Delay
+        delay = VariableDelay(wobble)
 
-        reverb = AKCostelloReverb(delay)
-        reverbDryWetMixer = AKDryWetMixer(delayDryWetMixer, reverb, balance: 0.0)
+        // Reverb
+        reverb = AKCombFilterReverb(delay)
 
+        // Wah
         autoWah = AutoWah(reverb)
-        autoWahDryWetMixer = AKDryWetMixer(reverbDryWetMixer, autoWah, balance: 0.0)
         
-        effects = AKMixer(bitCrusher, delayDryWetMixer, lpDryWetMixer, hpDryWetMixer, reverbDryWetMixer, autoWahDryWetMixer)
+        effects = AKDryWetMixer(generator, autoWah, balance: 0.0)
         
-        master = AKMixer(generator, effects)
-        
+        master = AKMixer(effects)
+    
         AudioKit.output = master
         
         AudioKit.start()

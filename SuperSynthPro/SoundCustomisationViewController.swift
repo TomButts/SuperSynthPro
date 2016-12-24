@@ -8,40 +8,38 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
     static var plot: AKNodeOutputPlot! = nil
     
     var keyboard: AKKeyboardView?
-    @IBOutlet weak var effectsKeyboardPlaceholder: UIView!
+    @IBOutlet var effectsKeyboardPlaceholder: UIView!
+    @IBOutlet var waveformPlaceholder: UIView!
     
-    @IBOutlet weak var effectsKeyboard: UIView!
+    @IBOutlet var effectsKeyboard: UIView!
     static var viewInitialised = false
     
-    @IBOutlet var rolandCutoffKnobPlaceholder: UIView!
-    @IBOutlet var rolandResonanceKnobPlaceholder: UIView!
-    @IBOutlet var rolandDistortionKnobPlaceholder: UIView!
-    @IBOutlet var rolandResonanceAsymetryKnobPlaceholder: UIView!
-    @IBOutlet var rolandDryWetKnobPlaceholder: UIView!
+    @IBOutlet var lowPass1CuttoffKnobPlaceholder: UIView!
+    @IBOutlet var lowPass1ResonanceKnobPlaceholder: UIView!
+    
+    @IBOutlet var lowPass2CuttoffKnobPlaceholder: UIView!
+    @IBOutlet var lowPass2ResonanceKnobPlaceholder: UIView!
+    
+    @IBOutlet var highPassCuttoffKnobPlaceholder: UIView!
+    @IBOutlet var highPassResonanceKnobPlaceholder: UIView!
+
+    @IBOutlet var lowPass1AttackKnobPlaceholder: UIView!
+    @IBOutlet var lowPass1DecayKnobPlaceholder: UIView!
+    @IBOutlet var lowPass1SustainKnobPlaceholder: UIView!
+    @IBOutlet var lowPass1ReleaseKnobPlaceholder: UIView!
+    
+    @IBOutlet var lowPass2AttackKnobPlaceholder: UIView!
+    @IBOutlet var lowPass2DecayKnobPlaceholder: UIView!
+    @IBOutlet var lowPass2SustainKnobPlaceholder: UIView!
+    @IBOutlet var lowPass2ReleaseKnobPlaceholder: UIView!
     
     @IBOutlet var delayTimeKnobPlaceholder: UIView!
     @IBOutlet var delayFeedbackKnobPlaceholder: UIView!
     @IBOutlet var delayLfoRateKnobPlaceholder: UIView!
     @IBOutlet var delayLfoAmplitudeKnobPlaceholder: UIView!
-    @IBOutlet var delayDryWetKnobPlaceholder: UIView!
-    
-    @IBOutlet var lowPassHalfPowerKnobPlaceholder: UIView!
-    @IBOutlet var lowPassLfoRateKnobPlaceholder: UIView!
-    @IBOutlet var lowPassLfoAmplitudeKnobPlaceholder: UIView!
-    @IBOutlet var lowPassDryWetKnobPlaceholder: UIView!
-    
-    @IBOutlet var highPassHalfPowerKnobPlaceholder: UIView!
-    @IBOutlet var highPassLfoRateKnobPlaceholder: UIView!
-    @IBOutlet var highPassLfoAmplitudeKnobPlaceholder: UIView!
-    @IBOutlet var highPassDryWetKnobPlaceholder: UIView!
-    
-    @IBOutlet var reverbFeedbackKnobPlaceholder: UIView!
-    @IBOutlet var reverbCuttoffKnobPlaceholder: UIView!
-    @IBOutlet var reverbDryWetKnobPlaceholder: UIView!
     
     @IBOutlet var wahKnobPlaceholder: UIView!
     @IBOutlet var wahRateKnobPlaceholder: UIView!
-    @IBOutlet var wahDryWetKnobPlaceholder: UIView!
     
     @IBOutlet var globalBendKnobPlaceholder: UIView!
     @IBOutlet var masterVolumeKnobPlaceholder: UIView!
@@ -51,58 +49,95 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
     @IBOutlet var startStopSwitch: UISwitch!
     @IBOutlet var bitCrusherTrigger: UISwitch!
 
-    @IBOutlet var rolandOnOffButton: UIButton!
     @IBOutlet var delayOnOffButton: UIButton!
-    @IBOutlet var lowPassOnOffButton: UIButton!
+    @IBOutlet var reverbOnOffButton: UIButton!
+    @IBOutlet var highPassOnOffButton: UIButton!
     
-    var rolandCutoffKnob: Knob!
-    var rolandResonanceKnob: Knob!
-    var rolandDistortionKnob: Knob!
-    var rolandResonanceAsymetryKnob: Knob!
-    var rolandDryWetKnob: Knob!
+    var lowPass1CuttoffKnob: Knob!
+    var lowPass1ResonanceKnob: Knob!
+    
+    var lowPass2CuttoffKnob: Knob!
+    var lowPass2ResonanceKnob: Knob!
+    
+    var lowPass1AttackKnob: Knob!
+    var lowPass1DecayKnob: Knob!
+    var lowPass1SustainKnob: Knob!
+    var lowPass1ReleaseKnob: Knob!
+    
+    var lowPass2AttackKnob: Knob!
+    var lowPass2DecayKnob: Knob!
+    var lowPass2SustainKnob: Knob!
+    var lowPass2ReleaseKnob: Knob!
+    
+    var highPassCuttoffKnob: Knob!
+    var highPassResonanceKnob: Knob!
     
     var delayTimeKnob: Knob!
     var delayFeedbackKnob: Knob!
     var delayLfoRateKnob: Knob!
     var delayLfoAmplitudeKnob: Knob!
-    var delayDryWetKnob: Knob!
-    
-    var lowPassHalfPowerKnob: Knob!
-    var lowPassLfoRateKnob: Knob!
-    var lowPassLfoAmplitudeKnob: Knob!
-    var lowPassDryWetKnob: Knob!
-    
-    var highPassHalfPowerKnob: Knob!
-    var highPassLfoRateKnob: Knob!
-    var highPassLfoAmplitudeKnob: Knob!
-    var highPassDryWetKnob: Knob!
-    
-    var reverbFeedbackKnob: Knob!
-    var reverbCuttoffKnob: Knob!
-    var reverbDryWetKnob: Knob!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Compressor Knobs
-        rolandCutoffKnob = Knob(frame: rolandCutoffKnobPlaceholder.bounds)
-        rolandCutoffKnob.addTarget(self, action: #selector(SoundCustomisationViewController.rolandCutoffValueChanged), for: .valueChanged)
-        rolandCutoffKnobPlaceholder.addSubview(rolandCutoffKnob)
         
-        rolandResonanceKnob = Knob(frame:rolandResonanceKnobPlaceholder.bounds)
-        rolandResonanceKnob.addTarget(self, action: #selector(SoundCustomisationViewController.rolandResonanceValueChanged), for: .valueChanged)
-        rolandResonanceKnobPlaceholder.addSubview(rolandResonanceKnob)
+        // Low pass 1 filter knobs
+        lowPass1CuttoffKnob = Knob(frame: lowPass1CuttoffKnobPlaceholder.bounds)
+        lowPass1CuttoffKnob.addTarget(self, action: #selector(SoundCustomisationViewController.lowPass1CuttoffValueChanged), for: .valueChanged)
+        lowPass1CuttoffKnobPlaceholder.addSubview(lowPass1CuttoffKnob)
         
-        rolandDistortionKnob = Knob(frame:rolandDistortionKnobPlaceholder.bounds)
-        rolandDistortionKnob.addTarget(self, action: #selector(SoundCustomisationViewController.rolandDistortionValueChanged), for: .valueChanged)
-        rolandDistortionKnobPlaceholder.addSubview(rolandDistortionKnob)
+        lowPass1ResonanceKnob = Knob(frame: lowPass1ResonanceKnobPlaceholder.bounds)
+        lowPass1ResonanceKnob.addTarget(self, action: #selector(SoundCustomisationViewController.lowPass1ResonanceValueChanged), for: .valueChanged)
+        lowPass1ResonanceKnobPlaceholder.addSubview(lowPass1ResonanceKnob)
         
-        rolandResonanceAsymetryKnob = Knob(frame:rolandResonanceAsymetryKnobPlaceholder.bounds)
-        rolandResonanceAsymetryKnob.addTarget(self, action: #selector(SoundCustomisationViewController.rolandResonanceAsymetryValueChanged), for: .valueChanged)
-        rolandResonanceAsymetryKnobPlaceholder.addSubview(rolandResonanceAsymetryKnob)
+        lowPass1AttackKnob = Knob(frame: lowPass1AttackKnobPlaceholder.bounds)
+        lowPass1AttackKnob.addTarget(self, action: #selector(SoundCustomisationViewController.lowPass1AttackValueChanged), for: .valueChanged)
+        lowPass1AttackKnobPlaceholder.addSubview(lowPass1AttackKnob)
         
-        rolandDryWetKnob = Knob(frame:rolandDryWetKnobPlaceholder.bounds)
-        rolandDryWetKnob.addTarget(self, action: #selector(SoundCustomisationViewController.rolandDryWetValueChanged), for: .valueChanged)
-        rolandDryWetKnobPlaceholder.addSubview(rolandDryWetKnob)
+        lowPass1DecayKnob = Knob(frame: lowPass1DecayKnobPlaceholder.bounds)
+        lowPass1DecayKnob.addTarget(self, action: #selector(SoundCustomisationViewController.lowPass1DecayValueChanged), for: .valueChanged)
+        lowPass1DecayKnobPlaceholder.addSubview(lowPass1DecayKnob)
+        
+        lowPass1SustainKnob = Knob(frame: lowPass1SustainKnobPlaceholder.bounds)
+        lowPass1SustainKnob.addTarget(self, action: #selector(SoundCustomisationViewController.lowPass1SustainValueChanged), for: .valueChanged)
+        lowPass1SustainKnobPlaceholder.addSubview(lowPass1SustainKnob)
+        
+        lowPass1ReleaseKnob = Knob(frame: lowPass1ReleaseKnobPlaceholder.bounds)
+        lowPass1ReleaseKnob.addTarget(self, action: #selector(SoundCustomisationViewController.lowPass1ReleaseValueChanged), for: .valueChanged)
+        lowPass1ReleaseKnobPlaceholder.addSubview(lowPass1ReleaseKnob)
+        
+        // Low pass 2 filter knobs
+        lowPass2CuttoffKnob = Knob(frame: lowPass2CuttoffKnobPlaceholder.bounds)
+        lowPass2CuttoffKnob.addTarget(self, action: #selector(SoundCustomisationViewController.lowPass2CuttoffValueChanged), for: .valueChanged)
+        lowPass2CuttoffKnobPlaceholder.addSubview(lowPass2CuttoffKnob)
+        
+        lowPass2ResonanceKnob = Knob(frame: lowPass2ResonanceKnobPlaceholder.bounds)
+        lowPass2ResonanceKnob.addTarget(self, action: #selector(SoundCustomisationViewController.lowPass2ResonanceValueChanged), for: .valueChanged)
+        lowPass2ResonanceKnobPlaceholder.addSubview(lowPass2ResonanceKnob)
+        
+        lowPass2AttackKnob = Knob(frame: lowPass2AttackKnobPlaceholder.bounds)
+        lowPass2AttackKnob.addTarget(self, action: #selector(SoundCustomisationViewController.lowPass2AttackValueChanged), for: .valueChanged)
+        lowPass2AttackKnobPlaceholder.addSubview(lowPass2AttackKnob)
+        
+        lowPass2DecayKnob = Knob(frame: lowPass2DecayKnobPlaceholder.bounds)
+        lowPass2DecayKnob.addTarget(self, action: #selector(SoundCustomisationViewController.lowPass2DecayValueChanged), for: .valueChanged)
+        lowPass2DecayKnobPlaceholder.addSubview(lowPass2DecayKnob)
+        
+        lowPass2SustainKnob = Knob(frame: lowPass2SustainKnobPlaceholder.bounds)
+        lowPass2SustainKnob.addTarget(self, action: #selector(SoundCustomisationViewController.lowPass2SustainValueChanged), for: .valueChanged)
+        lowPass2SustainKnobPlaceholder.addSubview(lowPass2SustainKnob)
+        
+        lowPass2ReleaseKnob = Knob(frame: lowPass2ReleaseKnobPlaceholder.bounds)
+        lowPass2ReleaseKnob.addTarget(self, action: #selector(SoundCustomisationViewController.lowPass2ReleaseValueChanged), for: .valueChanged)
+        lowPass2ReleaseKnobPlaceholder.addSubview(lowPass2ReleaseKnob)
+        
+        // High pass knobs
+        highPassCuttoffKnob = Knob(frame: highPassCuttoffKnobPlaceholder.bounds)
+        highPassCuttoffKnob.addTarget(self, action: #selector(SoundCustomisationViewController.highPassCuttoffValueChanged), for: .valueChanged)
+        highPassCuttoffKnobPlaceholder.addSubview(highPassCuttoffKnob)
+        
+        highPassResonanceKnob = Knob(frame: highPassResonanceKnobPlaceholder.bounds)
+        highPassResonanceKnob.addTarget(self, action: #selector(SoundCustomisationViewController.highPassResonanceValueChanged), for: .valueChanged)
+        highPassResonanceKnobPlaceholder.addSubview(highPassResonanceKnob)
         
         // Delay Knobs
         delayTimeKnob = Knob(frame: delayTimeKnobPlaceholder.bounds)
@@ -121,56 +156,7 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
         delayLfoAmplitudeKnob.addTarget(self, action: #selector(SoundCustomisationViewController.delayLfoAmplitudeValueChanged), for: .valueChanged)
         delayLfoAmplitudeKnobPlaceholder.addSubview(delayLfoAmplitudeKnob)
         
-        delayDryWetKnob = Knob(frame: delayDryWetKnobPlaceholder.bounds)
-        delayDryWetKnob.addTarget(self, action: #selector(SoundCustomisationViewController.delayDryWetValueChanged), for: .valueChanged)
-        delayDryWetKnobPlaceholder.addSubview(delayDryWetKnob)
-        
-        // Low pass filter knob
-        lowPassHalfPowerKnob = Knob(frame: lowPassHalfPowerKnobPlaceholder.bounds)
-        lowPassHalfPowerKnob.addTarget(self, action: #selector(SoundCustomisationViewController.lowPassHalfPowerValueChanged), for: .valueChanged)
-        lowPassHalfPowerKnobPlaceholder.addSubview(lowPassHalfPowerKnob)
-        
-        lowPassLfoRateKnob = Knob(frame: lowPassLfoRateKnobPlaceholder.bounds)
-        lowPassLfoRateKnob.addTarget(self, action: #selector(SoundCustomisationViewController.lowPassLfoRateValueChanged), for: .valueChanged)
-        lowPassLfoRateKnobPlaceholder.addSubview(lowPassLfoRateKnob)
-        
-        lowPassLfoAmplitudeKnob = Knob(frame: lowPassLfoAmplitudeKnobPlaceholder.bounds)
-        lowPassLfoAmplitudeKnob.addTarget(self, action: #selector(SoundCustomisationViewController.lowPassLfoAmplitudeValueChanged), for: .valueChanged)
-        lowPassLfoAmplitudeKnobPlaceholder.addSubview(lowPassLfoAmplitudeKnob)
-        
-        lowPassDryWetKnob = Knob(frame: lowPassDryWetKnobPlaceholder.bounds)
-        lowPassDryWetKnob.addTarget(self, action: #selector(SoundCustomisationViewController.lowPassDryWetValueChanged), for: .valueChanged)
-        lowPassDryWetKnobPlaceholder.addSubview(lowPassDryWetKnob)
-        
-        // High pass filter knobs
-        highPassHalfPowerKnob = Knob(frame: highPassHalfPowerKnobPlaceholder.bounds)
-        highPassHalfPowerKnob.addTarget(self, action: #selector(SoundCustomisationViewController.highPassHalfPowerValueChanged), for: .valueChanged)
-        highPassHalfPowerKnobPlaceholder.addSubview(highPassHalfPowerKnob)
-        
-        highPassLfoRateKnob = Knob(frame: highPassLfoRateKnobPlaceholder.bounds)
-        highPassLfoRateKnob.addTarget(self, action: #selector(SoundCustomisationViewController.highPassLfoRateValueChanged), for: .valueChanged)
-        highPassLfoRateKnobPlaceholder.addSubview(highPassLfoRateKnob)
-        
-        highPassLfoAmplitudeKnob = Knob(frame: highPassLfoAmplitudeKnobPlaceholder.bounds)
-        highPassLfoAmplitudeKnob.addTarget(self, action: #selector(SoundCustomisationViewController.highPassLfoAmplitudeValueChanged), for: .valueChanged)
-        highPassLfoAmplitudeKnobPlaceholder.addSubview(highPassLfoAmplitudeKnob)
-        
-        highPassDryWetKnob = Knob(frame: highPassDryWetKnobPlaceholder.bounds)
-        highPassDryWetKnob.addTarget(self, action: #selector(SoundCustomisationViewController.highPassDryWetValueChanged), for: .valueChanged)
-        highPassDryWetKnobPlaceholder.addSubview(highPassDryWetKnob)
-        
         // Reverb knobs
-        reverbFeedbackKnob = Knob(frame: reverbFeedbackKnobPlaceholder.bounds)
-        reverbFeedbackKnob.addTarget(self, action: #selector(SoundCustomisationViewController.reverbFeedbackValueChanged), for: .valueChanged)
-        reverbFeedbackKnobPlaceholder.addSubview(reverbFeedbackKnob)
-        
-        reverbCuttoffKnob = Knob(frame: reverbCuttoffKnobPlaceholder.bounds)
-        reverbCuttoffKnob.addTarget(self, action: #selector(SoundCustomisationViewController.reverbCuttoffValueChanged), for: .valueChanged)
-        reverbCuttoffKnobPlaceholder.addSubview(reverbCuttoffKnob)
-        
-        reverbDryWetKnob = Knob(frame: reverbDryWetKnobPlaceholder.bounds)
-        reverbDryWetKnob.addTarget(self, action: #selector(SoundCustomisationViewController.reverbDryWetValueChanged), for: .valueChanged)
-        reverbDryWetKnobPlaceholder.addSubview(reverbDryWetKnob)
         
         // Keyboard
         keyboard = AKKeyboardView(width: 700, height: 128)
@@ -182,7 +168,7 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
         
         // Multiple Plotting nodes cause an error related to recording taps
         if (SoundCustomisationViewController.viewInitialised == false) {
-            let plotFrame = CGRect(x: 100.0, y: 100.0, width: 820.0, height: 220.0)
+            let plotFrame = CGRect(x: 8.0, y: 0.0, width: 235.0, height: 200.0)
             SoundCustomisationViewController.plot = AKNodeOutputPlot(audioHandler.master, frame: plotFrame)
             SoundCustomisationViewController.plot.color = UIColor.blue
             SoundCustomisationViewController.plot.layer.borderWidth = 0.8
@@ -191,25 +177,54 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
             SoundCustomisationViewController.viewInitialised = true
         }
         
-        view.addSubview(SoundCustomisationViewController.plot)
+        waveformPlaceholder.addSubview(SoundCustomisationViewController.plot)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        // Roland knob settings
-        rolandCutoffKnob.minimumValue = 450
-        rolandCutoffKnob.maximumValue = 550
-        rolandCutoffKnob.value = Float(audioHandler.roland.cutoffFrequency)
+        // Low Pass 1 Settings
+        lowPass1CuttoffKnob.minimumValue = 24.0
+        lowPass1CuttoffKnob.maximumValue = 4200.0
+        lowPass1CuttoffKnob.value = Float(audioHandler.lowPassFilter.cutOff)
         
-        rolandResonanceKnob.value = Float(audioHandler.roland.resonance)
+        lowPass1ResonanceKnob.maximumValue = 2.0
+        lowPass1ResonanceKnob.value = Float(audioHandler.lowPassFilter.resonance)
         
-        rolandDistortionKnob.minimumValue = 1.9
-        rolandDistortionKnob.maximumValue = 2.1
-        rolandDistortionKnob.value = Float(audioHandler.roland.distortion)
+        lowPass1AttackKnob.maximumValue = 2.0
+        lowPass1AttackKnob.value = Float(audioHandler.lowPassFilter.attack)
         
-        rolandResonanceAsymetryKnob.value = Float(audioHandler.roland.resonanceAsymmetry)
+        lowPass1DecayKnob.maximumValue = 2.0
+        lowPass1DecayKnob.value = Float(audioHandler.lowPassFilter.decay)
         
-        rolandDryWetKnob.value = Float(audioHandler.rolandDryWetMixer.balance)
+        lowPass1SustainKnob.value = Float(audioHandler.lowPassFilter.sustain)
+        
+        lowPass1ReleaseKnob.maximumValue = 3.0
+        lowPass1ReleaseKnob.value = Float(audioHandler.lowPassFilter.rel)
+        
+        // Low Pass 2 Settings
+        lowPass2CuttoffKnob.minimumValue = 24.0
+        lowPass2CuttoffKnob.maximumValue = 4200.0
+        lowPass2CuttoffKnob.value = Float(audioHandler.lowPassFilter2.cutOff)
+        
+        lowPass2ResonanceKnob.maximumValue = 2.0
+        lowPass2ResonanceKnob.value = Float(audioHandler.lowPassFilter2.resonance)
+        
+        lowPass2AttackKnob.maximumValue = 2.0
+        lowPass2AttackKnob.value = Float(audioHandler.lowPassFilter2.attack)
+        
+        lowPass2DecayKnob.maximumValue = 2.0
+        lowPass2DecayKnob.value = Float(audioHandler.lowPassFilter2.decay)
+        
+        lowPass2SustainKnob.value = Float(audioHandler.lowPassFilter2.sustain)
+        
+        lowPass2ReleaseKnob.maximumValue = 3.0
+        lowPass2ReleaseKnob.value = Float(audioHandler.lowPassFilter2.rel)
+        
+        // High pass settings
+        highPassCuttoffKnob.maximumValue = 4200.0
+        highPassCuttoffKnob.value = Float(audioHandler.highPassFilter.cutoffFrequency)
+        
+        highPassResonanceKnob.value = Float(audioHandler.highPassFilter.resonance)
         
         // Delay Knob Settings
         delayTimeKnob.maximumValue = 1.5
@@ -222,29 +237,9 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
         
         delayLfoAmplitudeKnob.value = Float(audioHandler.delay.lfoAmplitude)
         
-        delayDryWetKnob.value = Float(audioHandler.delayDryWetMixer.balance)
-        
-        // Low pass filter knob settings
-        lowPassHalfPowerKnob.maximumValue = 900.0
-        lowPassHalfPowerKnob.value = Float(audioHandler.lowPassFilter.halfPowerFrequency)
-        
-        lowPassLfoRateKnob.maximumValue = 100.0
-        lowPassLfoRateKnob.value = Float(audioHandler.lowPassFilter.lfoRate)
-        
-        lowPassLfoAmplitudeKnob.maximumValue = 500.0
-        lowPassLfoAmplitudeKnob.value = Float(audioHandler.lowPassFilter.lfoAmplitude)
-        
-        lowPassDryWetKnob.value = Float(audioHandler.lpDryWetMixer.balance)
-        
         // Make triggers reflect audio status
         if (audioHandler.bitCrusher.isStarted) {
             bitCrusherTrigger.setOn(true, animated: false)
-        }
-        
-        if (audioHandler.roland.isStarted) {
-            rolandOnOffButton.setImage(UIImage(named: "on.png"), for: .normal)
-        } else {
-            rolandOnOffButton.setImage(UIImage(named: "off.png"), for: .normal)
         }
         
         if (audioHandler.delay.output.isStarted) {
@@ -253,14 +248,14 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
             delayOnOffButton.setImage(UIImage(named: "off.png"), for: .normal)
         }
         
-        if (audioHandler.lowPassFilter.output.isStarted) {
-            lowPassOnOffButton.setImage(UIImage(named: "on.png"), for: .normal)
+        if (audioHandler.reverb.isStarted) {
+            reverbOnOffButton.setImage(UIImage(named: "on.png"), for: .normal)
         } else {
-            lowPassOnOffButton.setImage(UIImage(named: "off.png"), for: .normal)
+            reverbOnOffButton.setImage(UIImage(named: "off.png"), for: .normal)
         }
         
         // Effects on
-        audioHandler.effects.volume = 1.0
+        audioHandler.effects.balance = 1.0
     }
     
     @IBAction func bitCrusherTriggerValueChanged(_ sender: UISwitch) {
@@ -271,18 +266,6 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
         } else {
             audioHandler.bitCrusher.stop()
             bitCrusherTrigger.setOn(false, animated: true)
-        }
-    }
-    
-    @IBAction func rolandTriggerValueChanged(_ sender: UIButton) {
-        if (audioHandler.roland.isStarted) {
-            // Turn off
-            rolandOnOffButton.setImage(UIImage(named: "off.png"), for: .normal)
-            audioHandler.roland.stop()
-        } else {
-            // Turn on
-            rolandOnOffButton.setImage(UIImage(named: "on.png"), for: .normal)
-            audioHandler.roland.start()
         }
     }
     
@@ -298,18 +281,20 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
         }
     }
     
-    @IBAction func lowPassTriggerValueChange(_ sender: UIButton) {
-        if (audioHandler.lowPassFilter.output.isStarted) {
-            // Turn off
-            lowPassOnOffButton.setImage(UIImage(named: "off.png"), for: .normal)
-            audioHandler.lowPassFilter.output.stop()
-        } else {
-            // Turn on
-            lowPassOnOffButton.setImage(UIImage(named: "on.png"), for: .normal)
-            audioHandler.lowPassFilter.output.start()
-        }
+    @IBAction func highPassTriggerValueChanged(_ sender: UIButton) {
     }
     
+    @IBAction func reverbTriggerValueChange(_ sender: UIButton) {
+        if (audioHandler.reverb.isStarted) {
+            // Turn off
+            reverbOnOffButton.setImage(UIImage(named: "off.png"), for: .normal)
+            audioHandler.reverb.stop()
+        } else {
+            // Turn on
+            reverbOnOffButton.setImage(UIImage(named: "on.png"), for: .normal)
+            audioHandler.reverb.start()
+        }
+    }
     
     @IBAction func startStopSwitchValueChanged(_ sender: UISwitch) {
         if (startStopSwitch .isOn) {
@@ -321,24 +306,60 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
         }
     }
     
-    func rolandCutoffValueChanged() {
-        audioHandler.roland.cutoffFrequency = Double(rolandCutoffKnob.value)
+    func lowPass1CuttoffValueChanged() {
+        audioHandler.lowPassFilter.cutOff = Double(lowPass1CuttoffKnob.value)
     }
     
-    func rolandResonanceValueChanged() {
-        audioHandler.roland.resonance = Double(rolandResonanceKnob.value)
+    func lowPass1ResonanceValueChanged() {
+        audioHandler.lowPassFilter.resonance = Double(lowPass1ResonanceKnob.value)
     }
     
-    func rolandDistortionValueChanged() {
-        audioHandler.roland.distortion = Double(rolandDistortionKnob.value)
+    func lowPass1AttackValueChanged() {
+        audioHandler.lowPassFilter.attack = Double(lowPass1AttackKnob.value)
     }
     
-    func rolandResonanceAsymetryValueChanged() {
-        audioHandler.roland.resonanceAsymmetry = Double(rolandResonanceAsymetryKnob.value)
+    func lowPass1DecayValueChanged() {
+        audioHandler.lowPassFilter.decay = Double(lowPass1DecayKnob.value)
     }
     
-    func rolandDryWetValueChanged() {
-        audioHandler.rolandDryWetMixer.balance = Double(rolandDryWetKnob.value)
+    func lowPass1SustainValueChanged() {
+        audioHandler.lowPassFilter.sustain = Double(lowPass1SustainKnob.value)
+    }
+    
+    func lowPass1ReleaseValueChanged() {
+        audioHandler.lowPassFilter.rel = Double(lowPass1ReleaseKnob.value)
+    }
+    
+    func lowPass2CuttoffValueChanged() {
+        audioHandler.lowPassFilter2.cutOff = Double(lowPass2CuttoffKnob.value)
+    }
+    
+    func lowPass2ResonanceValueChanged() {
+        audioHandler.lowPassFilter2.resonance = Double(lowPass2ResonanceKnob.value)
+    }
+    
+    func lowPass2AttackValueChanged() {
+        audioHandler.lowPassFilter2.attack = Double(lowPass2AttackKnob.value)
+    }
+    
+    func lowPass2DecayValueChanged() {
+        audioHandler.lowPassFilter2.decay = Double(lowPass2DecayKnob.value)
+    }
+    
+    func lowPass2SustainValueChanged() {
+        audioHandler.lowPassFilter2.sustain = Double(lowPass2SustainKnob.value)
+    }
+    
+    func lowPass2ReleaseValueChanged() {
+        audioHandler.lowPassFilter2.rel = Double(lowPass2ReleaseKnob.value)
+    }
+    
+    func highPassCuttoffValueChanged() {
+        audioHandler.highPassFilter.cutoffFrequency = Double(highPassCuttoffKnob.value)
+    }
+    
+    func highPassResonanceValueChanged() {
+        audioHandler.highPassFilter.resonance = Double(highPassResonanceKnob.value)
     }
     
     func delayTimeValueChanged() {
@@ -356,60 +377,16 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
     func delayLfoAmplitudeValueChanged() {
         audioHandler.delay.lfoAmplitude = Double(delayLfoAmplitudeKnob.value)
     }
-    
-    func delayDryWetValueChanged() {
-        audioHandler.delayDryWetMixer.balance = Double(delayDryWetKnob.value)
-    }
-    
-    func lowPassHalfPowerValueChanged() {
-        audioHandler.lowPassFilter.halfPowerFrequency = Double(lowPassHalfPowerKnob.value)
-    }
-    
-    func lowPassLfoRateValueChanged() {
-        audioHandler.lowPassFilter.lfoRate = Double(lowPassLfoRateKnob.value)
-    }
-    
-    func lowPassLfoAmplitudeValueChanged() {
-        audioHandler.lowPassFilter.lfoAmplitude = Double(lowPassLfoAmplitudeKnob.value)
-    }
-    
-    func lowPassDryWetValueChanged() {
-        audioHandler.lpDryWetMixer.balance = Double(lowPassDryWetKnob.value)
-    }
-    
-    func highPassHalfPowerValueChanged() {
-        
-    }
-    
-    func highPassLfoRateValueChanged() {
-        
-    }
-    
-    func highPassLfoAmplitudeValueChanged() {
-        
-    }
-    
-    func highPassDryWetValueChanged() {
-        
-    }
-    
-    func reverbFeedbackValueChanged() {
-        
-    }
-    
-    func reverbCuttoffValueChanged() {
-        
-    }
-    
-    func reverbDryWetValueChanged() {
-        
-    }
-    
+  
     func noteOn(note: MIDINoteNumber) {
         audioHandler.generator.play(noteNumber: note, velocity: 80)
+        audioHandler.lowPassFilter.gate = 1
+        audioHandler.lowPassFilter2.gate = 1
     }
     
     func noteOff(note: MIDINoteNumber) {
         audioHandler.generator.stop(noteNumber: note)
+        audioHandler.lowPassFilter.gate = 0
+        audioHandler.lowPassFilter2.gate = 0
     }
 }

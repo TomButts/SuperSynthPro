@@ -7,7 +7,7 @@ class ViewController: UIViewController, AKKeyboardDelegate {
     var audioHandler = AudioHandler.sharedInstance
 
     @IBOutlet var keyboardPlaceholder: UIView!
-    
+
     var keyboard: AKKeyboardView?
     
     var plot: AKNodeOutputPlot! = nil
@@ -40,8 +40,6 @@ class ViewController: UIViewController, AKKeyboardDelegate {
     
     @IBOutlet var globalBendKnobPlaceholder: UIView!
     @IBOutlet var masterVolumeKnobPlaceholder: UIView!
-    
-    @IBOutlet var waveTypeSegment: UISegmentedControl!
   
     @IBOutlet var startStopSwitch: UISwitch!
     
@@ -189,8 +187,6 @@ class ViewController: UIViewController, AKKeyboardDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         // Knob values
-        setDefaultGeneratorValues()
-        
         mob1WaveTypeKnob.maximumValue = 4
         mob1WaveTypeKnob.value = Float(audioHandler.generator.waveform1)
         
@@ -244,7 +240,7 @@ class ViewController: UIViewController, AKKeyboardDelegate {
         
         masterVolumeKnob.value = Float(audioHandler.generator.master.volume)
         
-        audioHandler.effects.volume = 0.0
+        audioHandler.effects.balance = 0.0
     }
     
     @IBAction func startStopGenerator(_ sender: AnyObject) {
@@ -258,14 +254,6 @@ class ViewController: UIViewController, AKKeyboardDelegate {
             audioHandler.generator.stop(noteNumber: middleC)
             startStopSwitch.setOn(false, animated: true)
         }
-    }
-    
-    func setDefaultGeneratorValues() {
-        audioHandler.generator.mob1Mixer.volume = 0.5
-        audioHandler.generator.mob2Mixer.volume = 0.0
-        audioHandler.generator.globalbend = 0
-        audioHandler.generator.dryWet.balance = 0.5
-        audioHandler.generator.master.volume = 1.0
     }
     
     @IBAction func saveGenerator(_ sender: AnyObject) {

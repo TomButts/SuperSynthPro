@@ -20,7 +20,7 @@ class ViewController: UIViewController, AKKeyboardDelegate {
     
     @IBOutlet var mobBalancerKnobPlaceholder: UIView!
     
-    @IBOutlet weak var mob2WaveTypeKnobPlaceholder: UIView!
+    @IBOutlet var mob2WaveTypeKnobPlaceholder: UIView!
     @IBOutlet var mob2MorphKnobPlaceholder: UIView!
     @IBOutlet var mob2OffsetKnobPlaceholder: UIView!
     @IBOutlet var mob2DetuneKnobPlaceholder: UIView!
@@ -37,6 +37,8 @@ class ViewController: UIViewController, AKKeyboardDelegate {
     @IBOutlet var decayKnobPlaceholder: UIView!
     @IBOutlet var sustainKnobPlaceholder: UIView!
     @IBOutlet var releaseKnobPlaceholder: UIView!
+    
+    @IBOutlet var noiseVolumeKnobPlaceholder: UIView!
     
     @IBOutlet var globalBendKnobPlaceholder: UIView!
     @IBOutlet var masterVolumeKnobPlaceholder: UIView!
@@ -67,6 +69,8 @@ class ViewController: UIViewController, AKKeyboardDelegate {
     var decayKnob: Knob!
     var sustainKnob: Knob!
     var releaseKnob: Knob!
+    
+    var noiseVolumeKnob: Knob!
     
     var globalBendKnob: Knob!
     var masterVolumeKnob: Knob!
@@ -154,6 +158,11 @@ class ViewController: UIViewController, AKKeyboardDelegate {
         releaseKnob = Knob(frame: releaseKnobPlaceholder.bounds)
         releaseKnob.addTarget(self, action: #selector(ViewController.releaseValueChanged), for: .valueChanged)
         releaseKnobPlaceholder.addSubview(releaseKnob)
+        
+        // Noise
+        noiseVolumeKnob = Knob(frame: noiseVolumeKnobPlaceholder.bounds)
+        noiseVolumeKnob.addTarget(self, action: #selector(ViewController.noiseVolumeValueChanged), for: .valueChanged)
+        noiseVolumeKnobPlaceholder.addSubview(noiseVolumeKnob)
 
         // Bend
         globalBendKnob = Knob(frame: globalBendKnobPlaceholder.bounds)
@@ -228,6 +237,8 @@ class ViewController: UIViewController, AKKeyboardDelegate {
         fmModulationKnob.value = Float(audioHandler.generator.frequencyModulationOscillatorBank.modulationIndex)
         
         fmVolumeKnob.value = Float(audioHandler.generator.fmobMixer.volume)
+        
+        noiseVolumeKnob.value = Float(audioHandler.generator.noiseMixer.volume)
         
         // TODO ADSR
         attackKnob.value = Float(audioHandler.generator.attackDuration)
@@ -338,6 +349,10 @@ class ViewController: UIViewController, AKKeyboardDelegate {
     
     func fmVolumeValueChanged() {
         audioHandler.generator.fmobMixer.volume = Double(fmVolumeKnob.value)
+    }
+    
+    func noiseVolumeValueChanged() {
+        audioHandler.generator.noiseMixer.volume = Double(noiseVolumeKnob.value)
     }
     
     func globalBendValueChanged() {

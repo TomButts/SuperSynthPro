@@ -28,7 +28,7 @@ class Wobble: AKNode {
             
             let lfo = AKOperation.sineWave(
                 frequency: oscRate,
-                amplitude: 1
+                amplitude: 500
             )
             
             return input.lowPassFilter(

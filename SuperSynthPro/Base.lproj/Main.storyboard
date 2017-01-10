@@ -355,6 +355,25 @@
                                 <color key="textColor" red="0.062874163685667381" green="0.41809286238255677" blue="0.8238506217277487" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Jg-pw-5CN">
+                                <frame key="frameInset" minX="560" minY="501" width="47" height="47"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="vol" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="puz-0C-y6Q">
+                                <frame key="frameInset" minX="572" minY="556" width="23" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="noise" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XN3-Yp-6Wu">
+                                <frame key="frameInset" minX="565" minY="477" width="37" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
@@ -377,6 +396,7 @@
                         <outlet property="mob2VolumeKnobPlaceholder" destination="tQa-gV-9Dg" id="2OU-hS-XEc"/>
                         <outlet property="mob2WaveTypeKnobPlaceholder" destination="feD-1V-owO" id="aOV-8P-JPO"/>
                         <outlet property="mobBalancerKnobPlaceholder" destination="Evm-zW-Hfj" id="Vaa-wi-CKt"/>
+                        <outlet property="noiseVolumeKnobPlaceholder" destination="7Jg-pw-5CN" id="Ava-XX-Sxk"/>
                         <outlet property="pulseWidthKnobPlaceholder" destination="BFT-ph-WA6" id="eyr-WY-bJV"/>
                         <outlet property="pulseWidthOffsetKnobPlaceholder" destination="lK2-Je-GvJ" id="cOr-BY-hfi"/>
                         <outlet property="pulseWidthVolumeKnobPlaceholder" destination="eF9-2K-bkM" id="qJS-hd-fY5"/>
@@ -543,6 +563,9 @@
                                 <state key="normal" image="on">
                                     <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="lowPass1TriggerValueChanged:" destination="t05-09-Rer" eventType="touchUpInside" id="s6Y-gH-KG9"/>
+                                </connections>
                             </button>
                             <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1SF-cZ-p7X">
                                 <frame key="frameInset" minX="732" minY="515" width="47" height="47"/>
@@ -610,6 +633,9 @@
                                 <state key="normal" image="on">
                                     <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="wahTriggerValueChanged:" destination="t05-09-Rer" eventType="touchUpInside" id="c3L-26-Rla"/>
+                                </connections>
                             </button>
                             <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NXL-wu-g87">
                                 <frame key="frameInset" minX="55" minY="518" width="47" height="47"/>
@@ -653,42 +679,45 @@
                                 </connections>
                             </button>
                             <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1yL-T2-FSF">
-                                <frame key="frameInset" minX="55" minY="399" width="47" height="47"/>
+                                <frame key="frameInset" minX="55" minY="284" width="47" height="47"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c4q-6U-uZD">
-                                <frame key="frameInset" minX="123" minY="399" width="47" height="47"/>
+                                <frame key="frameInset" minX="123" minY="284" width="47" height="47"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="cut" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="REB-wa-ejN">
-                                <frame key="frameInset" minX="59" minY="453" width="38" height="21"/>
+                                <frame key="frameInset" minX="59" minY="338" width="38" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="res" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r38-VE-cDu">
-                                <frame key="frameInset" minX="133" minY="453" width="27" height="21"/>
+                                <frame key="frameInset" minX="133" minY="338" width="27" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Low Pass 2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GU8-uZ-6TV">
-                                <frame key="frameInset" minX="59" minY="374" width="92" height="21"/>
+                                <frame key="frameInset" minX="59" minY="259" width="92" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gz5-6g-C43">
-                                <frame key="frameInset" minX="165" minY="370" width="24" height="24"/>
+                                <frame key="frameInset" minX="165" minY="255" width="24" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="on">
                                     <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="lowPass2TriggerValueChanged:" destination="t05-09-Rer" eventType="touchUpInside" id="S7b-Nt-uS6"/>
+                                </connections>
                             </button>
                             <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IBP-mH-V7M">
                                 <frame key="frameInset" minX="327" minY="513" width="47" height="47"/>
@@ -744,17 +773,17 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="J0s-dX-9xK">
-                                <frame key="frameInset" minX="395" minY="283" width="47" height="47"/>
+                                <frame key="frameInset" minX="407" minY="283" width="47" height="47"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Uf7-dg-QAf">
-                                <frame key="frameInset" minX="464" minY="283" width="47" height="47"/>
+                                <frame key="frameInset" minX="487" minY="283" width="47" height="47"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0d9-Vg-P4J">
-                                <frame key="frameInset" minX="531" minY="283" width="47" height="47"/>
+                                <frame key="frameInset" minX="566" minY="283" width="47" height="47"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
@@ -766,21 +795,21 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="D" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fkt-lf-nJo">
-                                <frame key="frameInset" minX="411" minY="340" width="15" height="21"/>
+                                <frame key="frameInset" minX="423" minY="340" width="15" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="S" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eGh-eg-Ww8">
-                                <frame key="frameInset" minX="480" minY="340" width="15" height="21"/>
+                                <frame key="frameInset" minX="503" minY="340" width="15" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="R" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="igE-h4-sOC">
-                                <frame key="frameInset" minX="547" minY="340" width="15" height="21"/>
+                                <frame key="frameInset" minX="582" minY="340" width="15" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <nil key="textColor"/>
@@ -836,6 +865,76 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EAW-a9-tHx">
+                                <frame key="frameInset" minX="190" minY="148" width="47" height="47"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="vol" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e6Q-7I-Nvf">
+                                <frame key="frameInset" minX="201" minY="202" width="25" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OEQ-eP-RcM">
+                                <frame key="frameInset" minX="190" minY="287" width="47" height="47"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="vol" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CkH-lh-khY">
+                                <frame key="frameInset" minX="201" minY="341" width="25" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cw8-fY-Wxx">
+                                <frame key="frameInset" minX="59" minY="401" width="47" height="47"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ibu-Gf-yK0">
+                                <frame key="frameInset" minX="127" minY="401" width="47" height="47"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="power" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q0v-0y-T9r">
+                                <frame key="frameInset" minX="63" minY="455" width="38" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="rate" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="soN-T1-pXC">
+                                <frame key="frameInset" minX="137" minY="455" width="27" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Wobble" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pW8-6Y-52M">
+                                <frame key="frameInset" minX="63" minY="376" width="92" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zsN-Tk-u0S">
+                                <frame key="frameInset" minX="169" minY="372" width="24" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="on">
+                                    <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="wobbleTriggerValueChanged:" destination="t05-09-Rer" eventType="touchUpInside" id="HLb-ec-oAt"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Atr-2B-gXK">
+                                <frame key="frameInset" minX="274" minY="144" width="383" height="131"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -854,21 +953,31 @@
                         <outlet property="lowPass1AttackKnobPlaceholder" destination="1gR-67-174" id="ItO-9C-CXa"/>
                         <outlet property="lowPass1CuttoffKnobPlaceholder" destination="rZ5-dK-NC9" id="BCA-6N-7u2"/>
                         <outlet property="lowPass1DecayKnobPlaceholder" destination="J0s-dX-9xK" id="iOr-rN-pWL"/>
+                        <outlet property="lowPass1OnOffButton" destination="BsO-Qu-miS" id="94Y-8P-tmq"/>
                         <outlet property="lowPass1ReleaseKnobPlaceholder" destination="0d9-Vg-P4J" id="Pab-aD-LcF"/>
                         <outlet property="lowPass1ResonanceKnobPlaceholder" destination="W7v-SM-PeE" id="epX-J7-zcB"/>
                         <outlet property="lowPass1SustainKnobPlaceholder" destination="Uf7-dg-QAf" id="fHb-l4-5F6"/>
+                        <outlet property="lowPass1VolumeKnobPlaceholder" destination="EAW-a9-tHx" id="IUs-SP-cBj"/>
                         <outlet property="lowPass2AttackKnobPlaceholder" destination="IBP-mH-V7M" id="jjG-bC-HFz"/>
                         <outlet property="lowPass2CuttoffKnobPlaceholder" destination="1yL-T2-FSF" id="aik-uI-LRM"/>
                         <outlet property="lowPass2DecayKnobPlaceholder" destination="WEv-bT-KMT" id="h2Z-QP-le7"/>
+                        <outlet property="lowPass2OnOffButton" destination="Gz5-6g-C43" id="wcq-XI-OLf"/>
                         <outlet property="lowPass2ReleaseKnobPlaceholder" destination="JqI-PB-1lg" id="uRK-QJ-TFn"/>
                         <outlet property="lowPass2ResonanceKnobPlaceholder" destination="c4q-6U-uZD" id="uvU-5K-tY1"/>
                         <outlet property="lowPass2SustainKnobPlaceholder" destination="Bky-HH-kzV" id="Bdg-3L-9wL"/>
+                        <outlet property="lowPass2VolumeKnobPlaceholder" destination="OEQ-eP-RcM" id="CIa-m8-agw"/>
+                        <outlet property="lp1ADSRPlaceholder" destination="Atr-2B-gXK" id="wIB-Go-3Xy"/>
                         <outlet property="masterVolumeKnobPlaceholder" destination="nkf-Mm-gyF" id="vsf-X5-4yk"/>
+                        <outlet property="reverbDurationKnobPlaceholder" destination="1SF-cZ-p7X" id="IF7-Wa-67D"/>
                         <outlet property="reverbOnOffButton" destination="giW-5r-16G" id="Gye-93-9aZ"/>
                         <outlet property="startStopSwitch" destination="A7x-ml-7oG" id="c74-Je-svW"/>
                         <outlet property="wahKnobPlaceholder" destination="Cnw-ME-XFz" id="Z6Z-HJ-Na2"/>
+                        <outlet property="wahOnOffButton" destination="yRA-nW-wbc" id="c9R-vo-Lbx"/>
                         <outlet property="wahRateKnobPlaceholder" destination="XIC-Tu-cS5" id="KFQ-gL-a6w"/>
                         <outlet property="waveformPlaceholder" destination="gCG-9k-hbZ" id="GnY-Id-dNG"/>
+                        <outlet property="wobbleOnOffButton" destination="zsN-Tk-u0S" id="BSR-Sk-ncR"/>
+                        <outlet property="wobblePowerKnobPlaceholder" destination="cw8-fY-Wxx" id="5XM-Ps-wrK"/>
+                        <outlet property="wobbleRateKnobPlaceholder" destination="Ibu-Gf-yK0" id="ZNi-kl-7CJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MRH-YK-wHl" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -98,6 +98,7 @@ class GeneratorBank: AKPolyphonicNode {
             morphingOscillatorBank2.attackDuration = attackDuration
             pulseWidthModulationOscillatorBank.attackDuration = attackDuration
             frequencyModulationOscillatorBank.attackDuration = attackDuration
+            noiseADSR.attackDuration = attackDuration
         }
     }
    
@@ -108,6 +109,7 @@ class GeneratorBank: AKPolyphonicNode {
             morphingOscillatorBank2.decayDuration = decayDuration
             pulseWidthModulationOscillatorBank.decayDuration = decayDuration
             frequencyModulationOscillatorBank.decayDuration = decayDuration
+            noiseADSR.decayDuration = decayDuration
         }
     }
     
@@ -117,6 +119,7 @@ class GeneratorBank: AKPolyphonicNode {
             morphingOscillatorBank2.sustainLevel = sustainLevel
             pulseWidthModulationOscillatorBank.sustainLevel = sustainLevel
             frequencyModulationOscillatorBank.sustainLevel = sustainLevel
+            noiseADSR.sustainLevel = sustainLevel
         }
     }
     
@@ -127,6 +130,7 @@ class GeneratorBank: AKPolyphonicNode {
             morphingOscillatorBank2.releaseDuration = releaseDuration
             pulseWidthModulationOscillatorBank.releaseDuration = releaseDuration
             frequencyModulationOscillatorBank.releaseDuration = releaseDuration
+            noiseADSR.releaseDuration = releaseDuration
         }
     }
     
@@ -138,11 +142,14 @@ class GeneratorBank: AKPolyphonicNode {
     var morphingOscillatorBank2: AKMorphingOscillatorBank = AKMorphingOscillatorBank()
     var pulseWidthModulationOscillatorBank = AKPWMOscillatorBank()
     var frequencyModulationOscillatorBank = AKFMOscillatorBank()
+    var noise = AKPinkNoise()
+    var noiseADSR: AKAmplitudeEnvelope
 
     var mob1Mixer: AKMixer
     var mob2Mixer: AKMixer
     var pwmobMixer: AKMixer
     var fmobMixer: AKMixer
+    var noiseMixer: AKMixer
     
     var dryWet: AKDryWetMixer
     var master: AKMixer
@@ -159,19 +166,23 @@ class GeneratorBank: AKPolyphonicNode {
         morphingOscillatorBank1 = AKMorphingOscillatorBank(waveformArray: [triangle, square, sawtooth, sine])
         morphingOscillatorBank2 = AKMorphingOscillatorBank(waveformArray: [square, sine, sawtooth, triangle])
         
+        noiseADSR = AKAmplitudeEnvelope(noise)
+        
         // mixers
         mob1Mixer = AKMixer(morphingOscillatorBank1)
         mob2Mixer = AKMixer(morphingOscillatorBank2)
         pwmobMixer = AKMixer(pulseWidthModulationOscillatorBank)
         fmobMixer = AKMixer(frequencyModulationOscillatorBank)
+        noiseMixer = AKMixer(noiseADSR)
         
         // set bonus osc to off
         pwmobMixer.volume = 0.0
         fmobMixer.volume = 0.0
+        noiseMixer.volume = 0.0
         
         dryWet = AKDryWetMixer(mob1Mixer, mob2Mixer)
         
-        master = AKMixer(dryWet, pwmobMixer, fmobMixer)
+        master = AKMixer(dryWet, pwmobMixer, fmobMixer, noiseMixer)
         
         // set master as a playable MIDI node
         super.init()
@@ -183,8 +194,13 @@ class GeneratorBank: AKPolyphonicNode {
         morphingOscillatorBank1.play(noteNumber: noteNumber + offset1, velocity: velocity)
         morphingOscillatorBank2.play(noteNumber: noteNumber + offset2, velocity: velocity)
         pulseWidthModulationOscillatorBank.play(noteNumber: noteNumber - 12, velocity: velocity)
-        frequencyModulationOscillatorBank.play(noteNumber: noteNumber, velocity: velocity)
-    
+        frequencyModulationOscillatorBank.play(noteNumber: noteNumber - 12, velocity: velocity)
+        
+        if onNotes.count == 0 {
+            noise.start()
+            noiseADSR.start()
+        }
+        
         onNotes.insert(noteNumber)
     }
     
@@ -192,8 +208,11 @@ class GeneratorBank: AKPolyphonicNode {
         morphingOscillatorBank1.stop(noteNumber: noteNumber + offset1)
         morphingOscillatorBank2.stop(noteNumber: noteNumber + offset2)
         pulseWidthModulationOscillatorBank.stop(noteNumber: noteNumber - 12)
-        frequencyModulationOscillatorBank.stop(noteNumber: noteNumber)
-        
+        frequencyModulationOscillatorBank.stop(noteNumber: noteNumber - 12)
         onNotes.remove(noteNumber)
+    
+        if onNotes.count == 0 {
+            noiseADSR.stop()
+        }
     }
 }

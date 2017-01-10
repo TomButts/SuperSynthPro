@@ -1,3 +1,7 @@
+/**
+ * TODO explain which parts of this are mine
+ *
+ */
 import UIKit
 
 class Knob: UIControl {

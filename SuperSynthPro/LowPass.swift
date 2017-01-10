@@ -23,6 +23,7 @@ class LowPass: AKNode {
         didSet {
             parameters[2] = attack
             output.parameters = parameters
+            ADSRView?.attack = attack
         }
     }
     
@@ -30,6 +31,7 @@ class LowPass: AKNode {
         didSet {
             parameters[3] = decay
             output.parameters = parameters
+            ADSRView?.decay = decay
         }
     }
     
@@ -37,6 +39,7 @@ class LowPass: AKNode {
         didSet {
             parameters[4] = sustain
             output.parameters = parameters
+            ADSRView?.sustain = sustain
         }
     }
     
@@ -44,6 +47,7 @@ class LowPass: AKNode {
         didSet {
             parameters[5] = rel
             output.parameters = parameters
+            ADSRView?.rel = rel
         }
     }
     
@@ -53,6 +57,8 @@ class LowPass: AKNode {
             output.parameters = parameters
         }
     }
+    
+    var ADSRView: ADSRView? = nil
     
     var output: AKOperationEffect
     

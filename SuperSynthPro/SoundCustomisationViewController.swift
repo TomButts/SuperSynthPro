@@ -28,29 +28,46 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
     @IBOutlet var lowPass1SustainKnobPlaceholder: UIView!
     @IBOutlet var lowPass1ReleaseKnobPlaceholder: UIView!
     
+    @IBOutlet var lowPass1VolumeKnobPlaceholder: UIView!
+    
     @IBOutlet var lowPass2AttackKnobPlaceholder: UIView!
     @IBOutlet var lowPass2DecayKnobPlaceholder: UIView!
     @IBOutlet var lowPass2SustainKnobPlaceholder: UIView!
     @IBOutlet var lowPass2ReleaseKnobPlaceholder: UIView!
+    
+    @IBOutlet var lowPass2VolumeKnobPlaceholder: UIView!
+    
+    @IBOutlet var wobblePowerKnobPlaceholder: UIView!
+    @IBOutlet var wobbleRateKnobPlaceholder: UIView!
     
     @IBOutlet var delayTimeKnobPlaceholder: UIView!
     @IBOutlet var delayFeedbackKnobPlaceholder: UIView!
     @IBOutlet var delayLfoRateKnobPlaceholder: UIView!
     @IBOutlet var delayLfoAmplitudeKnobPlaceholder: UIView!
     
+    @IBOutlet var reverbDurationKnobPlaceholder: UIView!
+    
     @IBOutlet var wahKnobPlaceholder: UIView!
     @IBOutlet var wahRateKnobPlaceholder: UIView!
     
+    // TODO
     @IBOutlet var globalBendKnobPlaceholder: UIView!
     @IBOutlet var masterVolumeKnobPlaceholder: UIView!
+    
+    @IBOutlet weak var lp1ADSRPlaceholder: UIView!
+    
     
     var audioHandler = AudioHandler.sharedInstance
     
     @IBOutlet var startStopSwitch: UISwitch!
     @IBOutlet var bitCrusherTrigger: UISwitch!
 
+    @IBOutlet var lowPass1OnOffButton: UIButton!
+    @IBOutlet var lowPass2OnOffButton: UIButton!
+    @IBOutlet var wobbleOnOffButton: UIButton!
     @IBOutlet var delayOnOffButton: UIButton!
     @IBOutlet var reverbOnOffButton: UIButton!
+    @IBOutlet var wahOnOffButton: UIButton!
     @IBOutlet var highPassOnOffButton: UIButton!
     
     var lowPass1CuttoffKnob: Knob!
@@ -58,6 +75,9 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
     
     var lowPass2CuttoffKnob: Knob!
     var lowPass2ResonanceKnob: Knob!
+    
+    var lowPass1VolumeKnob: Knob!
+    var lowPass2VolumeKnob: Knob!
     
     var lowPass1AttackKnob: Knob!
     var lowPass1DecayKnob: Knob!
@@ -68,6 +88,10 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
     var lowPass2DecayKnob: Knob!
     var lowPass2SustainKnob: Knob!
     var lowPass2ReleaseKnob: Knob!
+    //TODO filter dw 
+    
+    var wobblePowerKnob: Knob!
+    var wobbleRateKnob: Knob!
     
     var highPassCuttoffKnob: Knob!
     var highPassResonanceKnob: Knob!
@@ -76,6 +100,13 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
     var delayFeedbackKnob: Knob!
     var delayLfoRateKnob: Knob!
     var delayLfoAmplitudeKnob: Knob!
+    
+    var reverbDurationKnob: Knob!
+    
+    var wahKnob: Knob!
+    var wahRateKnob: Knob!
+    
+    var lp1ADSR: ADSRView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -105,6 +136,10 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
         lowPass1ReleaseKnob.addTarget(self, action: #selector(SoundCustomisationViewController.lowPass1ReleaseValueChanged), for: .valueChanged)
         lowPass1ReleaseKnobPlaceholder.addSubview(lowPass1ReleaseKnob)
         
+        lowPass1VolumeKnob = Knob(frame: lowPass1VolumeKnobPlaceholder.bounds)
+        lowPass1VolumeKnob.addTarget(self, action: #selector(SoundCustomisationViewController.lowPass1VolumeValueChanged), for: .valueChanged)
+        lowPass1VolumeKnobPlaceholder.addSubview(lowPass1VolumeKnob)
+        
         // Low pass 2 filter knobs
         lowPass2CuttoffKnob = Knob(frame: lowPass2CuttoffKnobPlaceholder.bounds)
         lowPass2CuttoffKnob.addTarget(self, action: #selector(SoundCustomisationViewController.lowPass2CuttoffValueChanged), for: .valueChanged)
@@ -129,6 +164,19 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
         lowPass2ReleaseKnob = Knob(frame: lowPass2ReleaseKnobPlaceholder.bounds)
         lowPass2ReleaseKnob.addTarget(self, action: #selector(SoundCustomisationViewController.lowPass2ReleaseValueChanged), for: .valueChanged)
         lowPass2ReleaseKnobPlaceholder.addSubview(lowPass2ReleaseKnob)
+        
+        lowPass2VolumeKnob = Knob(frame: lowPass2VolumeKnobPlaceholder.bounds)
+        lowPass2VolumeKnob.addTarget(self, action: #selector(SoundCustomisationViewController.lowPass2VolumeValueChanged), for: .valueChanged)
+        lowPass2VolumeKnobPlaceholder.addSubview(lowPass2VolumeKnob)
+        
+        // Wobble knobs
+        wobblePowerKnob = Knob(frame: wobblePowerKnobPlaceholder.bounds)
+        wobblePowerKnob.addTarget(self, action: #selector(SoundCustomisationViewController.wobblePowerValueChanged), for: .valueChanged)
+        wobblePowerKnobPlaceholder.addSubview(wobblePowerKnob)
+        
+        wobbleRateKnob = Knob(frame: wobbleRateKnobPlaceholder.bounds)
+        wobbleRateKnob.addTarget(self, action: #selector(SoundCustomisationViewController.wobbleRateValueChanged), for: .valueChanged)
+        wobbleRateKnobPlaceholder.addSubview(wobbleRateKnob)
         
         // High pass knobs
         highPassCuttoffKnob = Knob(frame: highPassCuttoffKnobPlaceholder.bounds)
@@ -157,6 +205,18 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
         delayLfoAmplitudeKnobPlaceholder.addSubview(delayLfoAmplitudeKnob)
         
         // Reverb knobs
+        reverbDurationKnob = Knob(frame: reverbDurationKnobPlaceholder.bounds)
+        reverbDurationKnob.addTarget(self, action: #selector(SoundCustomisationViewController.reverbDurationValueChanged), for: .valueChanged)
+        reverbDurationKnobPlaceholder.addSubview(reverbDurationKnob)
+        
+        // Wah
+        wahKnob = Knob(frame: wahKnobPlaceholder.bounds)
+        wahKnob.addTarget(self, action: #selector(SoundCustomisationViewController.wahValueChanged), for: .valueChanged)
+        wahKnobPlaceholder.addSubview(wahKnob)
+        
+        wahRateKnob = Knob(frame: wahRateKnobPlaceholder.bounds)
+        wahRateKnob.addTarget(self, action: #selector(SoundCustomisationViewController.wahRateValueChanged), for: .valueChanged)
+        wahRateKnobPlaceholder.addSubview(wahRateKnob)
         
         // Keyboard
         keyboard = AKKeyboardView(width: 700, height: 128)
@@ -165,6 +225,11 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
         keyboard!.polyphonicMode = false
         keyboard!.delegate = self
         effectsKeyboardPlaceholder.addSubview(keyboard!)
+        
+        // ADSR lp1
+        lp1ADSR = ADSRView(frame: lp1ADSRPlaceholder.bounds)
+        lp1ADSR.renderView()
+        lp1ADSRPlaceholder.addSubview(lp1ADSR)
         
         // Multiple Plotting nodes cause an error related to recording taps
         if (SoundCustomisationViewController.viewInitialised == false) {
@@ -201,6 +266,8 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
         lowPass1ReleaseKnob.maximumValue = 3.0
         lowPass1ReleaseKnob.value = Float(audioHandler.lowPassFilter.rel)
         
+        lowPass1VolumeKnob.value = Float(audioHandler.lowPassFilterMixer.volume)
+        
         // Low Pass 2 Settings
         lowPass2CuttoffKnob.minimumValue = 24.0
         lowPass2CuttoffKnob.maximumValue = 4200.0
@@ -220,6 +287,15 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
         lowPass2ReleaseKnob.maximumValue = 3.0
         lowPass2ReleaseKnob.value = Float(audioHandler.lowPassFilter2.rel)
         
+        lowPass2VolumeKnob.value = Float(audioHandler.lowPassFilter2Mixer.volume)
+        
+        // Wobble settings
+        wobblePowerKnob.maximumValue = 1000.0
+        wobblePowerKnob.value = Float(audioHandler.wobble.halfPowerFrequency)
+        
+        wobbleRateKnob.maximumValue = 20.0
+        wobbleRateKnob.value = Float(audioHandler.wobble.lfoRate)
+        
         // High pass settings
         highPassCuttoffKnob.maximumValue = 4200.0
         highPassCuttoffKnob.value = Float(audioHandler.highPassFilter.cutoffFrequency)
@@ -237,7 +313,18 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
         
         delayLfoAmplitudeKnob.value = Float(audioHandler.delay.lfoAmplitude)
         
+        // Reverb
+        reverbDurationKnob.maximumValue = 2.0
+        reverbDurationKnob.value = Float(audioHandler.reverb.reverbDuration)
+        
+        // Wah
+        wahKnob.value = Float(audioHandler.autoWah.wahAmount)
+        
+        wahRateKnob.maximumValue = 10.0
+        wahRateKnob.value = Float(audioHandler.autoWah.lfoRate)
+        
         // Make triggers reflect audio status
+        // TODO
         if (audioHandler.bitCrusher.isStarted) {
             bitCrusherTrigger.setOn(true, animated: false)
         }
@@ -268,6 +355,42 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
             bitCrusherTrigger.setOn(false, animated: true)
         }
     }
+   
+    @IBAction func lowPass1TriggerValueChanged(_ sender: UIButton) {
+        if (audioHandler.lowPassFilter.output.isStarted) {
+            // Turn off
+            lowPass1OnOffButton.setImage(UIImage(named: "off.png"), for: .normal)
+            audioHandler.lowPassFilter.output.stop()
+        } else {
+            // Turn on
+            lowPass1OnOffButton.setImage(UIImage(named: "on.png"), for: .normal)
+            audioHandler.lowPassFilter.output.start()
+        }
+    }
+    
+    @IBAction func lowPass2TriggerValueChanged(_ sender: UIButton) {
+        if (audioHandler.lowPassFilter2.output.isStarted) {
+            // Turn off
+            lowPass2OnOffButton.setImage(UIImage(named: "off.png"), for: .normal)
+            audioHandler.lowPassFilter2.output.stop()
+        } else {
+            // Turn on
+            lowPass2OnOffButton.setImage(UIImage(named: "on.png"), for: .normal)
+            audioHandler.lowPassFilter2.output.start()
+        }
+    }
+    
+    @IBAction func wobbleTriggerValueChanged(_ sender: UIButton) {
+        if (audioHandler.wobble.output.isStarted) {
+            // Turn off
+            wobbleOnOffButton.setImage(UIImage(named: "off.png"), for: .normal)
+            audioHandler.wobble.output.stop()
+        } else {
+            // Turn on
+            wobbleOnOffButton.setImage(UIImage(named: "on.png"), for: .normal)
+            audioHandler.wobble.output.start()
+        }
+    }
     
     @IBAction func delayTriggerValueChanged(_ sender: UIButton) {
         if (audioHandler.delay.output.isStarted) {
@@ -282,6 +405,15 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
     }
     
     @IBAction func highPassTriggerValueChanged(_ sender: UIButton) {
+        if (audioHandler.highPassFilter.isStarted) {
+            // Turn off
+            highPassOnOffButton.setImage(UIImage(named: "off.png"), for: .normal)
+            audioHandler.highPassFilter.stop()
+        } else {
+            // Turn on
+            highPassOnOffButton.setImage(UIImage(named: "on.png"), for: .normal)
+            audioHandler.highPassFilter.start()
+        }
     }
     
     @IBAction func reverbTriggerValueChange(_ sender: UIButton) {
@@ -293,6 +425,18 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
             // Turn on
             reverbOnOffButton.setImage(UIImage(named: "on.png"), for: .normal)
             audioHandler.reverb.start()
+        }
+    }
+    
+    @IBAction func wahTriggerValueChanged(_ sender: UIButton) {
+        if (audioHandler.autoWah.output.isStarted) {
+            // Turn off
+            wahOnOffButton.setImage(UIImage(named: "off.png"), for: .normal)
+            audioHandler.autoWah.output.stop()
+        } else {
+            // Turn on
+            wahOnOffButton.setImage(UIImage(named: "on.png"), for: .normal)
+            audioHandler.autoWah.output.start()
         }
     }
     
@@ -330,6 +474,10 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
         audioHandler.lowPassFilter.rel = Double(lowPass1ReleaseKnob.value)
     }
     
+    func lowPass1VolumeValueChanged() {
+        audioHandler.lowPassFilterMixer.volume = Double(lowPass1VolumeKnob.value)
+    }
+    
     func lowPass2CuttoffValueChanged() {
         audioHandler.lowPassFilter2.cutOff = Double(lowPass2CuttoffKnob.value)
     }
@@ -352,6 +500,18 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
     
     func lowPass2ReleaseValueChanged() {
         audioHandler.lowPassFilter2.rel = Double(lowPass2ReleaseKnob.value)
+    }
+    
+    func lowPass2VolumeValueChanged() {
+        audioHandler.lowPassFilter2Mixer.volume = Double(lowPass2VolumeKnob.value)
+    }
+    
+    func wobblePowerValueChanged() {
+        audioHandler.wobble.halfPowerFrequency = Double(wobblePowerKnob.value)
+    }
+    
+    func wobbleRateValueChanged() {
+        audioHandler.wobble.lfoRate = Double(wobbleRateKnob.value)
     }
     
     func highPassCuttoffValueChanged() {
@@ -377,11 +537,27 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
     func delayLfoAmplitudeValueChanged() {
         audioHandler.delay.lfoAmplitude = Double(delayLfoAmplitudeKnob.value)
     }
+    
+    func reverbDurationValueChanged() {
+        audioHandler.reverb.reverbDuration = Double(reverbDurationKnob.value)
+    }
+    
+    func wahValueChanged() {
+        audioHandler.autoWah.wahAmount = Double(wahKnob.value)
+    }
+    
+    func wahRateValueChanged() {
+        audioHandler.autoWah.lfoRate = Double(wahRateKnob.value)
+    }
   
     func noteOn(note: MIDINoteNumber) {
         audioHandler.generator.play(noteNumber: note, velocity: 80)
-        audioHandler.lowPassFilter.gate = 1
-        audioHandler.lowPassFilter2.gate = 1
+        if (audioHandler.lowPassFilter.output.isStarted) {
+            audioHandler.lowPassFilter.gate = 1
+        }
+        if (audioHandler.lowPassFilter2.output.isStarted) {
+            audioHandler.lowPassFilter2.gate = 1
+        }
     }
     
     func noteOff(note: MIDINoteNumber) {

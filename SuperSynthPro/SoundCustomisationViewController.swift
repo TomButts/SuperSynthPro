@@ -268,6 +268,8 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
         
         lowPass1VolumeKnob.value = Float(audioHandler.lowPassFilterMixer.volume)
         
+        audioHandler.lowPassFilter.ADSRView = lp1ADSR
+        
         // Low Pass 2 Settings
         lowPass2CuttoffKnob.minimumValue = 24.0
         lowPass2CuttoffKnob.maximumValue = 4200.0

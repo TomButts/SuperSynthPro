@@ -27,6 +27,8 @@
 		E2C91E9F1E05C553009BD62C /* AudioHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C91E9E1E05C553009BD62C /* AudioHandler.swift */; };
 		E2C91EA91E05D1B8009BD62C /* LowPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C91EA81E05D1B8009BD62C /* LowPass.swift */; };
 		E2C9CDF81E0AF7A4004FD3A2 /* Wobble.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C9CDF71E0AF7A4004FD3A2 /* Wobble.swift */; };
+		E2E18AAD1E28354A008AB8DD /* SoundTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E18AAC1E28354A008AB8DD /* SoundTable.swift */; };
+		E2E18AAF1E283878008AB8DD /* Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E18AAE1E283878008AB8DD /* Sound.swift */; };
 		E2E789ED1E03FF260005D5C4 /* GeneratorBank.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E789EC1E03FF260005D5C4 /* GeneratorBank.swift */; };
 		E2F17D181DC66D1700FAB9AE /* GeneratorTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F17D171DC66D1700FAB9AE /* GeneratorTable.swift */; };
 		E2F17D1A1DC66D7200FAB9AE /* OscillatorAmplitudeTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F17D191DC66D7200FAB9AE /* OscillatorAmplitudeTable.swift */; };
@@ -137,6 +139,8 @@
 		E2C91E9E1E05C553009BD62C /* AudioHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioHandler.swift; sourceTree = "<group>"; };
 		E2C91EA81E05D1B8009BD62C /* LowPass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LowPass.swift; sourceTree = "<group>"; };
 		E2C9CDF71E0AF7A4004FD3A2 /* Wobble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Wobble.swift; sourceTree = "<group>"; };
+		E2E18AAC1E28354A008AB8DD /* SoundTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundTable.swift; sourceTree = "<group>"; };
+		E2E18AAE1E283878008AB8DD /* Sound.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sound.swift; sourceTree = "<group>"; };
 		E2E789EC1E03FF260005D5C4 /* GeneratorBank.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratorBank.swift; sourceTree = "<group>"; };
 		E2F17D171DC66D1700FAB9AE /* GeneratorTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratorTable.swift; sourceTree = "<group>"; };
 		E2F17D191DC66D7200FAB9AE /* OscillatorAmplitudeTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OscillatorAmplitudeTable.swift; sourceTree = "<group>"; };
@@ -167,6 +171,7 @@
 			isa = PBXGroup;
 			children = (
 				E20F0F041DC6707B002A7389 /* Generator.swift */,
+				E2E18AAE1E283878008AB8DD /* Sound.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -301,6 +306,7 @@
 				E2F17D171DC66D1700FAB9AE /* GeneratorTable.swift */,
 				E2F17D191DC66D7200FAB9AE /* OscillatorAmplitudeTable.swift */,
 				E2F17D1B1DC66D8400FAB9AE /* OscillatorWaveTypeTable.swift */,
+				E2E18AAC1E28354A008AB8DD /* SoundTable.swift */,
 			);
 			name = CreateTables;
 			sourceTree = "<group>";
@@ -483,8 +489,10 @@
 				E2C1FFAE1E033106008A0B81 /* AutoWah.swift in Sources */,
 				E2C91EA91E05D1B8009BD62C /* LowPass.swift in Sources */,
 				E2BE052C1DC617A00004CADD /* SoundCustomisationViewController.swift in Sources */,
+				E2E18AAF1E283878008AB8DD /* Sound.swift in Sources */,
 				E2C91E9F1E05C553009BD62C /* AudioHandler.swift in Sources */,
 				E2E789ED1E03FF260005D5C4 /* GeneratorBank.swift in Sources */,
+				E2E18AAD1E28354A008AB8DD /* SoundTable.swift in Sources */,
 				E2F17D1C1DC66D8400FAB9AE /* OscillatorWaveTypeTable.swift in Sources */,
 				E2F17D1A1DC66D7200FAB9AE /* OscillatorAmplitudeTable.swift in Sources */,
 				E24E30261DC2754D00E6D6BD /* AppDelegate.swift in Sources */,

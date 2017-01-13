@@ -40,9 +40,12 @@ class ViewController: UIViewController, AKKeyboardDelegate {
     
     @IBOutlet var noiseVolumeKnobPlaceholder: UIView!
     
+    @IBOutlet weak var adsrPlaceholder: UIView!
+    
     @IBOutlet var globalBendKnobPlaceholder: UIView!
     @IBOutlet var masterVolumeKnobPlaceholder: UIView!
   
+    
     @IBOutlet var startStopSwitch: UISwitch!
     
     var mob1WaveTypeKnob: Knob!
@@ -71,6 +74,8 @@ class ViewController: UIViewController, AKKeyboardDelegate {
     var releaseKnob: Knob!
     
     var noiseVolumeKnob: Knob!
+    
+    var adsrView: ADSRView!
     
     var globalBendKnob: Knob!
     var masterVolumeKnob: Knob!
@@ -174,8 +179,18 @@ class ViewController: UIViewController, AKKeyboardDelegate {
         masterVolumeKnob.addTarget(self, action: #selector(ViewController.masterVolumeValueChanged), for: .valueChanged)
         masterVolumeKnobPlaceholder.addSubview(masterVolumeKnob)
         
-        //TODO: make ADSR view
+        // ADSR view
+        adsrView = ADSRView(frame: adsrPlaceholder.bounds)
         
+        adsrView.initialiseADSR(
+            nodeAttack: audioHandler.generator.attackDuration,
+            nodeDecay: audioHandler.generator.decayDuration,
+            nodeSustain: audioHandler.generator.sustainLevel,
+            nodeRelease: audioHandler.generator.releaseDuration
+        )
+        
+        adsrPlaceholder.addSubview(adsrView)
+    
         // Keyboard
         keyboard = AKKeyboardView(width: 820, height: 128)
         keyboard?.sizeThatFits(CGSize(width: CGFloat(820.0), height: CGFloat(128.0)))
@@ -223,7 +238,7 @@ class ViewController: UIViewController, AKKeyboardDelegate {
         
         mob2VolumeKnob.value = Float(audioHandler.generator.mob2Mixer.volume)
         
-        mobBalancerKnob.value = Float(audioHandler.generator.dryWet.balance)
+        mobBalancerKnob.value = Float(audioHandler.generator.mobDryWet.balance)
         
         pulseWidthKnob.value = Float(audioHandler.generator.pulseWidthModulationOscillatorBank.pulseWidth)
         
@@ -240,16 +255,17 @@ class ViewController: UIViewController, AKKeyboardDelegate {
         
         noiseVolumeKnob.value = Float(audioHandler.generator.noiseMixer.volume)
         
-        // TODO ADSR
         attackKnob.value = Float(audioHandler.generator.attackDuration)
         decayKnob.value = Float(audioHandler.generator.decayDuration)
         sustainKnob.value = Float(audioHandler.generator.sustainLevel)
         releaseKnob.value = Float(audioHandler.generator.releaseDuration)
         
+        audioHandler.generator.adsrEnvelope = adsrView
+        
         globalBendKnob.maximumValue = 2.0
         globalBendKnob.value = Float(audioHandler.generator.globalbend)
         
-        masterVolumeKnob.value = Float(audioHandler.generator.master.volume)
+        masterVolumeKnob.value = Float(audioHandler.generator.generatorMaster.volume)
         
         audioHandler.effects.balance = 0.0
     }
@@ -268,7 +284,11 @@ class ViewController: UIViewController, AKKeyboardDelegate {
     }
     
     @IBAction func saveGenerator(_ sender: AnyObject) {
+        let json = audioHandler.serializeCurrentSettings()
         
+        print(json)
+        
+        audioHandler.settingsFromJson(settingsJson: json)
     }
     
     @IBAction func loadGenerator(_ sender: AnyObject) {
@@ -308,7 +328,7 @@ class ViewController: UIViewController, AKKeyboardDelegate {
     }
     
     func mobBalancerValueChanged() {
-        audioHandler.generator.dryWet.balance = Double(mobBalancerKnob.value)
+        audioHandler.generator.mobDryWet.balance = Double(mobBalancerKnob.value)
     }
     
     func mob2WaveTypeValueChanged() {
@@ -360,7 +380,7 @@ class ViewController: UIViewController, AKKeyboardDelegate {
     }
     
     func masterVolumeValueChanged() {
-        audioHandler.generator.master.volume = Double(masterVolumeKnob.value)
+        audioHandler.generator.generatorMaster.volume = Double(masterVolumeKnob.value)
     }
     
     func noteOn(note: MIDINoteNumber) {

@@ -3,7 +3,7 @@ import AudioKit
 
 class LowPass: AKNode {
     
-    var parameters: [Double] = [1000.0, 0.0, 0.2, 0.2, 0.0, 0.8, 1.0]
+    var parameters: [Double] = [1000.0, 0.0, 0.2, 0.2, 0.5, 0.8, 1.0]
     
     var cutOff: Double = 1000.0 {
         didSet {
@@ -35,7 +35,7 @@ class LowPass: AKNode {
         }
     }
     
-    var sustain: Double = 0.0 {
+    var sustain: Double = 0.5 {
         didSet {
             parameters[4] = sustain
             output.parameters = parameters

@@ -374,11 +374,17 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TVL-uF-SHz">
+                                <frame key="frameInset" minX="712" minY="362" width="251" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <navigationItem key="navigationItem" id="hnm-wm-PIu"/>
                     <connections>
+                        <outlet property="adsrPlaceholder" destination="TVL-uF-SHz" id="h9u-CT-CQk"/>
                         <outlet property="attackKnobPlaceholder" destination="W4C-0Z-bLm" id="sqA-cz-5VF"/>
                         <outlet property="decayKnobPlaceholder" destination="xVK-KF-0KK" id="ge3-4u-PnN"/>
                         <outlet property="fmModulationKnobPlaceholder" destination="rrL-Ub-QI6" id="F9p-bp-GEf"/>
@@ -935,6 +941,11 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VyS-Dy-us2">
+                                <frame key="frameInset" minX="274" minY="377" width="383" height="131"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -967,6 +978,7 @@
                         <outlet property="lowPass2SustainKnobPlaceholder" destination="Bky-HH-kzV" id="Bdg-3L-9wL"/>
                         <outlet property="lowPass2VolumeKnobPlaceholder" destination="OEQ-eP-RcM" id="CIa-m8-agw"/>
                         <outlet property="lp1ADSRPlaceholder" destination="Atr-2B-gXK" id="wIB-Go-3Xy"/>
+                        <outlet property="lp2ADSRPlaceholder" destination="VyS-Dy-us2" id="9Ur-LS-0nc"/>
                         <outlet property="masterVolumeKnobPlaceholder" destination="nkf-Mm-gyF" id="vsf-X5-4yk"/>
                         <outlet property="reverbDurationKnobPlaceholder" destination="1SF-cZ-p7X" id="IF7-Wa-67D"/>
                         <outlet property="reverbOnOffButton" destination="giW-5r-16G" id="Gye-93-9aZ"/>

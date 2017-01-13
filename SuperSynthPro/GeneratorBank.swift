@@ -44,6 +44,8 @@ class GeneratorBank: AKPolyphonicNode {
         }
     }
     
+    var adsrEnvelope: ADSRView? = nil
+    
     /** Update mob1 if the waveform or morph index is changed */
     func updateMob1WaveSetup() {
         var newWaveformIndex = waveform1 + morph1
@@ -99,6 +101,7 @@ class GeneratorBank: AKPolyphonicNode {
             pulseWidthModulationOscillatorBank.attackDuration = attackDuration
             frequencyModulationOscillatorBank.attackDuration = attackDuration
             noiseADSR.attackDuration = attackDuration
+            adsrEnvelope?.attack = attackDuration
         }
     }
    
@@ -110,6 +113,7 @@ class GeneratorBank: AKPolyphonicNode {
             pulseWidthModulationOscillatorBank.decayDuration = decayDuration
             frequencyModulationOscillatorBank.decayDuration = decayDuration
             noiseADSR.decayDuration = decayDuration
+            adsrEnvelope?.decay = decayDuration
         }
     }
     
@@ -120,6 +124,7 @@ class GeneratorBank: AKPolyphonicNode {
             pulseWidthModulationOscillatorBank.sustainLevel = sustainLevel
             frequencyModulationOscillatorBank.sustainLevel = sustainLevel
             noiseADSR.sustainLevel = sustainLevel
+            adsrEnvelope?.sustain = sustainLevel
         }
     }
     
@@ -131,6 +136,7 @@ class GeneratorBank: AKPolyphonicNode {
             pulseWidthModulationOscillatorBank.releaseDuration = releaseDuration
             frequencyModulationOscillatorBank.releaseDuration = releaseDuration
             noiseADSR.releaseDuration = releaseDuration
+            adsrEnvelope?.rel = releaseDuration
         }
     }
     
@@ -151,8 +157,8 @@ class GeneratorBank: AKPolyphonicNode {
     var fmobMixer: AKMixer
     var noiseMixer: AKMixer
     
-    var dryWet: AKDryWetMixer
-    var master: AKMixer
+    var mobDryWet: AKDryWetMixer
+    var generatorMaster: AKMixer
     
     var onNotes = Set<Int>()
     
@@ -180,14 +186,14 @@ class GeneratorBank: AKPolyphonicNode {
         fmobMixer.volume = 0.0
         noiseMixer.volume = 0.0
         
-        dryWet = AKDryWetMixer(mob1Mixer, mob2Mixer)
+        mobDryWet = AKDryWetMixer(mob1Mixer, mob2Mixer)
         
-        master = AKMixer(dryWet, pwmobMixer, fmobMixer, noiseMixer)
+        generatorMaster = AKMixer(mobDryWet, pwmobMixer, fmobMixer, noiseMixer)
         
         // set master as a playable MIDI node
         super.init()
         
-        avAudioNode = master.avAudioNode
+        avAudioNode = generatorMaster.avAudioNode
     }
     
     override func play(noteNumber: MIDINoteNumber, velocity: MIDIVelocity) {

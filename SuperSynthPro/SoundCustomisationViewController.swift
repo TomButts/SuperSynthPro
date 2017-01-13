@@ -50,12 +50,11 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
     @IBOutlet var wahKnobPlaceholder: UIView!
     @IBOutlet var wahRateKnobPlaceholder: UIView!
     
-    // TODO
     @IBOutlet var globalBendKnobPlaceholder: UIView!
     @IBOutlet var masterVolumeKnobPlaceholder: UIView!
     
     @IBOutlet weak var lp1ADSRPlaceholder: UIView!
-    
+    @IBOutlet weak var lp2ADSRPlaceholder: UIView!
     
     var audioHandler = AudioHandler.sharedInstance
     
@@ -106,7 +105,11 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
     var wahKnob: Knob!
     var wahRateKnob: Knob!
     
+    var globalBendKnob: Knob!
+    var masterVolumeKnob: Knob!
+    
     var lp1ADSR: ADSRView!
+    var lp2ADSR: ADSRView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -218,6 +221,16 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
         wahRateKnob.addTarget(self, action: #selector(SoundCustomisationViewController.wahRateValueChanged), for: .valueChanged)
         wahRateKnobPlaceholder.addSubview(wahRateKnob)
         
+        // Global bend
+        globalBendKnob = Knob(frame: globalBendKnobPlaceholder.bounds)
+        globalBendKnob.addTarget(self, action: #selector(SoundCustomisationViewController.globalBendValueChanged), for: .valueChanged)
+        globalBendKnobPlaceholder.addSubview(globalBendKnob)
+        
+        // Master volume
+        masterVolumeKnob = Knob(frame: masterVolumeKnobPlaceholder.bounds)
+        masterVolumeKnob.addTarget(self, action: #selector(SoundCustomisationViewController.masterVolumeValueChanged), for: .valueChanged)
+        masterVolumeKnobPlaceholder.addSubview(masterVolumeKnob)
+        
         // Keyboard
         keyboard = AKKeyboardView(width: 700, height: 128)
         keyboard?.sizeThatFits(CGSize(width: CGFloat(820.0), height: CGFloat(128.0)))
@@ -228,8 +241,27 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
         
         // ADSR lp1
         lp1ADSR = ADSRView(frame: lp1ADSRPlaceholder.bounds)
-        lp1ADSR.renderView()
+        
+        lp1ADSR.initialiseADSR(
+            nodeAttack: audioHandler.lowPassFilter.attack,
+            nodeDecay: audioHandler.lowPassFilter.decay,
+            nodeSustain: audioHandler.lowPassFilter.sustain,
+            nodeRelease: audioHandler.lowPassFilter.rel
+        )
+        
         lp1ADSRPlaceholder.addSubview(lp1ADSR)
+        
+        // ADSR lp2
+        lp2ADSR = ADSRView(frame: lp2ADSRPlaceholder.bounds)
+        
+        lp2ADSR.initialiseADSR(
+            nodeAttack: audioHandler.lowPassFilter2.attack,
+            nodeDecay: audioHandler.lowPassFilter2.decay,
+            nodeSustain: audioHandler.lowPassFilter2.sustain,
+            nodeRelease: audioHandler.lowPassFilter2.rel
+        )
+        
+        lp2ADSRPlaceholder.addSubview(lp2ADSR)
         
         // Multiple Plotting nodes cause an error related to recording taps
         if (SoundCustomisationViewController.viewInitialised == false) {
@@ -291,6 +323,9 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
         
         lowPass2VolumeKnob.value = Float(audioHandler.lowPassFilter2Mixer.volume)
         
+        audioHandler.lowPassFilter2.ADSRView = lp2ADSR
+
+        
         // Wobble settings
         wobblePowerKnob.maximumValue = 1000.0
         wobblePowerKnob.value = Float(audioHandler.wobble.halfPowerFrequency)
@@ -325,10 +360,49 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
         wahRateKnob.maximumValue = 10.0
         wahRateKnob.value = Float(audioHandler.autoWah.lfoRate)
         
-        // Make triggers reflect audio status
-        // TODO
+        // Global bend
+        globalBendKnob.value = Float(audioHandler.generator.globalbend)
+        
+        // Master volume
+        masterVolumeKnob.value = Float(audioHandler.generator.generatorMaster.volume)
+        
         if (audioHandler.bitCrusher.isStarted) {
             bitCrusherTrigger.setOn(true, animated: false)
+        }
+        
+        // lp1 on off button reflect status
+        if (audioHandler.lowPassFilter.output.isStarted) {
+            lowPass1OnOffButton.setImage(UIImage(named: "on.png"), for: .normal)
+        } else {
+            lowPass1OnOffButton.setImage(UIImage(named: "off.png"), for: .normal)
+        }
+        
+        // lp2 on off button reflect status
+        if (audioHandler.lowPassFilter2.output.isStarted) {
+            lowPass2OnOffButton.setImage(UIImage(named: "on.png"), for: .normal)
+        } else {
+            lowPass2OnOffButton.setImage(UIImage(named: "off.png"), for: .normal)
+        }
+        
+        // wobble on off button reflect status
+        if (audioHandler.wobble.output.isStarted) {
+            wobbleOnOffButton.setImage(UIImage(named: "on.png"), for: .normal)
+        } else {
+            wobbleOnOffButton.setImage(UIImage(named: "off.png"), for: .normal)
+        }
+        
+        // highpass on off button reflect status
+        if (audioHandler.highPassFilter.isStarted) {
+            highPassOnOffButton.setImage(UIImage(named: "on.png"), for: .normal)
+        } else {
+            highPassOnOffButton.setImage(UIImage(named: "off.png"), for: .normal)
+        }
+        
+        // wah on off button reflect status
+        if (audioHandler.autoWah.output.isStarted) {
+            wahOnOffButton.setImage(UIImage(named: "on.png"), for: .normal)
+        } else {
+            wahOnOffButton.setImage(UIImage(named: "off.png"), for: .normal)
         }
         
         if (audioHandler.delay.output.isStarted) {
@@ -551,7 +625,15 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
     func wahRateValueChanged() {
         audioHandler.autoWah.lfoRate = Double(wahRateKnob.value)
     }
-  
+    
+    func globalBendValueChanged() {
+        audioHandler.generator.globalbend = Double(globalBendKnob.value)
+    }
+    
+    func masterVolumeValueChanged() {
+        audioHandler.generator.generatorMaster.volume = Double(masterVolumeKnob.value)
+    }
+
     func noteOn(note: MIDINoteNumber) {
         audioHandler.generator.play(noteNumber: note, velocity: 80)
         if (audioHandler.lowPassFilter.output.isStarted) {

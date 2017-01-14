@@ -1,8 +1,11 @@
 import UIKit
 import AudioKit
+import SQLite
 
 class ViewController: UIViewController, AKKeyboardDelegate {
     let db = DatabaseConnector()
+    
+    let presetSoundModel = PresetSound()
     
     var audioHandler = AudioHandler.sharedInstance
 
@@ -284,15 +287,34 @@ class ViewController: UIViewController, AKKeyboardDelegate {
     }
     
     @IBAction func saveGenerator(_ sender: AnyObject) {
-        let json = audioHandler.serializeCurrentSettings()
+//        let alert = UIAlertController(title: "Save Preset", message: "Save a preset", preferredStyle: .alert)
+//        
+//        alert.addTextField { (soundName) in
+//            soundName.text = "sound name..."
+//        }
+//        
+//        alert.addAction(
+//            UIAlertAction(
+//                title: "OK",
+//                style: .default,
+//                handler: {
+//                    [weak alert] (_) in
+//                    
+//                    let soundName = alert?.textFields![0]
+//            
+//                    self.presetSoundModel.save(name: (soundName?.text!)!)
+//                }
+//            )
+//        )
+//        
+//        self.present(alert, animated: true, completion: nil)
         
-        print(json)
-        
-        audioHandler.settingsFromJson(settingsJson: json)
+        presetSoundModel.printSettings()
     }
     
     @IBAction func loadGenerator(_ sender: AnyObject) {
-        
+        presetSoundModel.loadPreset(name: "CharlieDimmock")
+        self.viewDidAppear(false)
     }
     
     func attackValueChanged() {

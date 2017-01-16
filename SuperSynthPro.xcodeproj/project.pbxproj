@@ -263,6 +263,7 @@
 		E24E30591DC281D300E6D6BD /* Synthesizer */ = {
 			isa = PBXGroup;
 			children = (
+				E2BF65911E2D3B0D00B73889 /* Panning */,
 				E20F9C3B1E02FAFB004430C6 /* Delay */,
 				E223D42B1E00562900753049 /* Filters */,
 				E2D64F1B1DC4F5000074A86A /* Generators */,
@@ -311,6 +312,13 @@
 				E21DE4AC1E2991CB00E20CAB /* PresetSoundTable.swift */,
 			);
 			name = CreateTables;
+			sourceTree = "<group>";
+		};
+		E2BF65911E2D3B0D00B73889 /* Panning */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Panning;
 			sourceTree = "<group>";
 		};
 		E2D64F1B1DC4F5000074A86A /* Generators */ = {

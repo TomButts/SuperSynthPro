@@ -48,7 +48,6 @@ class ViewController: UIViewController, AKKeyboardDelegate {
     @IBOutlet var globalBendKnobPlaceholder: UIView!
     @IBOutlet var masterVolumeKnobPlaceholder: UIView!
   
-    
     @IBOutlet var startStopSwitch: UISwitch!
     
     var mob1WaveTypeKnob: Knob!
@@ -195,8 +194,8 @@ class ViewController: UIViewController, AKKeyboardDelegate {
         adsrPlaceholder.addSubview(adsrView)
     
         // Keyboard
-        keyboard = AKKeyboardView(width: 820, height: 128)
-        keyboard?.sizeThatFits(CGSize(width: CGFloat(820.0), height: CGFloat(128.0)))
+        keyboard = AKKeyboardView(width: 800, height: 128, firstOctave: 2, octaveCount: 3)
+        keyboard?.sizeToFit()
         keyboard?.keyOnColor = UIColor.blue
         keyboard!.polyphonicMode = false
         keyboard!.delegate = self
@@ -287,34 +286,7 @@ class ViewController: UIViewController, AKKeyboardDelegate {
     }
     
     @IBAction func saveGenerator(_ sender: AnyObject) {
-//        let alert = UIAlertController(title: "Save Preset", message: "Save a preset", preferredStyle: .alert)
-//        
-//        alert.addTextField { (soundName) in
-//            soundName.text = "sound name..."
-//        }
-//        
-//        alert.addAction(
-//            UIAlertAction(
-//                title: "OK",
-//                style: .default,
-//                handler: {
-//                    [weak alert] (_) in
-//                    
-//                    let soundName = alert?.textFields![0]
-//            
-//                    self.presetSoundModel.save(name: (soundName?.text!)!)
-//                }
-//            )
-//        )
-//        
-//        self.present(alert, animated: true, completion: nil)
-        
         presetSoundModel.printSettings()
-    }
-    
-    @IBAction func loadGenerator(_ sender: AnyObject) {
-        presetSoundModel.loadPreset(name: "CharlieDimmock")
-        self.viewDidAppear(false)
     }
     
     func attackValueChanged() {

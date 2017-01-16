@@ -7,8 +7,6 @@ class PresetSound {
     var audioHandler = AudioHandler.sharedInstance
     
     let presetSoundTable: PresetSoundTable
-    
-    var presetNames: [Int64:String]? = nil
 
     init () {
         presetSoundTable = PresetSoundTable(db: db)
@@ -46,22 +44,24 @@ class PresetSound {
 
     }
     
-    func loadAllPresetNames() {
+    func loadAllPresetNames() -> [String] {
+        var presetNames = ["none"]
         do {
             for preset in try db.prepare(PresetSoundTable.presetSoundTable.select(
                     presetSoundTable.id,
                     presetSoundTable.soundName
                 )
             ) {
-                presetNames?[preset[presetSoundTable.id]] = preset[presetSoundTable.soundName]
+                presetNames.append(preset[presetSoundTable.soundName])
             }
         } catch {
             print("Selection of preset ids and names failed: \(error)")
         }
+        
+        return presetNames
     }
     
     func loadPreset(name: String) {
-        print("asdfsadf")
         do {
             for preset in try db.prepare(PresetSoundTable.presetSoundTable.select(
                     presetSoundTable.soundSerialisation

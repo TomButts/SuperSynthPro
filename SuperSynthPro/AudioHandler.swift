@@ -27,9 +27,18 @@ class AudioHandler: AKMIDIListener  {
 
     var filterMixer: AKDryWetMixer! = nil
     
+    var panner: Panning! = nil
+    
+    // EQ filters
+    var low: AKEqualizerFilter! = nil
+    var middle: AKEqualizerFilter! = nil
+    var high: AKEqualizerFilter! = nil
+    
     var effects: AKDryWetMixer! = nil
     
     var master: AKMixer! = nil
+    
+    
     
     init() {
         AKSettings.audioInputEnabled = true
@@ -53,7 +62,10 @@ class AudioHandler: AKMIDIListener  {
         // Filter section output
         filterMixer = AKDryWetMixer(generator, highPassFilter, balance: 1.0)
         
-        let clipper = AKClipper(filterMixer)
+        // Add subtle panning
+        panner = Panning(filterMixer)
+        
+        let clipper = AKClipper(panner)
         clipper.limit = 0.2
         
         // Wobble
@@ -81,7 +93,12 @@ class AudioHandler: AKMIDIListener  {
         lowPara.cornerFrequency = 200
         lowPara.q = 20
         
-        master = AKMixer(lowPara)
+        // EQ
+        low = AKEqualizerFilter(lowPara, centerFrequency: 50, bandwidth: 100, gain: 1.0)
+        middle = AKEqualizerFilter(low, centerFrequency: 350, bandwidth: 300, gain: 1.0)
+        high = AKEqualizerFilter(middle, centerFrequency: 5000, bandwidth: 1000, gain: 1.0)
+        
+        master = AKMixer(high)
         
         AudioKit.output = master
         
@@ -171,6 +188,9 @@ class AudioHandler: AKMIDIListener  {
         settings["wahRate"] = autoWah.lfoRate
         settings["wahAmount"] = autoWah.wahAmount
         settings["wahOn"] = autoWah.output.isStarted
+        settings["low"] = low.gain
+        settings["middle"] = middle.gain
+        settings["high"] = high.gain
         settings["master"] = master.volume
         
         let data = try? JSONSerialization.data(withJSONObject: settings, options: [])
@@ -181,9 +201,7 @@ class AudioHandler: AKMIDIListener  {
     func settingsFromJson(settingsJson: String) {
         let data = settingsJson.data(using: .utf8)!
         
-        let parsedData = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String:AnyObject]
-        
-        print(parsedData)
+        let parsedData = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String: Any]
         
         generator.waveform1 = parsedData?["waveform1"] as! Double
         generator.waveform2 = parsedData?["waveform2"] as! Double
@@ -284,6 +302,10 @@ class AudioHandler: AKMIDIListener  {
         if (parsedData?["wahOn"] as! Bool) {
             autoWah.output.start()
         }
+        
+        low.gain = parsedData?["low"] as! Double
+        middle.gain = parsedData?["middle"] as! Double
+        high.gain = parsedData?["high"] as! Double
         
         master.volume = parsedData?["master"] as! Double
     }

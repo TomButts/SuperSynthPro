@@ -50,6 +50,11 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
     @IBOutlet var wahKnobPlaceholder: UIView!
     @IBOutlet var wahRateKnobPlaceholder: UIView!
     
+    
+    @IBOutlet var lowKnobPlaceholder: UIView!
+    @IBOutlet var midKnobPlaceholder: UIView!
+    @IBOutlet var highKnobPlaceholder: UIView!
+    
     @IBOutlet var globalBendKnobPlaceholder: UIView!
     @IBOutlet var masterVolumeKnobPlaceholder: UIView!
     
@@ -104,6 +109,11 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
     
     var wahKnob: Knob!
     var wahRateKnob: Knob!
+    
+    // EQ
+    var lowKnob: Knob!
+    var midKnob: Knob!
+    var highKnob: Knob!
     
     var globalBendKnob: Knob!
     var masterVolumeKnob: Knob!
@@ -221,6 +231,18 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
         wahRateKnob.addTarget(self, action: #selector(SoundCustomisationViewController.wahRateValueChanged), for: .valueChanged)
         wahRateKnobPlaceholder.addSubview(wahRateKnob)
         
+        lowKnob = Knob(frame: lowKnobPlaceholder.bounds)
+        lowKnob.addTarget(self, action: #selector(SoundCustomisationViewController.lowValueChanged), for: .valueChanged)
+        lowKnobPlaceholder.addSubview(lowKnob)
+        
+        midKnob = Knob(frame: midKnobPlaceholder.bounds)
+        midKnob.addTarget(self, action: #selector(SoundCustomisationViewController.midValueChanged), for: .valueChanged)
+        midKnobPlaceholder.addSubview(midKnob)
+        
+        highKnob = Knob(frame: highKnobPlaceholder.bounds)
+        highKnob.addTarget(self, action: #selector(SoundCustomisationViewController.highValueChanged), for: .valueChanged)
+        highKnobPlaceholder.addSubview(highKnob)
+        
         // Global bend
         globalBendKnob = Knob(frame: globalBendKnobPlaceholder.bounds)
         globalBendKnob.addTarget(self, action: #selector(SoundCustomisationViewController.globalBendValueChanged), for: .valueChanged)
@@ -232,8 +254,8 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
         masterVolumeKnobPlaceholder.addSubview(masterVolumeKnob)
         
         // Keyboard
-        keyboard = AKKeyboardView(width: 700, height: 128)
-        keyboard?.sizeThatFits(CGSize(width: CGFloat(820.0), height: CGFloat(128.0)))
+        keyboard = AKKeyboardView(width: 680, height: 128, firstOctave: 2, octaveCount: 3)
+        keyboard?.sizeToFit()
         keyboard?.keyOnColor = UIColor.blue
         keyboard!.polyphonicMode = false
         keyboard!.delegate = self
@@ -359,6 +381,11 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
         
         wahRateKnob.maximumValue = 10.0
         wahRateKnob.value = Float(audioHandler.autoWah.lfoRate)
+        
+        // EQ
+        lowKnob.maximumValue = 9.0
+        midKnob.maximumValue = 9.0
+        highKnob.maximumValue = 9.0
         
         // Global bend
         globalBendKnob.value = Float(audioHandler.generator.globalbend)
@@ -624,6 +651,18 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
     
     func wahRateValueChanged() {
         audioHandler.autoWah.lfoRate = Double(wahRateKnob.value)
+    }
+    
+    func lowValueChanged() {
+        audioHandler.low.gain = Double(lowKnob.value)
+    }
+    
+    func midValueChanged() {
+        audioHandler.middle.gain = Double(midKnob.value)
+    }
+    
+    func highValueChanged() {
+        audioHandler.high.gain = Double(highKnob.value)
     }
     
     func globalBendValueChanged() {

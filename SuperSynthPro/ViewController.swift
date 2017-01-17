@@ -1,89 +1,142 @@
+/**
+ * The main view controller contains the UI elements needed for wave generation. 
+ * It also includes links to other parts of the app such as sound cutosmisation
+ * and the help page.
+ */
 import UIKit
 import AudioKit
 import SQLite
 
 class ViewController: UIViewController, AKKeyboardDelegate {
+    // This initialises a singleton database connection which can then be accesed
+    // statically from any class which requires it.
     let db = DatabaseConnector()
     
+    // Initialise the preset sound model that controls database interaction
     let presetSoundModel = PresetSound()
     
+    // Initialise the singleton containing the synths audio circuit
     var audioHandler = AudioHandler.sharedInstance
 
+    // Link to the UIView that the keyboard will be placed in
     @IBOutlet var keyboardPlaceholder: UIView!
 
+    // Keyboard UI view
     var keyboard: AKKeyboardView?
     
+    // Live waveform plot
     var plot: AKNodeOutputPlot! = nil
     
-    // Knob Placeholders
+    /*
+     * The UI Knobs are drawn in UIViews placed in the storyboard
+     * These placeholder variables represent these UIViews.
+     * The Knobs will be intialised on load and added to these 
+     * placeholder views as subviews.
+     */
+    
+    // Morphing Ocillator Bank 1
     @IBOutlet var mob1WaveTypeKnobPlaceholder: UIView!
     @IBOutlet var mob1MorphKnobPlaceholder: UIView!
     @IBOutlet var mob1OffsetKnobPlaceholder: UIView!
     @IBOutlet var mob1VolumeKnobPlaceholder: UIView!
     
+    // MOB1 MOB2 Dry Wet Mixer
     @IBOutlet var mobBalancerKnobPlaceholder: UIView!
     
+    // Morphing Ocillator Bank 2
     @IBOutlet var mob2WaveTypeKnobPlaceholder: UIView!
     @IBOutlet var mob2MorphKnobPlaceholder: UIView!
     @IBOutlet var mob2OffsetKnobPlaceholder: UIView!
     @IBOutlet var mob2DetuneKnobPlaceholder: UIView!
     @IBOutlet var mob2VolumeKnobPlaceholder: UIView!
     
+    // Pulse Width Modulator
     @IBOutlet var pulseWidthKnobPlaceholder: UIView!
     @IBOutlet var pulseWidthOffsetKnobPlaceholder: UIView!
     @IBOutlet var pulseWidthVolumeKnobPlaceholder: UIView!
     
+    // FM Oscillator
     @IBOutlet var fmModulationKnobPlaceholder: UIView!
     @IBOutlet var fmVolumeKnobPlaceholder: UIView!
     
+    // Amplitude ADSR Envelope
     @IBOutlet var attackKnobPlaceholder: UIView!
     @IBOutlet var decayKnobPlaceholder: UIView!
     @IBOutlet var sustainKnobPlaceholder: UIView!
     @IBOutlet var releaseKnobPlaceholder: UIView!
     
+    // Noise
     @IBOutlet var noiseVolumeKnobPlaceholder: UIView!
     
-    @IBOutlet weak var adsrPlaceholder: UIView!
+    // Custom drawn envelope
+    @IBOutlet var adsrPlaceholder: UIView!
     
+    // Bend and Master volume
     @IBOutlet var globalBendKnobPlaceholder: UIView!
     @IBOutlet var masterVolumeKnobPlaceholder: UIView!
   
+    // Switch for holding a continuous note (middle C)
     @IBOutlet var startStopSwitch: UISwitch!
     
+    /*
+     * The Knob variables that will be drawn and added to the placeholder
+     * views
+     */
+    
+    // Morphing Ocillator Bank 1
     var mob1WaveTypeKnob: Knob!
     var mob1MorphKnob: Knob!
     var mob1OffsetKnob: Knob!
     var mob1VolumeKnob: Knob!
     
+    // Morphing Ocillator Bank 2
     var mob2WaveTypeKnob: Knob!
     var mob2MorphKnob: Knob!
     var mob2OffsetKnob: Knob!
     var mob2DetuneKnob: Knob!
     var mob2VolumeKnob: Knob!
     
+    // Pulse Width
     var pulseWidthKnob: Knob!
     var pulseWidthOffsetKnob: Knob!
     var pulseWidthVolumeKnob: Knob!
     
+    // FM Oscillator
     var fmModulationKnob: Knob!
     var fmVolumeKnob: Knob!
     
+    // MOB1 MOB2 Dry Wet
     var mobBalancerKnob: Knob!
     
+    // ADSR controls
     var attackKnob: Knob!
     var decayKnob: Knob!
     var sustainKnob: Knob!
     var releaseKnob: Knob!
     
+    // Noise
     var noiseVolumeKnob: Knob!
     
+    // ADSR view
     var adsrView: ADSRView!
     
+    // Bend and master volume
     var globalBendKnob: Knob!
     var masterVolumeKnob: Knob!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        /*
+         * The following blocks initialise the Knob object by passing 
+         * it the bounds information of the placeholder view it will be drawn in.
+         * 
+         * Next the addTarget method is used in order to specify where the value of the knob 
+         * should be sent on change.
+         *
+         * Finally the Knobs are added to the placeholder view 
+         * as subviews.
+         */
+        
         // MOB1
         mob1WaveTypeKnob = Knob(frame: mob1WaveTypeKnobPlaceholder.bounds)
         mob1WaveTypeKnob.addTarget(self, action: #selector(ViewController.mob1WaveTypeValueChanged), for: .valueChanged)
@@ -184,6 +237,7 @@ class ViewController: UIViewController, AKKeyboardDelegate {
         // ADSR view
         adsrView = ADSRView(frame: adsrPlaceholder.bounds)
         
+        // This makes sure the drawing reflects the values of the envelope in the audio handler
         adsrView.initialiseADSR(
             nodeAttack: audioHandler.generator.attackDuration,
             nodeDecay: audioHandler.generator.decayDuration,
@@ -194,7 +248,7 @@ class ViewController: UIViewController, AKKeyboardDelegate {
         adsrPlaceholder.addSubview(adsrView)
     
         // Keyboard
-        keyboard = AKKeyboardView(width: 800, height: 128, firstOctave: 2, octaveCount: 3)
+        keyboard = AKKeyboardView(width: 800, height: 128)
         keyboard?.sizeToFit()
         keyboard?.keyOnColor = UIColor.blue
         keyboard!.polyphonicMode = false
@@ -212,7 +266,17 @@ class ViewController: UIViewController, AKKeyboardDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        // Knob values
+        /*
+         * The following blocks set the Knob settings
+         * like maxiumum and minimum values and also intialise
+         * the knob value to be the same as the audio component its
+         * representing.
+         *
+         * When initially writing this part these were in view did load function
+         * but for some reason AK threw an error so they are now in view did appear.
+         */
+        
+        // MOB1
         mob1WaveTypeKnob.maximumValue = 4
         mob1WaveTypeKnob.value = Float(audioHandler.generator.waveform1)
         
@@ -226,6 +290,7 @@ class ViewController: UIViewController, AKKeyboardDelegate {
         
         mob1VolumeKnob.value = Float(audioHandler.generator.mob1Mixer.volume)
         
+        // MOB 2
         mob2MorphKnob.minimumValue = -4
         mob2MorphKnob.maximumValue = 4
         mob2MorphKnob.value = Float(audioHandler.generator.morph2)
@@ -240,8 +305,10 @@ class ViewController: UIViewController, AKKeyboardDelegate {
         
         mob2VolumeKnob.value = Float(audioHandler.generator.mob2Mixer.volume)
         
+        // MOB1 MOB2 DW Mixer
         mobBalancerKnob.value = Float(audioHandler.generator.mobDryWet.balance)
         
+        // PW Modulation
         pulseWidthKnob.value = Float(audioHandler.generator.pulseWidthModulationOscillatorBank.pulseWidth)
         
         pulseWidthOffsetKnob.minimumValue = -12
@@ -250,28 +317,41 @@ class ViewController: UIViewController, AKKeyboardDelegate {
         
         pulseWidthVolumeKnob.value = Float(audioHandler.generator.pwmobMixer.volume)
         
+        // FM Oscillator
         fmModulationKnob.maximumValue = 15
         fmModulationKnob.value = Float(audioHandler.generator.frequencyModulationOscillatorBank.modulationIndex)
         
         fmVolumeKnob.value = Float(audioHandler.generator.fmobMixer.volume)
         
+        // Noise
         noiseVolumeKnob.value = Float(audioHandler.generator.noiseMixer.volume)
         
+        // ADSR
         attackKnob.value = Float(audioHandler.generator.attackDuration)
         decayKnob.value = Float(audioHandler.generator.decayDuration)
         sustainKnob.value = Float(audioHandler.generator.sustainLevel)
         releaseKnob.value = Float(audioHandler.generator.releaseDuration)
         
+        // Envelope
         audioHandler.generator.adsrEnvelope = adsrView
         
+        // Bend and Master
         globalBendKnob.maximumValue = 2.0
         globalBendKnob.value = Float(audioHandler.generator.globalbend)
         
         masterVolumeKnob.value = Float(audioHandler.generator.generatorMaster.volume)
         
+        // This sets the volume of the effects to zero
+        // which means you can focus on getting the perfect waveform
+        // while in this view
         audioHandler.effects.balance = 0.0
     }
     
+    /*
+     * This switch plays a note continuously which
+     * is really useful because you can play with the dials
+     * while hearing the sound.
+     */
     @IBAction func startStopGenerator(_ sender: AnyObject) {
         let middleC: MIDINoteNumber = 60
         let vel: MIDIVelocity = 127
@@ -285,10 +365,16 @@ class ViewController: UIViewController, AKKeyboardDelegate {
         }
     }
     
+    // Vestigial
     @IBAction func saveGenerator(_ sender: AnyObject) {
         presetSoundModel.printSettings()
     }
     
+    /*
+     * The following functions handle the changing of knob values.
+     * They all take the knob value and apply it to the relevant audio
+     * component.
+     */
     func attackValueChanged() {
         audioHandler.generator.attackDuration = Double(attackKnob.value)
     }
@@ -377,10 +463,12 @@ class ViewController: UIViewController, AKKeyboardDelegate {
         audioHandler.generator.generatorMaster.volume = Double(masterVolumeKnob.value)
     }
     
+    // Called when an AKKeyboard key is pressed
     func noteOn(note: MIDINoteNumber) {
         audioHandler.generator.play(noteNumber: note, velocity: 80)
     }
     
+    // Called when the key is released
     func noteOff(note: MIDINoteNumber) {
         audioHandler.generator.stop(noteNumber: note)
     }

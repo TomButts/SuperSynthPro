@@ -1,71 +1,101 @@
+/**
+ * This view controller is responsible for the effects page.
+ */
 import UIKit
 import SQLite
 import AudioKit
 
 class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
-    let db = DatabaseConnector()
-    
+    // AudioKit Errors if too many 'taps' are being used
+    // This is due to the AVF audio code that AK is built on
+    // To avoid this breaking things once the plot is initialised
+    // that instance is retained
     static var plot: AKNodeOutputPlot! = nil
-    
-    var keyboard: AKKeyboardView?
-    @IBOutlet var effectsKeyboardPlaceholder: UIView!
-    @IBOutlet var waveformPlaceholder: UIView!
-    
-    @IBOutlet var effectsKeyboard: UIView!
     static var viewInitialised = false
     
+    /*
+     * The UI Knobs are drawn in UIViews placed in the storyboard
+     * These placeholder variables represent these UIViews.
+     * The Knobs will be intialised on load and added to these
+     * placeholder views as subviews.
+     */
+    
+    // Keyboard
+    @IBOutlet var effectsKeyboardPlaceholder: UIView!
+    
+    // Live waveform plot
+    @IBOutlet var waveformPlaceholder: UIView!
+    
+    // Low pass filter 1 controls
     @IBOutlet var lowPass1CuttoffKnobPlaceholder: UIView!
     @IBOutlet var lowPass1ResonanceKnobPlaceholder: UIView!
     
+    // Low pass filter 1 controls
     @IBOutlet var lowPass2CuttoffKnobPlaceholder: UIView!
     @IBOutlet var lowPass2ResonanceKnobPlaceholder: UIView!
     
+    // High pass
     @IBOutlet var highPassCuttoffKnobPlaceholder: UIView!
     @IBOutlet var highPassResonanceKnobPlaceholder: UIView!
 
+    // Low pass filter 1's cutoff ADSR
     @IBOutlet var lowPass1AttackKnobPlaceholder: UIView!
     @IBOutlet var lowPass1DecayKnobPlaceholder: UIView!
     @IBOutlet var lowPass1SustainKnobPlaceholder: UIView!
     @IBOutlet var lowPass1ReleaseKnobPlaceholder: UIView!
     
+    // LP1 Volume
     @IBOutlet var lowPass1VolumeKnobPlaceholder: UIView!
     
+    // Low pass filter 2's cutoff ADSR
     @IBOutlet var lowPass2AttackKnobPlaceholder: UIView!
     @IBOutlet var lowPass2DecayKnobPlaceholder: UIView!
     @IBOutlet var lowPass2SustainKnobPlaceholder: UIView!
     @IBOutlet var lowPass2ReleaseKnobPlaceholder: UIView!
     
+    // LP2 Volume
     @IBOutlet var lowPass2VolumeKnobPlaceholder: UIView!
     
+    // Wobble control
     @IBOutlet var wobblePowerKnobPlaceholder: UIView!
     @IBOutlet var wobbleRateKnobPlaceholder: UIView!
     
+    // Variable delay
     @IBOutlet var delayTimeKnobPlaceholder: UIView!
     @IBOutlet var delayFeedbackKnobPlaceholder: UIView!
     @IBOutlet var delayLfoRateKnobPlaceholder: UIView!
     @IBOutlet var delayLfoAmplitudeKnobPlaceholder: UIView!
     
+    // Reverb
     @IBOutlet var reverbDurationKnobPlaceholder: UIView!
     
+    // Wah
     @IBOutlet var wahKnobPlaceholder: UIView!
     @IBOutlet var wahRateKnobPlaceholder: UIView!
     
-    
+    // EQ
     @IBOutlet var lowKnobPlaceholder: UIView!
     @IBOutlet var midKnobPlaceholder: UIView!
     @IBOutlet var highKnobPlaceholder: UIView!
     
+    // Bend and master volume
     @IBOutlet var globalBendKnobPlaceholder: UIView!
     @IBOutlet var masterVolumeKnobPlaceholder: UIView!
     
+    // The custom ADSR envelopes for LP1 and LP2
     @IBOutlet weak var lp1ADSRPlaceholder: UIView!
     @IBOutlet weak var lp2ADSRPlaceholder: UIView!
     
+    // The shared instance of the audio handler
     var audioHandler = AudioHandler.sharedInstance
     
+    // Another useful middle C switch
     @IBOutlet var startStopSwitch: UISwitch!
+    
+    // Bitcrusher on and off
     @IBOutlet var bitCrusherTrigger: UISwitch!
 
+    // The on off button outlets for the audio components
     @IBOutlet var lowPass1OnOffButton: UIButton!
     @IBOutlet var lowPass2OnOffButton: UIButton!
     @IBOutlet var wobbleOnOffButton: UIButton!
@@ -74,39 +104,53 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
     @IBOutlet var wahOnOffButton: UIButton!
     @IBOutlet var highPassOnOffButton: UIButton!
     
+    /*
+     * The Knob variables that will be drawn and added to the placeholder
+     * views
+     */
+    
+    // LP1
     var lowPass1CuttoffKnob: Knob!
     var lowPass1ResonanceKnob: Knob!
     
+    // LP2
     var lowPass2CuttoffKnob: Knob!
     var lowPass2ResonanceKnob: Knob!
     
+    // LP1 Volume
     var lowPass1VolumeKnob: Knob!
     var lowPass2VolumeKnob: Knob!
     
+    // LP1 Cutoff ADSR
     var lowPass1AttackKnob: Knob!
     var lowPass1DecayKnob: Knob!
     var lowPass1SustainKnob: Knob!
     var lowPass1ReleaseKnob: Knob!
     
+    // LP2 Cutoff ADSR
     var lowPass2AttackKnob: Knob!
     var lowPass2DecayKnob: Knob!
     var lowPass2SustainKnob: Knob!
     var lowPass2ReleaseKnob: Knob!
-    //TODO filter dw 
     
+    // Wobble
     var wobblePowerKnob: Knob!
     var wobbleRateKnob: Knob!
     
+    // High Pass
     var highPassCuttoffKnob: Knob!
     var highPassResonanceKnob: Knob!
     
+    // Delay
     var delayTimeKnob: Knob!
     var delayFeedbackKnob: Knob!
     var delayLfoRateKnob: Knob!
     var delayLfoAmplitudeKnob: Knob!
     
+    // Reverb
     var reverbDurationKnob: Knob!
     
+    // Wah
     var wahKnob: Knob!
     var wahRateKnob: Knob!
     
@@ -115,14 +159,30 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
     var midKnob: Knob!
     var highKnob: Knob!
     
+    // Bend and master
     var globalBendKnob: Knob!
     var masterVolumeKnob: Knob!
     
+    // LP1 and LP2 envelope views
     var lp1ADSR: ADSRView!
     var lp2ADSR: ADSRView!
     
+    // Keyboard
+    var keyboard: AKKeyboardView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        /*
+         * The following blocks initialise the Knob object by passing
+         * it the bounds information of the placeholder view it will be drawn in.
+         *
+         * Next the addTarget method is used in order to specify where the value of the knob
+         * should be sent on change.
+         *
+         * Finally the Knobs are added to the placeholder view
+         * as subviews.
+         */
+
         
         // Low pass 1 filter knobs
         lowPass1CuttoffKnob = Knob(frame: lowPass1CuttoffKnobPlaceholder.bounds)
@@ -254,7 +314,7 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
         masterVolumeKnobPlaceholder.addSubview(masterVolumeKnob)
         
         // Keyboard
-        keyboard = AKKeyboardView(width: 680, height: 128, firstOctave: 2, octaveCount: 3)
+        keyboard = AKKeyboardView(width: 680, height: 128)
         keyboard?.sizeToFit()
         keyboard?.keyOnColor = UIColor.blue
         keyboard!.polyphonicMode = false
@@ -264,6 +324,7 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
         // ADSR lp1
         lp1ADSR = ADSRView(frame: lp1ADSRPlaceholder.bounds)
         
+        // Sets the drawn envelope to use the same values as the component
         lp1ADSR.initialiseADSR(
             nodeAttack: audioHandler.lowPassFilter.attack,
             nodeDecay: audioHandler.lowPassFilter.decay,
@@ -276,6 +337,7 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
         // ADSR lp2
         lp2ADSR = ADSRView(frame: lp2ADSRPlaceholder.bounds)
         
+        // Sets the drawn envelope to use the same values as the component
         lp2ADSR.initialiseADSR(
             nodeAttack: audioHandler.lowPassFilter2.attack,
             nodeDecay: audioHandler.lowPassFilter2.decay,
@@ -285,7 +347,7 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
         
         lp2ADSRPlaceholder.addSubview(lp2ADSR)
         
-        // Multiple Plotting nodes cause an error related to recording taps
+        // Multiple Plotting nodes cause an error related to recording taps as mentioned above
         if (SoundCustomisationViewController.viewInitialised == false) {
             let plotFrame = CGRect(x: 8.0, y: 0.0, width: 235.0, height: 200.0)
             SoundCustomisationViewController.plot = AKNodeOutputPlot(audioHandler.master, frame: plotFrame)
@@ -296,11 +358,23 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
             SoundCustomisationViewController.viewInitialised = true
         }
         
+        // The intialisation code is ran once then each time the view is loaded that
+        // instance of the plot is added to the view here
         waveformPlaceholder.addSubview(SoundCustomisationViewController.plot)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
+        /*
+         * The following blocks set the Knob settings
+         * like maxiumum and minimum values and also intialise
+         * the knob value to be the same as the audio component its
+         * representing.
+         *
+         * When initially writing this part these were in view did load function
+         * but for some reason AK threw an error so they are now in view did appear.
+         */
+
         // Low Pass 1 Settings
         lowPass1CuttoffKnob.minimumValue = 24.0
         lowPass1CuttoffKnob.maximumValue = 4200.0
@@ -317,6 +391,9 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
         
         lowPass1SustainKnob.value = Float(audioHandler.lowPassFilter.sustain)
         
+        // Set the lp resonance to a low value to prevent noisey woop sound
+        // when intialised
+        audioHandler.lowPassFilter.resonance = 0.4
         lowPass1ReleaseKnob.maximumValue = 3.0
         lowPass1ReleaseKnob.value = Float(audioHandler.lowPassFilter.rel)
         
@@ -329,6 +406,9 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
         lowPass2CuttoffKnob.maximumValue = 4200.0
         lowPass2CuttoffKnob.value = Float(audioHandler.lowPassFilter2.cutOff)
         
+        // Set the lp resonance to a low value to prevent noisey woop sound
+        // when intialised
+        audioHandler.lowPassFilter2.resonance = 0.4
         lowPass2ResonanceKnob.maximumValue = 2.0
         lowPass2ResonanceKnob.value = Float(audioHandler.lowPassFilter2.resonance)
         
@@ -393,6 +473,11 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
         // Master volume
         masterVolumeKnob.value = Float(audioHandler.generator.generatorMaster.volume)
         
+        
+        /*
+         * The following blocks check if a component in the audio handler is 
+         * on or off and then change the button image to reflect that
+         */
         if (audioHandler.bitCrusher.isStarted) {
             bitCrusherTrigger.setOn(true, animated: false)
         }
@@ -444,10 +529,17 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
             reverbOnOffButton.setImage(UIImage(named: "off.png"), for: .normal)
         }
         
-        // Effects on
+        // This sets the balance of the effects mixer allowing the full circuit to be 
+        // heard (effects on)
         audioHandler.effects.balance = 1.0
     }
     
+    /*
+     * The following trigger methods are used to handle the component on off buttons
+     *
+     * If a component on off value is changed start or stop the component
+     * and set the button status to reflect the change.
+     */
     @IBAction func bitCrusherTriggerValueChanged(_ sender: UISwitch) {
         // Bitcrusher on / off
         if (bitCrusherTrigger .isOn) {
@@ -552,6 +644,11 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
             startStopSwitch.setOn(false, animated: true)
         }
     }
+    
+    /*
+     * The following value changed blocks handle the knob value changing
+     * and assing the value to the component the knob is tracking
+     */
     
     func lowPass1CuttoffValueChanged() {
         audioHandler.lowPassFilter.cutOff = Double(lowPass1CuttoffKnob.value)
@@ -673,16 +770,24 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
         audioHandler.generator.generatorMaster.volume = Double(masterVolumeKnob.value)
     }
 
+    /* The keyboard note on function also needs to set LP1 and LP2 'gate'
+     * values to 1 if they are switched on.  This is because the cutoff ADSR is gate triggered
+     * to acheive that funky woop sound when a key is pressed
+     */
     func noteOn(note: MIDINoteNumber) {
         audioHandler.generator.play(noteNumber: note, velocity: 80)
         if (audioHandler.lowPassFilter.output.isStarted) {
             audioHandler.lowPassFilter.gate = 1
         }
+        
         if (audioHandler.lowPassFilter2.output.isStarted) {
             audioHandler.lowPassFilter2.gate = 1
         }
     }
     
+    /*
+     * When the keyboard key is released also set the LP gates to 0
+     */
     func noteOff(note: MIDINoteNumber) {
         audioHandler.generator.stop(noteNumber: note)
         audioHandler.lowPassFilter.gate = 0

@@ -1,8 +1,15 @@
+/**
+ * The ADSR view is a custom envelope drawing object made entirely by me.
+ * It draws a representation of an envelope in a view based on ADSR values
+ */
 import Foundation
 import UIKit
 
 class ADSRView: UIView {
-    // variable to determine rendering
+    /*
+     * didSet allows rerendering of the envelope everytime an ADSR value is changed
+     * by using the setNeedsDisplay function
+     */
     var attack: Double? = 0.2 {
         didSet {
             setNeedsDisplay()
@@ -26,19 +33,38 @@ class ADSRView: UIView {
         }
     }
     
+    /* 
+     * A UIView takes a CGRect to init and when draw is called
+     *
+     * In this case the CGRect (frame) is the same so I set it as a property
+     */
     var viewFrame: CGRect
     
     override init(frame: CGRect) {
+        // Set the frame on initialisation
         viewFrame = frame
+        
+        // UIViews init
         super.init(frame: frame)
+        
+        // Need a clear background for the view
         self.backgroundColor = UIColor.clear
     }
     
+    /*
+     * UIView sub classes override draw in order to draw thing
+     */
     public override func draw(_ frame: CGRect) {
+        // Draw the 'container' which is just a rectangle
         drawContainer()
+        
+        // Draw the actual envelope in the rectangle
         drawEnvelope()
     }
     
+    /*
+     * Allows the ADSR properties to be set in 1 line rather than 4
+     */
     func initialiseADSR(nodeAttack: Double, nodeDecay: Double, nodeSustain: Double, nodeRelease: Double) {
         attack = nodeAttack
         decay = nodeDecay
@@ -50,10 +76,17 @@ class ADSRView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    /*
+     * A wrapper for draw which means I don't have to pass draw another rect 
+     * in a view controller
+     */
     func renderView() {
         draw(viewFrame)
     }
     
+    /*
+     * Draws the container which is just a rectangle
+     */
     func drawContainer() {
         let colour: UIColor = UIColor.blue
         let viewHeight = viewFrame.height
@@ -66,6 +99,16 @@ class ADSRView: UIView {
         container.stroke()
     }
     
+    /*
+     * Draw the envelope.
+     * 
+     * This is a bit confusing because the x,y values start at the top left rather than bottom left.
+     *
+     * I've tried to make the variables fairly verbose to make things clearer.
+     * 
+     * Everything is done in relation to the view frame so that it should scale to whatever size frame you're 
+     * using
+     */
     func drawEnvelope() {
         let adsrLine = UIBezierPath()
         let attackLineHeight = (viewFrame.height * 0.2)

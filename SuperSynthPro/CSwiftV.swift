@@ -1,6 +1,12 @@
-//  Note touched nothing in here not claiming credit
-//  it is open source though so i can use it
-// 
+/**
+ * NOTE This file does not belong to me and I am not claiming credit for it
+ *
+ * It's an open source csv parsing module free to use
+ *
+ * I need to parse the presets txt file so I have used this handy module.
+ *
+ */
+
 //  CSwiftV.swift
 //  CSwiftV
 //

@@ -1,13 +1,20 @@
+/**
+ * A Singleton class that holds the audio circuit of the synth
+ */
 import Foundation
 import AudioKit
 
-class AudioHandler: AKMIDIListener  {
+class AudioHandler  {
+    // Create a shared instance
     static let sharedInstance = AudioHandler()
-    
+  
+    // Generator bank
     var generator = GeneratorBank()
     
+    // Bitcrusher
     var bitCrusher: AKBitCrusher! = nil
     
+    // Filters
     var lowPassFilter: LowPass! = nil
     var lowPassFilter2: LowPass! = nil
     var highPassFilter: AKHighPassFilter! = nil
@@ -15,18 +22,24 @@ class AudioHandler: AKMIDIListener  {
     var lowPassFilterMixer: AKMixer! = nil
     var lowPassFilter2Mixer: AKMixer! = nil
 
+    // Wobble
     var wobble: Wobble! = nil
     
+    // Delay
     var delay: VariableDelay! = nil
     
+    // Reverb
     var reverb: AKFlatFrequencyResponseReverb! = nil
     
+    // Auto Wah
     var autoWah: AutoWah! = nil
 
+    // Maximum global detune
     var maximumBend: Double = 2.0
 
     var filterMixer: AKDryWetMixer! = nil
     
+    // Panning
     var panner: Panning! = nil
     
     // EQ filters
@@ -38,11 +51,10 @@ class AudioHandler: AKMIDIListener  {
     
     var master: AKMixer! = nil
     
-    
-    
     init() {
         AKSettings.audioInputEnabled = true
         
+        // Peak expander
         let expander = AKExpander(generator)
         expander.expansionRatio = 50
         expander.expansionThreshold = 50
@@ -65,6 +77,7 @@ class AudioHandler: AKMIDIListener  {
         // Add subtle panning
         panner = Panning(filterMixer)
         
+        // Clip the filter sounds
         let clipper = AKClipper(panner)
         clipper.limit = 0.2
         
@@ -82,6 +95,7 @@ class AudioHandler: AKMIDIListener  {
         
         effects = AKDryWetMixer(expander, autoWah, balance: 0.0)
         
+        // Add some compression
         let compressor = AKCompressor(
             effects,
             threshold: -20,
@@ -89,47 +103,34 @@ class AudioHandler: AKMIDIListener  {
             masterGain: -10
         )
         
+        // EQFilter to middle
         let lowPara = AKLowShelfParametricEqualizerFilter(compressor)
         lowPara.cornerFrequency = 200
         lowPara.q = 20
         
-        // EQ
+        // EQ Filters
         low = AKEqualizerFilter(lowPara, centerFrequency: 50, bandwidth: 100, gain: 1.0)
         middle = AKEqualizerFilter(low, centerFrequency: 350, bandwidth: 300, gain: 1.0)
         high = AKEqualizerFilter(middle, centerFrequency: 5000, bandwidth: 1000, gain: 1.0)
         
+        // Master volume
         master = AKMixer(high)
         
+        // Set output
         AudioKit.output = master
         
+        // Start AK
         AudioKit.start()
-        
-        let midi = AKMIDI()
-        
-        midi.createVirtualPorts()
-        
-        midi.openInput("Session 1")
-        
-        midi.addListener(self)
     }
     
-    func receivedMIDINoteOn(noteNumber: MIDINoteNumber,
-                            velocity: MIDIVelocity,
-                            channel: Int) {
-        generator.play(noteNumber: noteNumber, velocity: velocity)
-    }
-    
-    func receivedMIDINoteOff(noteNumber: MIDINoteNumber,
-                             velocity: MIDIVelocity,
-                             channel: Int) {
-        generator.stop(noteNumber: noteNumber)
-    }
-    
-    func receivedMIDIPitchWheel(_ pitchWheelValue: Int, channel: Int) {
-        let bendSemi =  (Double(pitchWheelValue - 8192) / 8192.0) * maximumBend
-        generator.globalbend = bendSemi
-    }
-    
+    /*
+     * Gets all the current settings that are accessible to users 
+     * and puts the into an array which is then converted into JSON
+     *
+     * If youre going to serialise things swift makes it hard to do this a nicer
+     * way.  Even if you write something to serialise structs (which I did)
+     * it's difficult and unweildly to extract parse the JSON
+     */
     func serializeCurrentSettings() -> String {
         // Encoding all of these in a top level array as JSON deserialisation
         // only works on one levels so cant use nested dictionary
@@ -193,16 +194,23 @@ class AudioHandler: AKMIDIListener  {
         settings["high"] = high.gain
         settings["master"] = master.volume
         
+        // Serialise
         let data = try? JSONSerialization.data(withJSONObject: settings, options: [])
         
         return String(data: data!, encoding: .utf8)!
     }
     
+    /*
+     * Deserialises the data created in serializeCurrentSettings and applys the settings
+     */
     func settingsFromJson(settingsJson: String) {
+        // Encode string as data
         let data = settingsJson.data(using: .utf8)!
         
+        // Unserialise
         let parsedData = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String: Any]
         
+        // Set variables from the data
         generator.waveform1 = parsedData?["waveform1"] as! Double
         generator.waveform2 = parsedData?["waveform2"] as! Double
         generator.globalbend = parsedData?["globalbend"] as! Double
@@ -223,6 +231,7 @@ class AudioHandler: AKMIDIListener  {
         generator.mobDryWet.balance = parsedData?["mobDryWet"] as! Double
         generator.generatorMaster.volume = parsedData?["generatorMaster"] as! Double
         
+        // Handle bitcrusher on off setting
         bitCrusher.stop()
         
         if (parsedData?["bitCrusherOn"] as! Bool) {
@@ -237,6 +246,7 @@ class AudioHandler: AKMIDIListener  {
         lowPassFilter.resonance = parsedData?["lp1Resonance"] as! Double
         lowPassFilterMixer.volume = parsedData?["lp1Mixer"] as! Double
         
+        // Handle LP1 on off setting
         lowPassFilter.output.stop()
         
         if (parsedData?["lp1On"] as! Bool) {
@@ -251,6 +261,7 @@ class AudioHandler: AKMIDIListener  {
         lowPassFilter2.resonance = parsedData?["lp2Resonance"] as! Double
         lowPassFilter2Mixer.volume = parsedData?["lp2Mixer"] as! Double
         
+        // Handle LP2 on off setting
         lowPassFilter2.output.stop()
         
         if (parsedData?["lp2On"] as! Bool) {
@@ -260,6 +271,7 @@ class AudioHandler: AKMIDIListener  {
         highPassFilter.cutoffFrequency = parsedData?["hpfCutoff"] as! Double
         highPassFilter.resonance = parsedData?["hpfResonance"] as! Double
         
+        // Handle HP on off setting
         highPassFilter.stop()
         
         if (parsedData?["hpfOn"] as! Bool) {
@@ -269,6 +281,7 @@ class AudioHandler: AKMIDIListener  {
         wobble.halfPowerFrequency = parsedData?["wobblePower"] as! Double
         wobble.lfoRate = parsedData?["wobbleRate"] as! Double
         
+        // Handle wobble on off setting
         wobble.output.stop()
         
         if (parsedData?["wobbleOn"] as! Bool) {
@@ -280,6 +293,7 @@ class AudioHandler: AKMIDIListener  {
         delay.lfoRate = parsedData?["delayRate"] as! Double
         delay.lfoAmplitude = parsedData?["delayAmplitude"] as! Double
         
+        // Handle delay on off setting
         delay.output.stop()
         
         if (parsedData?["delayOn"] as! Bool) {
@@ -288,6 +302,7 @@ class AudioHandler: AKMIDIListener  {
         
         reverb.reverbDuration = parsedData?["reverbDuration"] as! Double
         
+        // Handle reverb on off setting
         reverb.stop()
         
         if (parsedData?["reverbOn"] as! Bool) {
@@ -297,6 +312,7 @@ class AudioHandler: AKMIDIListener  {
         autoWah.lfoRate = parsedData?["wahRate"] as! Double
         autoWah.wahAmount = parsedData?["wahAmount"] as! Double
         
+        // Handle wah on off setting
         autoWah.output.stop()
         
         if (parsedData?["wahOn"] as! Bool) {

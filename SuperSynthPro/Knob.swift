@@ -1,5 +1,10 @@
 /**
- * TODO explain which parts of this are mine
+ * I took most of this code from an online tutorial on how to build knobs
+ * found: https://www.raywenderlich.com/56885/custom-control-for-ios-tutorial-a-reusable-knob
+ * However his version is implemented in swift 2 instead of 3 so I had to convert it 
+ * and completely change the format of how touches are recognised.
+ *
+ * I wrote the knobValueChanged function and hooked it up in the init.
  *
  */
 import UIKit
@@ -68,7 +73,7 @@ class Knob: UIControl {
         
         createSublayers()
         
-        // links touche gesture to knobValueChanged method
+        // links touch gesture to knobValueChanged method
         self.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(knobValueChanged)))
     }
     
@@ -95,7 +100,10 @@ class Knob: UIControl {
         layer.addSublayer(knobRenderer.pointerLayer)
     }
     
-    /** Converts gestures coords into angle and then updates dial */
+    /*
+     * Grabs the value from the gesture recogniser and works out the 
+     * knob value from the x,y position
+     */
     func knobValueChanged(gesture: UIPanGestureRecognizer) {
         switch gesture.state {
         case .began, .changed:

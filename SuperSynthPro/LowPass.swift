@@ -1,10 +1,18 @@
+/**
+ * A low pass filter with an ADSR controlled cutoff value in an attempt to make a funky sound
+ */
 import Foundation
 import AudioKit
 
 class LowPass: AKNode {
-    
+    // Parameters array
     var parameters: [Double] = [1000.0, 0.0, 0.2, 0.2, 0.5, 0.8, 1.0]
     
+    /*
+     * When set the node properties are passed into the parameters array
+     * which is kept track of by the operation effect closure allowing dynamic
+     * changes to operation values
+     */
     var cutOff: Double = 1000.0 {
         didSet {
             parameters[0] = cutOff
@@ -12,6 +20,7 @@ class LowPass: AKNode {
         }
     }
     
+    // This gate controls when to trigger this classes ouput
     var gate: Double = 0.0 {
         didSet {
             parameters[1] = gate
@@ -23,6 +32,8 @@ class LowPass: AKNode {
         didSet {
             parameters[2] = attack
             output.parameters = parameters
+            
+            // Syncs attack with the ADSR Cutoff view
             ADSRView?.attack = attack
         }
     }
@@ -31,6 +42,8 @@ class LowPass: AKNode {
         didSet {
             parameters[3] = decay
             output.parameters = parameters
+            
+            // Syncs decay with the ADSR Cutoff view
             ADSRView?.decay = decay
         }
     }
@@ -39,14 +52,19 @@ class LowPass: AKNode {
         didSet {
             parameters[4] = sustain
             output.parameters = parameters
+            
+            // Syncs sustain with the ADSR Cutoff view
             ADSRView?.sustain = sustain
         }
     }
     
+    // Release is a keyword so used rel instead
     var rel: Double = 0.8 {
         didSet {
             parameters[5] = rel
             output.parameters = parameters
+            
+            // Syncs release with the ADSR Cutoff view
             ADSRView?.rel = rel
         }
     }
@@ -58,6 +76,7 @@ class LowPass: AKNode {
         }
     }
     
+    // Store a ADSR UI view instance so values can be updated
     var ADSRView: ADSRView? = nil
     
     var output: AKOperationEffect
@@ -83,6 +102,7 @@ class LowPass: AKNode {
             return input.moogLadderFilter(cutoffFrequency: cuttoffFrequency, resonance: res)
         }
         
+        // Link parameters array to closure params of operation effect
         output.parameters = parameters
         
         let mixer = AKMixer(output)

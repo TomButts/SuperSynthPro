@@ -120,7 +120,7 @@
 		E20F9C421E02FB1B004430C6 /* VariableDelay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VariableDelay.swift; sourceTree = "<group>"; };
 		E21DE4AC1E2991CB00E20CAB /* PresetSoundTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresetSoundTable.swift; sourceTree = "<group>"; };
 		E21DE4AE1E29923700E20CAB /* PresetSound.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresetSound.swift; sourceTree = "<group>"; };
-		E21DE4B01E29A2F500E20CAB /* presets.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = presets.txt; sourceTree = "<group>"; };
+		E21DE4B01E29A2F500E20CAB /* presets.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = presets.txt; sourceTree = "<group>"; wrapsLines = 0; };
 		E21DE4B31E29AB8B00E20CAB /* CSwiftV.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSwiftV.swift; sourceTree = "<group>"; };
 		E24E30221DC2754D00E6D6BD /* SuperSynthPro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SuperSynthPro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E24E30251DC2754D00E6D6BD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -387,6 +387,7 @@
 				TargetAttributes = {
 					E24E30211DC2754D00E6D6BD = {
 						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = 32NGA43D7K;
 						ProvisioningStyle = Automatic;
 					};
 					E24E30351DC2754D00E6D6BD = {
@@ -662,6 +663,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 32NGA43D7K;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/AudioKit/Frameworks/AudioKit-iOS",
@@ -682,6 +684,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 32NGA43D7K;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

@@ -3,4 +3,10 @@ Super Synth Pro Assignment Text File
 
 App Name: Super Synth Pro
 
-App Description: A simple synthesiser great for exploring sound ideas on the go! Super Synth Pro combines audio elements of classic synths with a minimal interface.  It comes complete with an in app keyboard and preset sounds so you can test your creations or just have some fun.  
+App Description: A simple synthesiser great for exploring sound ideas on the go! Super Synth Pro combines audio elements of classic synths with a minimal interface.  It comes complete with an in app keyboard and preset sounds so you can test your creations or just have some fun.
+
+Primary Category: Music
+
+Secondary Category: Entertainment
+
+  

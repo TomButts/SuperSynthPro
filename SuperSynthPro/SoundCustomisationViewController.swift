@@ -314,11 +314,20 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
         masterVolumeKnobPlaceholder.addSubview(masterVolumeKnob)
         
         // Keyboard
-        keyboard = AKKeyboardView(width: 680, height: 128)
-        keyboard?.sizeToFit()
+        
+        // Get placeholder width and height
+        let width = Int(effectsKeyboardPlaceholder.bounds.width) - 2
+        let height = Int(effectsKeyboardPlaceholder.bounds.height) - 1
+        
+        // Initialise keyboard view
+        keyboard = AKKeyboardView(width: width, height: height, firstOctave: 4, octaveCount: 2)
+        
+        // Keyboard settings
         keyboard?.keyOnColor = UIColor.blue
         keyboard!.polyphonicMode = false
         keyboard!.delegate = self
+        
+        // Add view to placeholder
         effectsKeyboardPlaceholder.addSubview(keyboard!)
         
         // ADSR lp1
@@ -480,7 +489,6 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
         
         // Master volume
         masterVolumeKnob.value = Float(audioHandler.generator.generatorMaster.volume)
-        
         
         /*
          * The following blocks check if a component in the audio handler is 

@@ -23,6 +23,6 @@ class DatabaseConnector {
         }
         
         // Print the db path so you can navigate to it an inpect using sqlite3 command in terminal
-        // print(path)
+        print(path)
     }
 }

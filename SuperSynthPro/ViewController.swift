@@ -246,13 +246,30 @@ class ViewController: UIViewController, AKKeyboardDelegate {
         )
         
         adsrPlaceholder.addSubview(adsrView)
-    
-        // Keyboard
-        keyboard = AKKeyboardView(width: 800, height: 128)
-        keyboard?.sizeToFit()
+        
+        /* 
+         * Keyboard
+         *
+         * This is part of a horrible hack. After redownloading and compiling AK for iOS 10.2
+         * the AK Keyboard view cuts off early missing out the final line on the right key
+         * 
+         * So I have set the placholder view to have black backgrounds and sized the element
+         * slightly smaller to give the illusion of borders.
+         */
+        
+        // Get placeholder width and height
+        let width = Int(keyboardPlaceholder.bounds.width) - 2
+        let height = Int(keyboardPlaceholder.bounds.height) - 1
+        
+        // Initialise keyboard view
+        keyboard = AKKeyboardView(width: width, height: height, firstOctave: 4, octaveCount: 2)
+        
+        // Keyboard settings
         keyboard?.keyOnColor = UIColor.blue
         keyboard!.polyphonicMode = false
         keyboard!.delegate = self
+        
+        // Add view to placeholder
         keyboardPlaceholder.addSubview(keyboard!)
         
         // Add waveform plot

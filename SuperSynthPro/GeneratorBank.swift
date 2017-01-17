@@ -259,12 +259,12 @@ class GeneratorBank: AKPolyphonicNode {
         morphingOscillatorBank2.stop(noteNumber: noteNumber + offset2)
         pulseWidthModulationOscillatorBank.stop(noteNumber: noteNumber - 12)
         frequencyModulationOscillatorBank.stop(noteNumber: noteNumber - 12)
-    
+        // Release key record from set
+        onNotes.remove(noteNumber)
+        
+        // Now check if keyon not set is empty
         if onNotes.count == 0 {
             noiseADSR.stop()
         }
-        
-        // Release key record from set
-        onNotes.remove(noteNumber)
     }
 }

@@ -54,13 +54,7 @@ class AudioHandler  {
     init() {
         AKSettings.audioInputEnabled = true
         
-        // Peak expander
-        let expander = AKExpander(generator)
-        expander.expansionRatio = 50
-        expander.expansionThreshold = 50
-        expander.masterGain = -15
-        
-        bitCrusher = AKBitCrusher(expander)
+        bitCrusher = AKBitCrusher(generator)
         bitCrusher.stop()
     
         lowPassFilter = LowPass(bitCrusher)
@@ -77,12 +71,8 @@ class AudioHandler  {
         // Add subtle panning
         panner = Panning(filterMixer)
         
-        // Clip the filter sounds
-        let clipper = AKClipper(panner)
-        clipper.limit = 0.2
-        
         // Wobble
-        wobble = Wobble(clipper)
+        wobble = Wobble(panner)
     
         // Delay
         delay = VariableDelay(wobble)
@@ -93,28 +83,19 @@ class AudioHandler  {
         // Wah
         autoWah = AutoWah(reverb)
         
-        effects = AKDryWetMixer(expander, autoWah, balance: 0.0)
-        
-        // Add some compression
-        let compressor = AKCompressor(
-            effects,
-            threshold: -20,
-            headRoom: 2.0,
-            masterGain: -10
-        )
-        
-        // EQFilter to middle
-        let lowPara = AKLowShelfParametricEqualizerFilter(compressor)
-        lowPara.cornerFrequency = 200
-        lowPara.q = 20
+        effects = AKDryWetMixer(generator, autoWah, balance: 0.0)
         
         // EQ Filters
-        low = AKEqualizerFilter(lowPara, centerFrequency: 50, bandwidth: 100, gain: 1.0)
+        low = AKEqualizerFilter(effects, centerFrequency: 50, bandwidth: 100, gain: 1.0)
         middle = AKEqualizerFilter(low, centerFrequency: 350, bandwidth: 300, gain: 1.0)
         high = AKEqualizerFilter(middle, centerFrequency: 5000, bandwidth: 1000, gain: 1.0)
         
+        // Fitler resonance and others in the chain can make volume shoot up
+        let balancer = AKBalancer(high, comparator: generator)
+        let balanceMixer = AKMixer(balancer)
+        
         // Master volume
-        master = AKMixer(high)
+        master = AKMixer(balanceMixer)
         
         // Set output
         AudioKit.output = master

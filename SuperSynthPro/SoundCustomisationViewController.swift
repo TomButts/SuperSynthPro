@@ -378,7 +378,12 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
         // Low Pass 1 Settings
         lowPass1CuttoffKnob.minimumValue = 24.0
         lowPass1CuttoffKnob.maximumValue = 4200.0
+        
         lowPass1CuttoffKnob.value = Float(audioHandler.lowPassFilter.cutOff)
+        
+        // Set the lp resonance to a low value to prevent noisey woop sound
+        // when intialised
+        audioHandler.lowPassFilter.resonance = 0.6
         
         lowPass1ResonanceKnob.maximumValue = 2.0
         lowPass1ResonanceKnob.value = Float(audioHandler.lowPassFilter.resonance)
@@ -391,9 +396,6 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
         
         lowPass1SustainKnob.value = Float(audioHandler.lowPassFilter.sustain)
         
-        // Set the lp resonance to a low value to prevent noisey woop sound
-        // when intialised
-        audioHandler.lowPassFilter.resonance = 0.4
         lowPass1ReleaseKnob.maximumValue = 3.0
         lowPass1ReleaseKnob.value = Float(audioHandler.lowPassFilter.rel)
         
@@ -408,7 +410,8 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
         
         // Set the lp resonance to a low value to prevent noisey woop sound
         // when intialised
-        audioHandler.lowPassFilter2.resonance = 0.4
+        audioHandler.lowPassFilter2.resonance = 0.6
+        
         lowPass2ResonanceKnob.maximumValue = 2.0
         lowPass2ResonanceKnob.value = Float(audioHandler.lowPassFilter2.resonance)
         
@@ -464,8 +467,13 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
         
         // EQ
         lowKnob.maximumValue = 9.0
+        lowKnob.value = Float(audioHandler.low.gain)
+        
         midKnob.maximumValue = 9.0
+        midKnob.value = Float(audioHandler.middle.gain)
+        
         highKnob.maximumValue = 9.0
+        highKnob.value = Float(audioHandler.high.gain)
         
         // Global bend
         globalBendKnob.value = Float(audioHandler.generator.globalbend)

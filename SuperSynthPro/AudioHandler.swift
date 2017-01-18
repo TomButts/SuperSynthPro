@@ -4,7 +4,7 @@
 import Foundation
 import AudioKit
 
-class AudioHandler: AKMIDIListener  {
+class AudioHandler  {
     // Create a shared instance
     static let sharedInstance = AudioHandler()
   
@@ -36,8 +36,6 @@ class AudioHandler: AKMIDIListener  {
 
     // Maximum global detune
     var maximumBend: Double = 2.0
-
-    var filterMixer: AKDryWetMixer! = nil
     
     // Panning
     var panner: Panning! = nil
@@ -57,11 +55,11 @@ class AudioHandler: AKMIDIListener  {
      * Make all effects start as off
      */
     init() {
-        AKSettings.audioInputEnabled = true
-        
+        // Bitcrusher
         bitCrusher = AKBitCrusher(generator)
         bitCrusher.stop()
     
+        // Filter section
         lowPassFilter = LowPass(bitCrusher)
         lowPassFilter.output.stop()
         
@@ -75,11 +73,8 @@ class AudioHandler: AKMIDIListener  {
         highPassFilter = AKHighPassFilter(lowPassFilter2)
         highPassFilter.stop()
         
-        // Filter section output
-        filterMixer = AKDryWetMixer(generator, highPassFilter, balance: 1.0)
-        
         // Add subtle panning
-        panner = Panning(filterMixer)
+        panner = Panning(highPassFilter)
         
         // Wobble
         wobble = Wobble(panner)
@@ -97,6 +92,7 @@ class AudioHandler: AKMIDIListener  {
         autoWah = AutoWah(reverb)
         autoWah.output.stop()
         
+        // Effects mixer allows isolation of generator sound
         effects = AKDryWetMixer(generator, autoWah, balance: 0.0)
         
         // EQ Filters
@@ -125,6 +121,8 @@ class AudioHandler: AKMIDIListener  {
      * If youre going to serialise things swift makes it hard to do this a nicer
      * way.  Even if you write something to serialise structs (which I did)
      * it's difficult and unweildly to extract parse the JSON
+     *
+     * return String of serialised settings
      */
     func serializeCurrentSettings() -> String {
         // Encoding all of these in a top level array as JSON deserialisation
@@ -196,6 +194,8 @@ class AudioHandler: AKMIDIListener  {
     }
     
     /*
+     * [@param String] The JSON encoded settings to deserialise and apply
+     *
      * Deserialises the data created in serializeCurrentSettings and applys the settings
      */
     func settingsFromJson(settingsJson: String) {

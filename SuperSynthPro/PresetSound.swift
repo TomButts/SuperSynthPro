@@ -23,10 +23,10 @@ class PresetSound {
     let presetSoundTable: PresetSoundTable
 
     init () {
-        // initialse the table object
+        // Initialse the table object
         presetSoundTable = PresetSoundTable(db: db)
         
-        // on init save all the csv preset values into the database
+        // On init save all the csv preset values into the database
         savePresetsFromCSV()
     }
     
@@ -39,6 +39,9 @@ class PresetSound {
     }
     
     /*
+     * [@param String] Name of sound to save
+     * [@param String] JSON audio circuit data to save
+     *
      * Save a single preset sound into the database
      */
     func savePresetSound(name: String, soundSettingsJson: String) {
@@ -55,7 +58,9 @@ class PresetSound {
     }
     
     /*
-     * Load all the names of the presets
+     * Load all the names of the preset sounds from the database
+     * 
+     * return [String] an array of string values
      */
     func loadAllPresetNames() -> [String] {
         // Initialise the array with blank entry so if they clicked by mistake nothing changes immediately in the picker view
@@ -78,6 +83,8 @@ class PresetSound {
     }
     
     /*
+     * [@param String] Preset name to load
+     *
      * Loads a db stored preset and passes it through the JSON -> audio handler settings function
      */
     func loadPreset(name: String) {
@@ -113,10 +120,13 @@ class PresetSound {
     }
     
     /*
+     * [@param String] The file path of the file to read from
+     *
      * Handles grabbing the data from presets.txt
+     *
      */
-    func readDataFromFile(file:String)-> String! {
-        // Get the filepaht
+    func readDataFromFile(file: String)-> String! {
+        // Get the filepath
         guard let filepath = Bundle.main.path(forResource: file, ofType: "txt") else {
             return nil
         }

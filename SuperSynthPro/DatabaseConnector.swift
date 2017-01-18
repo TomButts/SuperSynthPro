@@ -22,7 +22,7 @@ class DatabaseConnector {
             DatabaseConnector.connection = try! Connection("\(path)/db.SuperSynthPro")
         }
         
-        // Print the db path so you can navigate to it an inpect using sqlite3 command in terminal
+        // Print the db path so you can navigate to it and inpect using sqlite3 command in terminal
         // print(path)
     }
 }

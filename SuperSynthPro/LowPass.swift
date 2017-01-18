@@ -13,6 +13,7 @@ class LowPass: AKNode {
      * which is kept track of by the operation effect closure allowing dynamic
      * changes to operation values
      */
+    
     var cutOff: Double = 1000.0 {
         didSet {
             parameters[0] = cutOff
@@ -20,7 +21,7 @@ class LowPass: AKNode {
         }
     }
     
-    // This gate controls when to trigger this classes ouput
+    // This gate controls the envelope trigger mechanism
     var gate: Double = 0.0 {
         didSet {
             parameters[1] = gate

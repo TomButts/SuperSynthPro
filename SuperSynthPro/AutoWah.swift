@@ -13,6 +13,7 @@ class AutoWah: AKNode {
      * which is kept track of by the operation effect closure allowing dynamic
      * changes to operation values
      */
+    
     var wahAmount: Double = 0 {
         didSet {
             parameters[0] = wahAmount
@@ -42,7 +43,7 @@ class AutoWah: AKNode {
             let amp = parameters[1]
             let oscRate = parameters[2]
             
-            // Set up lfo
+            // Set up LFO
             let lfo = AKOperation.sineWave(
                 frequency: oscRate,
                 amplitude: 1

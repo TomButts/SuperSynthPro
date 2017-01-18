@@ -8,8 +8,10 @@ import AudioKit
 import SQLite
 
 class ViewController: UIViewController, AKKeyboardDelegate {
-    // This initialises a singleton database connection which can then be accesed
-    // statically from any class which requires it.
+    /*
+     * This initialises a singleton database connection which can then be accesed
+     * statically from any class which requires it.
+     */
     let db = DatabaseConnector()
     
     // Initialise the preset sound model that controls database interaction
@@ -18,7 +20,7 @@ class ViewController: UIViewController, AKKeyboardDelegate {
     // Initialise the singleton containing the synths audio circuit
     var audioHandler = AudioHandler.sharedInstance
 
-    // Link to the UIView that the keyboard will be placed in
+    // Link to the UI View that the keyboard will be placed in
     @IBOutlet var keyboardPlaceholder: UIView!
 
     // Keyboard UI view
@@ -79,7 +81,7 @@ class ViewController: UIViewController, AKKeyboardDelegate {
     @IBOutlet var startStopSwitch: UISwitch!
     
     /*
-     * The Knob variables that will be drawn and added to the placeholder
+     * Here are the Knob variables that will be drawn and added to the placeholder
      * views
      */
     
@@ -250,7 +252,7 @@ class ViewController: UIViewController, AKKeyboardDelegate {
         /* 
          * Keyboard
          *
-         * This is part of a horrible hack. After redownloading and compiling AK for iOS 10.2
+         * After redownloading and compiling AK for iOS 10.2
          * the AK Keyboard view cuts off early missing out the final line on the right key
          * 
          * So I have set the placholder view to have black backgrounds and sized the element
@@ -325,7 +327,7 @@ class ViewController: UIViewController, AKKeyboardDelegate {
         // MOB1 MOB2 DW Mixer
         mobBalancerKnob.value = Float(audioHandler.generator.mobDryWet.balance)
         
-        // PW Modulation
+        // Pulse Width Modulation
         pulseWidthKnob.value = Float(audioHandler.generator.pulseWidthModulationOscillatorBank.pulseWidth)
         
         pulseWidthOffsetKnob.minimumValue = -12
@@ -358,9 +360,11 @@ class ViewController: UIViewController, AKKeyboardDelegate {
         
         masterVolumeKnob.value = Float(audioHandler.generator.generatorMaster.volume)
         
-        // This sets the volume of the effects to zero
-        // which means you can focus on getting the perfect waveform
-        // while in this view
+        /*
+         * This sets the volume of the effects to zero
+         * which means you can focus on getting the perfect waveform
+         * while in this view
+         */
         audioHandler.effects.balance = 0.0
     }
     
@@ -387,6 +391,7 @@ class ViewController: UIViewController, AKKeyboardDelegate {
      * They all take the knob value and apply it to the relevant audio
      * component.
      */
+    
     func attackValueChanged() {
         audioHandler.generator.attackDuration = Double(attackKnob.value)
     }

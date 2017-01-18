@@ -237,8 +237,14 @@ class GeneratorBank: AKPolyphonicNode {
         avAudioNode = generatorMaster.avAudioNode
     }
     
-    // Plays a MIDI note on all generators
+    /*
+     * [@param MIDINoteNumber] The midi note number to play
+     * [@param MIDIVelocity] The velocity of the midi note
+     *
+     * Plays a MIDI note on all generators and engages the noise unit
+     */
     override func play(noteNumber: MIDINoteNumber, velocity: MIDIVelocity) {
+        // Start oscillators
         morphingOscillatorBank1.play(noteNumber: noteNumber + offset1, velocity: velocity)
         morphingOscillatorBank2.play(noteNumber: noteNumber + offset2, velocity: velocity)
         pulseWidthModulationOscillatorBank.play(noteNumber: noteNumber - 12, velocity: velocity)
@@ -254,6 +260,11 @@ class GeneratorBank: AKPolyphonicNode {
         onNotes.insert(noteNumber)
     }
     
+    /*
+     * [@param MIDINoteNumber] The midi not number to stop playing
+     *
+     * Stops a note from playing and stops noise output
+     */
     override func stop(noteNumber: MIDINoteNumber) {
         morphingOscillatorBank1.stop(noteNumber: noteNumber + offset1)
         morphingOscillatorBank2.stop(noteNumber: noteNumber + offset2)

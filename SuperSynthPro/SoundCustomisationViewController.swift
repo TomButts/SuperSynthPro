@@ -6,16 +6,20 @@ import SQLite
 import AudioKit
 
 class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
-    // AudioKit Errors if too many 'taps' are being used
-    // This is due to the AVF audio code that AK is built on
-    // To avoid this breaking things once the plot is initialised
-    // that instance is retained
+    /*
+     * AudioKit Errors if too many 'taps' are being used
+     * This is due to the AVF audio code that AK is built on
+     * To avoid this breaking things once the plot is initialised
+     * that instance is retained
+     */
     static var plot: AKNodeOutputPlot! = nil
     static var viewInitialised = false
     
     /*
-     * The UI Knobs are drawn in UIViews placed in the storyboard
-     * These placeholder variables represent these UIViews.
+     * The UI Knobs are drawn in UI Views placed in the storyboard
+     *
+     * The following placeholder variables represent these UIViews.
+     *
      * The Knobs will be intialised on load and added to these
      * placeholder views as subviews.
      */
@@ -92,7 +96,7 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
     // Another useful middle C switch
     @IBOutlet var startStopSwitch: UISwitch!
     
-    // Bitcrusher on and off
+    // Bitcrusher on and off button outlet
     @IBOutlet var bitCrusherTrigger: UISwitch!
 
     // The on off button outlets for the audio components
@@ -182,7 +186,6 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
          * Finally the Knobs are added to the placeholder view
          * as subviews.
          */
-
         
         // Low pass 1 filter knobs
         lowPass1CuttoffKnob = Knob(frame: lowPass1CuttoffKnobPlaceholder.bounds)
@@ -367,8 +370,10 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
             SoundCustomisationViewController.viewInitialised = true
         }
         
-        // The intialisation code is ran once then each time the view is loaded that
-        // instance of the plot is added to the view here
+        /*
+         * The intialisation code is ran once then each time the view is loaded that
+         * instance of the plot is added to the view here.
+         */
         waveformPlaceholder.addSubview(SoundCustomisationViewController.plot)
     }
     
@@ -778,7 +783,8 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
         audioHandler.generator.generatorMaster.volume = Double(masterVolumeKnob.value)
     }
 
-    /* The keyboard note on function also needs to set LP1 and LP2 'gate'
+    /* 
+     * The keyboard note on function also needs to set LP1 and LP2 'gate'
      * values to 1 if they are switched on.  This is because the cutoff ADSR is gate triggered
      * to acheive that funky woop sound when a key is pressed
      */

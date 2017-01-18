@@ -34,13 +34,13 @@ class Wobble: AKNode {
             let halfPower = parameters[0]
             let oscRate = parameters[1]
             
-            // Set up lfo
+            // Set up LFO
             let lfo = AKOperation.sineWave(
                 frequency: oscRate,
                 amplitude: 500
             )
             
-            // Apply the lfo value to the LP half power point
+            // Apply the LFO value to the LP half power point
             return input.lowPassFilter(
                 halfPowerPoint: halfPower + lfo
             )

@@ -7,8 +7,8 @@ import UIKit
 
 class ADSRView: UIView {
     /*
-     * didSet allows rerendering of the envelope everytime an ADSR value is changed
-     * by using the setNeedsDisplay function
+     * Every time an ADSR value is changed didSet is called
+     * triggering the redrawing function (setNeedsDisplay)
      */
     var attack: Double? = 0.2 {
         didSet {
@@ -51,9 +51,6 @@ class ADSRView: UIView {
         self.backgroundColor = UIColor.clear
     }
     
-    /*
-     * UIView sub classes override draw in order to draw thing
-     */
     public override func draw(_ frame: CGRect) {
         // Draw the 'container' which is just a rectangle
         drawContainer()
@@ -63,6 +60,11 @@ class ADSRView: UIView {
     }
     
     /*
+     * [@param Double] The attack value of the node being tracked
+     * [@param Double] The decay value of the node being tracked
+     * [@param Double] The sustain value of the node being tracked
+     * [@param Double] The release value of the node being tracked
+     *
      * Allows the ADSR properties to be set in 1 line rather than 4
      */
     func initialiseADSR(nodeAttack: Double, nodeDecay: Double, nodeSustain: Double, nodeRelease: Double) {
@@ -110,34 +112,60 @@ class ADSRView: UIView {
      * using
      */
     func drawEnvelope() {
+        // Initialise line
         let adsrLine = UIBezierPath()
+        
+        // The height coordinate of the attack line
         let attackLineHeight = (viewFrame.height * 0.2)
         
+        // The upper and lower limit of the attack point x coordinate
         let highestXCoordOfAttackLine = viewFrame.width * 0.25
         let lowestXCoordOfAttackLine = viewFrame.width * 0.02
         
+        // The upper and lower limit of the decay point x coordinate
         let highestXCoordOfDecayLine = viewFrame.width * 0.2
         let lowestXCoordOfDecayLine = viewFrame.width * 0.02
         
+        // The actual attack X coordinate based off the attack property taking into account bounds
         let attackX = (highestXCoordOfAttackLine * (CGFloat(attack! / 2))) + lowestXCoordOfAttackLine
+        
+        // The actual decay X coordinate based off the decay property taking into account bounds
         let decayX = ((highestXCoordOfDecayLine * CGFloat(decay! / 2 )) + lowestXCoordOfDecayLine) + attackX
         
+        // The attack x,y point
         let attackPoint = CGPoint(x: attackX, y: attackLineHeight)
-        let sustainBounds = ((viewFrame.height * 0.98) - attackLineHeight)
         
+        /*
+         * 98% of the frame minus the 'attack line height' which is actually the distance from the
+         * top of the attack line to the top of the view.
+         */
+        let sustainYBounds = ((viewFrame.height * 0.98) - attackLineHeight)
+        
+        // Release x and y is the final destination of the line which will be the bottom right corner of the view
         let releaseY = viewFrame.height * 0.98
         let releaseX = viewFrame.width
         
-        let sustainY = (sustainBounds - (sustainBounds * CGFloat(sustain!))) + attackLineHeight
+        // The sustain y coordinate needs to stay within the attack lines height and not drop off the bottom of the view
+        let sustainY = (sustainYBounds - (sustainYBounds * CGFloat(sustain!))) + attackLineHeight
         
+        // The decay x,y point
         let decayPoint = CGPoint(x: decayX, y: sustainY)
     
+        /*
+         * The higher the release the longer the release line needs to be
+         * so an (y-y*x)+z formula needs to be used where y is the total space left
+         * available to the release line and x is the release value. Z ensures its drawn on 
+         * the end of the decay line
+         */
         let sustainX = (viewFrame.width - decayX) - ((viewFrame.width - decayX) * CGFloat(rel! / 3)) + decayX
         
+        // Sustain x,y point
         let sustainPoint = CGPoint(x: sustainX, y: sustainY)
         
+        // Release x,y point
         let releasePoint = CGPoint(x: releaseX, y: releaseY)
       
+        // Draw all the lines between the points
         adsrLine.move(to: CGPoint(x: 0, y: (viewFrame.height * 0.98)))
         
         adsrLine.addLine(to: attackPoint)
@@ -153,6 +181,7 @@ class ADSRView: UIView {
         
         adsrLine.close()
         
+        // Colour and stroke settings
         UIColor.blue.set()
         adsrLine.lineWidth = 1.5
         adsrLine.stroke()

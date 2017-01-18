@@ -17,6 +17,11 @@ class PresetSoundTable {
     // The serialised data representing the audio handler state
     let soundSerialisation = Expression<String>("sound_json")
     
+    /*
+     * [@param Connection] A connection object linking to the sqlite database
+     * 
+     * If the table doesn't exist create it
+     */
     init(db: Connection) {
         do {
             // Create the table

@@ -116,31 +116,6 @@ class AudioHandler: AKMIDIListener  {
         
         // Start AK
         AudioKit.start()
-        
-        let midi = AKMIDI()
-        
-        midi.createVirtualPorts()
-        
-        midi.openInput("Session 1")
-        
-        midi.addListener(self)
-    }
-    
-    func receivedMIDINoteOn(noteNumber: MIDINoteNumber,
-                            velocity: MIDIVelocity,
-                            channel: Int) {
-        generator.play(noteNumber: noteNumber, velocity: velocity)
-    }
-    
-    func receivedMIDINoteOff(noteNumber: MIDINoteNumber,
-                             velocity: MIDIVelocity,
-                             channel: Int) {
-        generator.stop(noteNumber: noteNumber)
-    }
-    
-    func receivedMIDIPitchWheel(_ pitchWheelValue: Int, channel: Int) {
-        let bendSemi =  (Double(pitchWheelValue - 8192) / 8192.0) * maximumBend
-        generator.globalbend = bendSemi
     }
     
     /*

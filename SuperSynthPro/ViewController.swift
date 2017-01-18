@@ -382,11 +382,6 @@ class ViewController: UIViewController, AKKeyboardDelegate {
         }
     }
     
-    // Vestigial
-    @IBAction func saveGenerator(_ sender: AnyObject) {
-        presetSoundModel.printSettings()
-    }
-    
     /*
      * The following functions handle the changing of knob values.
      * They all take the knob value and apply it to the relevant audio

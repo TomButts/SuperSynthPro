@@ -4,7 +4,7 @@
 import Foundation
 import AudioKit
 
-class AudioHandler  {
+class AudioHandler: AKMIDIListener  {
     // Create a shared instance
     static let sharedInstance = AudioHandler()
   
@@ -116,10 +116,35 @@ class AudioHandler  {
         
         // Start AK
         AudioKit.start()
+        
+        let midi = AKMIDI()
+        
+        midi.createVirtualPorts()
+        
+        midi.openInput("Session 1")
+        
+        midi.addListener(self)
+    }
+    
+    func receivedMIDINoteOn(noteNumber: MIDINoteNumber,
+                            velocity: MIDIVelocity,
+                            channel: Int) {
+        generator.play(noteNumber: noteNumber, velocity: velocity)
+    }
+    
+    func receivedMIDINoteOff(noteNumber: MIDINoteNumber,
+                             velocity: MIDIVelocity,
+                             channel: Int) {
+        generator.stop(noteNumber: noteNumber)
+    }
+    
+    func receivedMIDIPitchWheel(_ pitchWheelValue: Int, channel: Int) {
+        let bendSemi =  (Double(pitchWheelValue - 8192) / 8192.0) * maximumBend
+        generator.globalbend = bendSemi
     }
     
     /*
-     * Gets all the current settings that are accessible to users 
+     * Gets all the current settings that are accessible to users
      * and puts the into an array which is then converted into JSON
      *
      * If youre going to serialise things swift makes it hard to do this a nicer

@@ -58,8 +58,8 @@ class PresetSound {
      * Load all the names of the presets
      */
     func loadAllPresetNames() -> [String] {
-        // Initialise the array with none so if they clicked by mistake nothing changes immediately in the picker view
-        var presetNames = ["none"]
+        // Initialise the array with blank entry so if they clicked by mistake nothing changes immediately in the picker view
+        var presetNames = ["-----"]
         
         do {
             // SELECT `sound_name` FROM PresetSoundTable

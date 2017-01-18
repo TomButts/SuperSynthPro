@@ -18,6 +18,7 @@
 		E24E302D1DC2754D00E6D6BD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E24E302C1DC2754D00E6D6BD /* Assets.xcassets */; };
 		E24E30301DC2754D00E6D6BD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E24E302E1DC2754D00E6D6BD /* LaunchScreen.storyboard */; };
 		E24E303B1DC2754D00E6D6BD /* SuperSynthProTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24E303A1DC2754D00E6D6BD /* SuperSynthProTests.swift */; };
+		E250057C1E2F94430010FAA6 /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E250057B1E2F94430010FAA6 /* HelpViewController.swift */; };
 		E2531F901E01A0B500548B4B /* Knob.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2531F8F1E01A0B500548B4B /* Knob.swift */; };
 		E290218D1E253C5800DAE463 /* ADSRView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E290218C1E253C5700DAE463 /* ADSRView.swift */; };
 		E2BE052C1DC617A00004CADD /* SoundCustomisationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BE052B1DC617A00004CADD /* SoundCustomisationViewController.swift */; };
@@ -132,6 +133,7 @@
 		E24E30361DC2754D00E6D6BD /* SuperSynthProTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SuperSynthProTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E24E303A1DC2754D00E6D6BD /* SuperSynthProTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuperSynthProTests.swift; sourceTree = "<group>"; };
 		E24E303C1DC2754D00E6D6BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E250057B1E2F94430010FAA6 /* HelpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpViewController.swift; sourceTree = "<group>"; };
 		E2531F8F1E01A0B500548B4B /* Knob.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Knob.swift; sourceTree = "<group>"; };
 		E290218C1E253C5700DAE463 /* ADSRView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADSRView.swift; sourceTree = "<group>"; };
 		E2BE052B1DC617A00004CADD /* SoundCustomisationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundCustomisationViewController.swift; sourceTree = "<group>"; };
@@ -252,6 +254,7 @@
 				E24E30311DC2754D00E6D6BD /* Info.plist */,
 				E2BE052B1DC617A00004CADD /* SoundCustomisationViewController.swift */,
 				E2BF65951E2D54D800B73889 /* PresetsViewController.swift */,
+				E250057B1E2F94430010FAA6 /* HelpViewController.swift */,
 			);
 			path = SuperSynthPro;
 			sourceTree = "<group>";
@@ -513,6 +516,7 @@
 				E21DE4B41E29AB8B00E20CAB /* CSwiftV.swift in Sources */,
 				E2BF65961E2D54D800B73889 /* PresetsViewController.swift in Sources */,
 				E20F9C431E02FB1B004430C6 /* VariableDelay.swift in Sources */,
+				E250057C1E2F94430010FAA6 /* HelpViewController.swift in Sources */,
 				E290218D1E253C5800DAE463 /* ADSRView.swift in Sources */,
 				E21DE4AD1E2991CB00E20CAB /* PresetSoundTable.swift in Sources */,
 				E2531F901E01A0B500548B4B /* Knob.swift in Sources */,

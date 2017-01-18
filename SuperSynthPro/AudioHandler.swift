@@ -29,7 +29,7 @@ class AudioHandler  {
     var delay: VariableDelay! = nil
     
     // Reverb
-    var reverb: AKFlatFrequencyResponseReverb! = nil
+    var reverb: AKReverb! = nil
     
     // Auto Wah
     var autoWah: AutoWah! = nil
@@ -51,6 +51,11 @@ class AudioHandler  {
     
     var master: AKMixer! = nil
     
+    /*
+     * Initialise the audio ciruit of the synth
+     * 
+     * Make all effects start as off
+     */
     init() {
         AKSettings.audioInputEnabled = true
         
@@ -58,12 +63,17 @@ class AudioHandler  {
         bitCrusher.stop()
     
         lowPassFilter = LowPass(bitCrusher)
+        lowPassFilter.output.stop()
+        
         lowPassFilterMixer = AKMixer(lowPassFilter)
         
         lowPassFilter2 = LowPass(lowPassFilterMixer)
+        lowPassFilter2.output.stop()
+        
         lowPassFilter2Mixer = AKMixer(lowPassFilter2)
         
         highPassFilter = AKHighPassFilter(lowPassFilter2)
+        highPassFilter.stop()
         
         // Filter section output
         filterMixer = AKDryWetMixer(generator, highPassFilter, balance: 1.0)
@@ -73,15 +83,19 @@ class AudioHandler  {
         
         // Wobble
         wobble = Wobble(panner)
+        wobble.output.stop()
     
         // Delay
         delay = VariableDelay(wobble)
+        delay.output.stop()
 
         // Reverb
-        reverb = AKFlatFrequencyResponseReverb(delay)
+        reverb = AKReverb(delay)
+        reverb.stop()
 
         // Wah
         autoWah = AutoWah(reverb)
+        autoWah.output.stop()
         
         effects = AKDryWetMixer(generator, autoWah, balance: 0.0)
         
@@ -165,7 +179,7 @@ class AudioHandler  {
         settings["delayRate"] = delay.lfoRate
         settings["delayAmplitude"] = delay.lfoAmplitude
         settings["delayOn"] = delay.output.isStarted
-        settings["reverbDuration"] = reverb.reverbDuration
+        settings["reverbDuration"] = reverb.dryWetMix
         settings["reverbOn"] = reverb.isStarted
         settings["wahRate"] = autoWah.lfoRate
         settings["wahAmount"] = autoWah.wahAmount
@@ -281,7 +295,7 @@ class AudioHandler  {
             delay.output.start()
         }
         
-        reverb.reverbDuration = parsedData?["reverbDuration"] as! Double
+        reverb.dryWetMix = parsedData?["reverbDuration"] as! Double
         
         // Handle reverb on off setting
         reverb.stop()

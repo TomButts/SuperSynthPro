@@ -67,7 +67,7 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
     @IBOutlet var delayLfoAmplitudeKnobPlaceholder: UIView!
     
     // Reverb
-    @IBOutlet var reverbDurationKnobPlaceholder: UIView!
+    @IBOutlet var reverbKnobPlaceholder: UIView!
     
     // Wah
     @IBOutlet var wahKnobPlaceholder: UIView!
@@ -148,7 +148,7 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
     var delayLfoAmplitudeKnob: Knob!
     
     // Reverb
-    var reverbDurationKnob: Knob!
+    var reverbKnob: Knob!
     
     // Wah
     var wahKnob: Knob!
@@ -278,9 +278,9 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
         delayLfoAmplitudeKnobPlaceholder.addSubview(delayLfoAmplitudeKnob)
         
         // Reverb knobs
-        reverbDurationKnob = Knob(frame: reverbDurationKnobPlaceholder.bounds)
-        reverbDurationKnob.addTarget(self, action: #selector(SoundCustomisationViewController.reverbDurationValueChanged), for: .valueChanged)
-        reverbDurationKnobPlaceholder.addSubview(reverbDurationKnob)
+        reverbKnob = Knob(frame: reverbKnobPlaceholder.bounds)
+        reverbKnob.addTarget(self, action: #selector(SoundCustomisationViewController.reverbValueChanged), for: .valueChanged)
+        reverbKnobPlaceholder.addSubview(reverbKnob)
         
         // Wah
         wahKnob = Knob(frame: wahKnobPlaceholder.bounds)
@@ -390,10 +390,6 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
         
         lowPass1CuttoffKnob.value = Float(audioHandler.lowPassFilter.cutOff)
         
-        // Set the lp resonance to a low value to prevent noisey woop sound
-        // when intialised
-        audioHandler.lowPassFilter.resonance = 0.6
-        
         lowPass1ResonanceKnob.maximumValue = 2.0
         lowPass1ResonanceKnob.value = Float(audioHandler.lowPassFilter.resonance)
         
@@ -416,10 +412,6 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
         lowPass2CuttoffKnob.minimumValue = 24.0
         lowPass2CuttoffKnob.maximumValue = 4200.0
         lowPass2CuttoffKnob.value = Float(audioHandler.lowPassFilter2.cutOff)
-        
-        // Set the lp resonance to a low value to prevent noisey woop sound
-        // when intialised
-        audioHandler.lowPassFilter2.resonance = 0.6
         
         lowPass2ResonanceKnob.maximumValue = 2.0
         lowPass2ResonanceKnob.value = Float(audioHandler.lowPassFilter2.resonance)
@@ -465,8 +457,8 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
         delayLfoAmplitudeKnob.value = Float(audioHandler.delay.lfoAmplitude)
         
         // Reverb
-        reverbDurationKnob.maximumValue = 2.0
-        reverbDurationKnob.value = Float(audioHandler.reverb.reverbDuration)
+        reverbKnob.maximumValue = 2.0
+        reverbKnob.value = Float(audioHandler.reverb.dryWetMix)
         
         // Wah
         wahKnob.value = Float(audioHandler.autoWah.wahAmount)
@@ -754,8 +746,8 @@ class SoundCustomisationViewController: UIViewController, AKKeyboardDelegate {
         audioHandler.delay.lfoAmplitude = Double(delayLfoAmplitudeKnob.value)
     }
     
-    func reverbDurationValueChanged() {
-        audioHandler.reverb.reverbDuration = Double(reverbDurationKnob.value)
+    func reverbValueChanged() {
+        audioHandler.reverb.dryWetMix = Double(reverbKnob.value)
     }
     
     func wahValueChanged() {

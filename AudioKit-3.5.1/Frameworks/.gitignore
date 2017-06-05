@@ -1,5 +1,0 @@
-*.framework
-*.zip
-AudioKit-*
-Carthage
-docs

@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		985235176CD0502F8E097825 /* Pods_SuperSynthPro.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAFAF2AB376C51228BC0C8F7 /* Pods_SuperSynthPro.framework */; };
 		E20F9C431E02FB1B004430C6 /* VariableDelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20F9C421E02FB1B004430C6 /* VariableDelay.swift */; };
+		E2103D9B1EE59A40005EC688 /* Pods_SuperSynthPro.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAFAF2AB376C51228BC0C8F7 /* Pods_SuperSynthPro.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E21DE4AD1E2991CB00E20CAB /* PresetSoundTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21DE4AC1E2991CB00E20CAB /* PresetSoundTable.swift */; };
 		E21DE4AF1E29923700E20CAB /* PresetSound.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21DE4AE1E29923700E20CAB /* PresetSound.swift */; };
 		E21DE4B11E29A2F500E20CAB /* presets.txt in Resources */ = {isa = PBXBuildFile; fileRef = E21DE4B01E29A2F500E20CAB /* presets.txt */; };
@@ -23,10 +25,6 @@
 		E290218D1E253C5800DAE463 /* ADSRView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E290218C1E253C5700DAE463 /* ADSRView.swift */; };
 		E2BE052C1DC617A00004CADD /* SoundCustomisationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BE052B1DC617A00004CADD /* SoundCustomisationViewController.swift */; };
 		E2BE05481DC61D3F0004CADD /* DatabaseConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BE05471DC61D3F0004CADD /* DatabaseConnector.swift */; };
-		E2BE054E1DC61E3D0004CADD /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2BE05391DC61CFE0004CADD /* SQLite.framework */; };
-		E2BE054F1DC61E3D0004CADD /* SQLite.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E2BE05391DC61CFE0004CADD /* SQLite.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		E2BF65931E2D526400B73889 /* AudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2BF65921E2D526400B73889 /* AudioKit.framework */; };
-		E2BF65941E2D526400B73889 /* AudioKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E2BF65921E2D526400B73889 /* AudioKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E2BF65961E2D54D800B73889 /* PresetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BF65951E2D54D800B73889 /* PresetsViewController.swift */; };
 		E2C1FFAE1E033106008A0B81 /* AutoWah.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1FFAD1E033106008A0B81 /* AutoWah.swift */; };
 		E2C586D61E2D602B00CA81C6 /* Panning.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C586D51E2D602B00CA81C6 /* Panning.swift */; };
@@ -44,62 +42,6 @@
 			remoteGlobalIDString = E24E30211DC2754D00E6D6BD;
 			remoteInfo = SuperSynthPro;
 		};
-		E2BE05381DC61CFE0004CADD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E2BE052E1DC61CFE0004CADD /* SQLite.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = EE247AD31C3F04ED00AE3E12;
-			remoteInfo = "SQLite iOS";
-		};
-		E2BE053A1DC61CFE0004CADD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E2BE052E1DC61CFE0004CADD /* SQLite.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = EE247ADD1C3F04ED00AE3E12;
-			remoteInfo = "SQLiteTests iOS";
-		};
-		E2BE053C1DC61CFE0004CADD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E2BE052E1DC61CFE0004CADD /* SQLite.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = EE247B3C1C3F3ED000AE3E12;
-			remoteInfo = "SQLite Mac";
-		};
-		E2BE053E1DC61CFE0004CADD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E2BE052E1DC61CFE0004CADD /* SQLite.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = EE247B451C3F3ED000AE3E12;
-			remoteInfo = "SQLiteTests Mac";
-		};
-		E2BE05401DC61CFE0004CADD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E2BE052E1DC61CFE0004CADD /* SQLite.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 03A65E5A1C6BB0F50062603F;
-			remoteInfo = "SQLite tvOS";
-		};
-		E2BE05421DC61CFE0004CADD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E2BE052E1DC61CFE0004CADD /* SQLite.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 03A65E631C6BB0F60062603F;
-			remoteInfo = "SQLiteTests tvOS";
-		};
-		E2BE05441DC61CFE0004CADD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E2BE052E1DC61CFE0004CADD /* SQLite.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A121AC451CA35C79005A31D1;
-			remoteInfo = "SQLite watchOS";
-		};
-		E2BE05501DC61E3D0004CADD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E2BE052E1DC61CFE0004CADD /* SQLite.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = EE247AD21C3F04ED00AE3E12;
-			remoteInfo = "SQLite iOS";
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -109,8 +51,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				E2BF65941E2D526400B73889 /* AudioKit.framework in Embed Frameworks */,
-				E2BE054F1DC61E3D0004CADD /* SQLite.framework in Embed Frameworks */,
+				E2103D9B1EE59A40005EC688 /* Pods_SuperSynthPro.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -118,6 +59,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9141AAF139EC941817B44ECE /* Pods_SuperSynthPro_SuperSynthProTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SuperSynthPro_SuperSynthProTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A47A6C74E3D613973FF55AD /* Pods-SuperSynthPro.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SuperSynthPro.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SuperSynthPro/Pods-SuperSynthPro.debug.xcconfig"; sourceTree = "<group>"; };
 		E20F9C421E02FB1B004430C6 /* VariableDelay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VariableDelay.swift; sourceTree = "<group>"; };
 		E21DE4AC1E2991CB00E20CAB /* PresetSoundTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresetSoundTable.swift; sourceTree = "<group>"; };
 		E21DE4AE1E29923700E20CAB /* PresetSound.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresetSound.swift; sourceTree = "<group>"; };
@@ -137,9 +80,7 @@
 		E2531F8F1E01A0B500548B4B /* Knob.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Knob.swift; sourceTree = "<group>"; };
 		E290218C1E253C5700DAE463 /* ADSRView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADSRView.swift; sourceTree = "<group>"; };
 		E2BE052B1DC617A00004CADD /* SoundCustomisationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundCustomisationViewController.swift; sourceTree = "<group>"; };
-		E2BE052E1DC61CFE0004CADD /* SQLite.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SQLite.xcodeproj; path = SQLite.swift/SQLite.xcodeproj; sourceTree = "<group>"; };
 		E2BE05471DC61D3F0004CADD /* DatabaseConnector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseConnector.swift; sourceTree = "<group>"; };
-		E2BF65921E2D526400B73889 /* AudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioKit.framework; path = "AudioKit-3.5.1/Frameworks/AudioKit-iOS/AudioKit.framework"; sourceTree = "<group>"; };
 		E2BF65951E2D54D800B73889 /* PresetsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresetsViewController.swift; sourceTree = "<group>"; };
 		E2C1FFAD1E033106008A0B81 /* AutoWah.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoWah.swift; sourceTree = "<group>"; };
 		E2C586D51E2D602B00CA81C6 /* Panning.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Panning.swift; sourceTree = "<group>"; };
@@ -147,6 +88,8 @@
 		E2C91EA81E05D1B8009BD62C /* LowPass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LowPass.swift; sourceTree = "<group>"; };
 		E2C9CDF71E0AF7A4004FD3A2 /* Wobble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Wobble.swift; sourceTree = "<group>"; };
 		E2E789EC1E03FF260005D5C4 /* GeneratorBank.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratorBank.swift; sourceTree = "<group>"; };
+		EA261782FF16354225482E26 /* Pods-SuperSynthPro.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SuperSynthPro.release.xcconfig"; path = "Pods/Target Support Files/Pods-SuperSynthPro/Pods-SuperSynthPro.release.xcconfig"; sourceTree = "<group>"; };
+		FAFAF2AB376C51228BC0C8F7 /* Pods_SuperSynthPro.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SuperSynthPro.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,8 +97,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2BF65931E2D526400B73889 /* AudioKit.framework in Frameworks */,
-				E2BE054E1DC61E3D0004CADD /* SQLite.framework in Frameworks */,
+				985235176CD0502F8E097825 /* Pods_SuperSynthPro.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -169,6 +111,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		09863542B832902D91CDA295 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9A47A6C74E3D613973FF55AD /* Pods-SuperSynthPro.debug.xcconfig */,
+				EA261782FF16354225482E26 /* Pods-SuperSynthPro.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		E20F0EFD1DC6704A002A7389 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -223,11 +174,11 @@
 		E24E30191DC2754D00E6D6BD = {
 			isa = PBXGroup;
 			children = (
-				E2BF65921E2D526400B73889 /* AudioKit.framework */,
 				E24E30241DC2754D00E6D6BD /* SuperSynthPro */,
 				E24E30391DC2754D00E6D6BD /* SuperSynthProTests */,
 				E24E30231DC2754D00E6D6BD /* Products */,
-				E2BE052E1DC61CFE0004CADD /* SQLite.xcodeproj */,
+				09863542B832902D91CDA295 /* Pods */,
+				F0897685929BE2BDF1562F66 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -300,20 +251,6 @@
 			name = DataLayer;
 			sourceTree = "<group>";
 		};
-		E2BE052F1DC61CFE0004CADD /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				E2BE05391DC61CFE0004CADD /* SQLite.framework */,
-				E2BE053B1DC61CFE0004CADD /* SQLiteTests iOS.xctest */,
-				E2BE053D1DC61CFE0004CADD /* SQLite.framework */,
-				E2BE053F1DC61CFE0004CADD /* SQLiteTests Mac.xctest */,
-				E2BE05411DC61CFE0004CADD /* SQLite.framework */,
-				E2BE05431DC61CFE0004CADD /* SQLiteTests tvOS.xctest */,
-				E2BE05451DC61CFE0004CADD /* SQLite.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		E2BE05521DC623430004CADD /* CreateTables */ = {
 			isa = PBXGroup;
 			children = (
@@ -338,6 +275,15 @@
 			name = Generators;
 			sourceTree = "<group>";
 		};
+		F0897685929BE2BDF1562F66 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FAFAF2AB376C51228BC0C8F7 /* Pods_SuperSynthPro.framework */,
+				9141AAF139EC941817B44ECE /* Pods_SuperSynthPro_SuperSynthProTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -345,15 +291,17 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E24E303F1DC2754D00E6D6BD /* Build configuration list for PBXNativeTarget "SuperSynthPro" */;
 			buildPhases = (
+				3DD760C3048700A43407A016 /* [CP] Check Pods Manifest.lock */,
 				E24E301E1DC2754D00E6D6BD /* Sources */,
 				E24E301F1DC2754D00E6D6BD /* Frameworks */,
 				E24E30201DC2754D00E6D6BD /* Resources */,
 				E24E30581DC27DCA00E6D6BD /* Embed Frameworks */,
+				F70400082A661405919BA592 /* [CP] Embed Pods Frameworks */,
+				02B1080E064FDEA11051C11F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				E2BE05511DC61E3D0004CADD /* PBXTargetDependency */,
 			);
 			name = SuperSynthPro;
 			productName = SuperSynthPro;
@@ -395,6 +343,7 @@
 					};
 					E24E30351DC2754D00E6D6BD = {
 						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = 32NGA43D7K;
 						ProvisioningStyle = Automatic;
 						TestTargetID = E24E30211DC2754D00E6D6BD;
 					};
@@ -411,12 +360,6 @@
 			mainGroup = E24E30191DC2754D00E6D6BD;
 			productRefGroup = E24E30231DC2754D00E6D6BD /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = E2BE052F1DC61CFE0004CADD /* Products */;
-					ProjectRef = E2BE052E1DC61CFE0004CADD /* SQLite.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				E24E30211DC2754D00E6D6BD /* SuperSynthPro */,
@@ -424,58 +367,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		E2BE05391DC61CFE0004CADD /* SQLite.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SQLite.framework;
-			remoteRef = E2BE05381DC61CFE0004CADD /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		E2BE053B1DC61CFE0004CADD /* SQLiteTests iOS.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "SQLiteTests iOS.xctest";
-			remoteRef = E2BE053A1DC61CFE0004CADD /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		E2BE053D1DC61CFE0004CADD /* SQLite.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SQLite.framework;
-			remoteRef = E2BE053C1DC61CFE0004CADD /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		E2BE053F1DC61CFE0004CADD /* SQLiteTests Mac.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "SQLiteTests Mac.xctest";
-			remoteRef = E2BE053E1DC61CFE0004CADD /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		E2BE05411DC61CFE0004CADD /* SQLite.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SQLite.framework;
-			remoteRef = E2BE05401DC61CFE0004CADD /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		E2BE05431DC61CFE0004CADD /* SQLiteTests tvOS.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "SQLiteTests tvOS.xctest";
-			remoteRef = E2BE05421DC61CFE0004CADD /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		E2BE05451DC61CFE0004CADD /* SQLite.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SQLite.framework;
-			remoteRef = E2BE05441DC61CFE0004CADD /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		E24E30201DC2754D00E6D6BD /* Resources */ = {
@@ -497,6 +388,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		02B1080E064FDEA11051C11F /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SuperSynthPro/Pods-SuperSynthPro-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3DD760C3048700A43407A016 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		F70400082A661405919BA592 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SuperSynthPro/Pods-SuperSynthPro-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		E24E301E1DC2754D00E6D6BD /* Sources */ = {
@@ -539,11 +478,6 @@
 			isa = PBXTargetDependency;
 			target = E24E30211DC2754D00E6D6BD /* SuperSynthPro */;
 			targetProxy = E24E30371DC2754D00E6D6BD /* PBXContainerItemProxy */;
-		};
-		E2BE05511DC61E3D0004CADD /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "SQLite iOS";
-			targetProxy = E2BE05501DC61E3D0004CADD /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -664,8 +598,8 @@
 		};
 		E24E30401DC2754D00E6D6BD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9A47A6C74E3D613973FF55AD /* Pods-SuperSynthPro.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 32NGA43D7K;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -685,8 +619,8 @@
 		};
 		E24E30411DC2754D00E6D6BD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EA261782FF16354225482E26 /* Pods-SuperSynthPro.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 32NGA43D7K;
 				ENABLE_TESTABILITY = YES;
@@ -710,6 +644,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 32NGA43D7K;
 				INFOPLIST_FILE = SuperSynthProTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = MagicConditionals.SuperSynthProTests;
@@ -724,6 +659,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 32NGA43D7K;
 				INFOPLIST_FILE = SuperSynthProTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = MagicConditionals.SuperSynthProTests;

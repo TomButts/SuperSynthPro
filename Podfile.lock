@@ -1,0 +1,17 @@
+PODS:
+  - AudioKit (3.5.1)
+  - SQLite.swift (0.11.3):
+    - SQLite.swift/standard (= 0.11.3)
+  - SQLite.swift/standard (0.11.3)
+
+DEPENDENCIES:
+  - AudioKit (= 3.5.1)
+  - SQLite.swift (~> 0.11.3)
+
+SPEC CHECKSUMS:
+  AudioKit: 7d3183b3f95b73c747348006d4085ac6207f71fc
+  SQLite.swift: 99b36c22084427f0abbeb957556ce1528cf10bb3
+
+PODFILE CHECKSUM: 6f1ce33f015e135978170f1fb37c2a476fa78043
+
+COCOAPODS: 1.2.1

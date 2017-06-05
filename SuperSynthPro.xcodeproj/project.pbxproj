@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		89A1F96D0A8DB54150AF29BB /* Pods_SuperSynthPro.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAFAF2AB376C51228BC0C8F7 /* Pods_SuperSynthPro.framework */; };
-		E20C43691EE5AA35004B68F9 /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E20C435C1EE5A9C3004B68F9 /* SQLite.framework */; };
 		E20F9C431E02FB1B004430C6 /* VariableDelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20F9C421E02FB1B004430C6 /* VariableDelay.swift */; };
 		E21DE4AD1E2991CB00E20CAB /* PresetSoundTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21DE4AC1E2991CB00E20CAB /* PresetSoundTable.swift */; };
 		E21DE4AF1E29923700E20CAB /* PresetSound.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21DE4AE1E29923700E20CAB /* PresetSound.swift */; };
@@ -133,7 +132,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E20C43691EE5AA35004B68F9 /* SQLite.framework in Frameworks */,
 				89A1F96D0A8DB54150AF29BB /* Pods_SuperSynthPro.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

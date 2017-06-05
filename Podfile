@@ -7,5 +7,6 @@ project '/Users/tom/Development/SuperSynthPro/SuperSynthPro.xcodeproj'
 use_frameworks!
 
 target 'SuperSynthPro' do
-  pod 'AudioKit', '3.5.1'
+    pod 'SQLite.swift', '~> 0.11.3'    
+    pod 'AudioKit', '3.5.1'
 end
